@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-dark-gray-200;
+  }
+  body {
+    @apply bg-light-background text-gray-900 dark:bg-dark-background dark:text-dark-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
