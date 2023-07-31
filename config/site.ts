@@ -1,9 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
-  description:
-    "Beautifully designed template built with Next.js, Shadcn UI, Tailwind CSS, and Cosmic.",
+  name: "Media",
+  description: "Integrate Unsplash and Pexels directly into your Dashboard.",
   mainNav: [
     {
       title: "Home",
