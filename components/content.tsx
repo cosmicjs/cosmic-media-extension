@@ -4,6 +4,7 @@ import { Bucket } from "@/lib/types"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import GetPhotos from "./get-photos"
+import GetVideos from "./get-videos"
 
 export default function Content(bucket: Bucket) {
   return (
@@ -23,7 +24,11 @@ export default function Content(bucket: Bucket) {
         />
       </TabsContent>
       <TabsContent value="videos" className="w-full">
-        {/* <GetVideos /> */}
+        <GetVideos
+          bucket_slug={bucket.bucket_slug}
+          read_key={bucket.read_key}
+          write_key={bucket.write_key}
+        />
       </TabsContent>
     </Tabs>
   )
