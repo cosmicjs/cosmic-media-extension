@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import { client } from "@/lib/data"
+import { client, cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
@@ -12,12 +12,18 @@ import Input from "./input"
 import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
-export default function GetPhotos(bucket: Bucket, insertOne: () => void) {
+export default function GetPhotos(bucket: Bucket) {
   const [photos, setPhotos] = useState<Photo[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
   })
+
+  const cosmicBucket = cosmic(
+    bucket.bucket_slug,
+    bucket.read_key,
+    bucket.write_key
+  )
 
   async function searchPhotos(q: string) {
     const query = q
@@ -52,7 +58,7 @@ export default function GetPhotos(bucket: Bucket, insertOne: () => void) {
         type: photo ? "image/jpeg" : "video/mp4",
       })
       media.name = photo.id + ".jpg"
-      await insertOne({ media })
+      await cosmicBucket.media.insertOne({ media })
       const adding_media = photoData.adding_media?.filter(
         (id: string) => id !== photo.id
       )

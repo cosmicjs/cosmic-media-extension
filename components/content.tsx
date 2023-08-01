@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import GetPhotos from "./get-photos"
 
-export default function Content(bucket: Bucket, insertOne: () => void) {
+export default function Content(bucket: Bucket) {
   return (
     <Tabs
       defaultValue="photos"
@@ -20,7 +20,6 @@ export default function Content(bucket: Bucket, insertOne: () => void) {
           bucket_slug={bucket.bucket_slug}
           read_key={bucket.read_key}
           write_key={bucket.write_key}
-          insertOne={insertOne}
         />
       </TabsContent>
       <TabsContent value="videos" className="w-full">
