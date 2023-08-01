@@ -13,7 +13,7 @@ import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
 export default function GetUnsplashPhotos(bucket: Bucket) {
-  const [photos, setPhotos] = useState<Photo[]>([])
+  const [photos, setPhotos] = useState<UnsplashPhoto[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
