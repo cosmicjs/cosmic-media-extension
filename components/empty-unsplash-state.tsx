@@ -1,6 +1,6 @@
 import React from "react";
 
-function EmptyState() {
+function EmptyUnsplashState() {
   return (
     <div className="grid h-[95vh] w-full place-content-center">
       <div className="flex flex-col items-center justify-center space-y-4">
@@ -16,7 +16,7 @@ function EmptyState() {
         </svg>
         <div className="text-center font-sans text-2xl text-neutral-800 dark:text-neutral-200">
           Use the search bar above to find photos from{" "}
-          <a href="https://unsplash.com" target="_blank">
+          <a href="https://unsplash.com" target="_blank" rel="noreferrer">
             <span className="font-semibold text-[#2AAAE2]">Unsplash</span>
           </a>
         </div>
@@ -25,4 +25,4 @@ function EmptyState() {
   );
 }
 
-export default EmptyState;
+export default EmptyUnsplashState;
