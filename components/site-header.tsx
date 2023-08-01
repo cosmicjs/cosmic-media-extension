@@ -21,7 +21,8 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <MainNav />
         <div className="flex items-center justify-end space-x-4">
-          <Select onValueChange={/* Set Content to Render Different Chilren */}>
+        {/* add onValueChange */}
+          <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue defaultValue="pexels" placeholder="Pexels" />
             </SelectTrigger>
