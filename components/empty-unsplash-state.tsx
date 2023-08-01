@@ -5,7 +5,7 @@ function EmptyUnsplashState() {
     <div className="flex h-[95vh] w-full flex-col justify-start">
       <div className="flex flex-col items-center justify-center space-y-4">
         <svg
-          className="h-8 w-8 fill-black dark:fill-white"
+          className="h-12 w-12 fill-black dark:fill-white"
           width="32"
           height="32"
           aria-labelledby="unsplash-home"

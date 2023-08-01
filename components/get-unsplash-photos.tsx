@@ -38,7 +38,7 @@ export default function GetUnsplashPhotos(bucket: Bucket) {
           "&query=" +
           q +
           "&per_page=50").then((res: any) => {
-        const photos = res.data.results.photos
+        const photos = res.data.results
         if (!photos) {
           setPhotos([])
         } else {
