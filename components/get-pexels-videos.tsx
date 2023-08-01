@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import { client, cosmic } from "@/lib/data"
+import { PEXELS_CLIENT, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
@@ -12,7 +12,7 @@ import Input from "./input"
 import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
-export default function GetVideos(bucket: Bucket) {
+export default function GetPexelsVideos(bucket: Bucket) {
   const [videos, setVideos] = useState<Video[]>([])
   const [videoData, setVideosData] = useState<VideoData>({
     adding_media: [],
@@ -32,7 +32,7 @@ export default function GetVideos(bucket: Bucket) {
       return
     }
     try {
-      await client.videos.search({ query, per_page: 20 }).then((res: any) => {
+      await PEXELS_CLIENT.videos.search({ query, per_page: 20 }).then((res: any) => {
         const videos = res.videos
         if (!videos) {
           setVideos([])

@@ -3,8 +3,8 @@
 import { Bucket } from "@/lib/types"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import GetPhotos from "./get-photos"
-import GetVideos from "./get-videos"
+import GetPexelsPhotos from "./get-pexels-photos"
+import GetPexelsVideos from "./get-pexels-videos"
 
 export default function Content(bucket: Bucket) {
   return (
@@ -17,14 +17,14 @@ export default function Content(bucket: Bucket) {
         <TabsTrigger value="videos">Videos</TabsTrigger>
       </TabsList>
       <TabsContent value="photos" className="w-full">
-        <GetPhotos
+        <GetPexelsPhotos
           bucket_slug={bucket.bucket_slug}
           read_key={bucket.read_key}
           write_key={bucket.write_key}
         />
       </TabsContent>
       <TabsContent value="videos" className="w-full">
-        <GetVideos
+        <GetPexelsVideos
           bucket_slug={bucket.bucket_slug}
           read_key={bucket.read_key}
           write_key={bucket.write_key}

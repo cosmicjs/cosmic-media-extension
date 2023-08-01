@@ -23,6 +23,13 @@ export type Photo = {
   url: string
 }
 
+export type UnsplashPhoto = {
+  [key: string]: any
+  id: string
+  name: string
+  urls?: { full: string; regular: string }
+}
+
 export type Video = {
   [key: string]: any
   id: string
