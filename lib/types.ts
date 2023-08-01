@@ -28,6 +28,7 @@ export type UnsplashPhoto = {
   id: string
   name: string
   urls?: { full: string; regular: string }
+  url: string
 }
 
 export type Video = {
