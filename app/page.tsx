@@ -1,13 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { usePathname } from "next/navigation"
 import { createBucketClient } from "@cosmicjs/sdk"
 import { Check, Loader2, Plus } from "lucide-react"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 
 import { client } from "@/lib/data"
-import { Photo, PhotoData, Video, VideoData } from "@/lib/types"
+import { Bucket, Photo, PhotoData, Video, VideoData } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import EmptyState from "@/components/empty-state"
 import Header from "@/components/header"
@@ -15,28 +14,11 @@ import Input from "@/components/input"
 import NoResultState from "@/components/no-result-state"
 import PhotoOutput from "@/components/photo"
 
-export default function IndexPage() {
-  const pathname = usePathname()
-
-  function getParameterByName(name: string): string {
-    name = name.replace(/[\[\]]/g, "\\$&")
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)")
-    const results = regex.exec(pathname)
-    if (!results) return ""
-    if (!results[2]) return ""
-    return decodeURIComponent(results[2].replace(/\+/g, " "))
-  }
-
-  const bucketSlug = getParameterByName("bucket_slug")
-
-  const readKey = getParameterByName("read_key")
-
-  const writeKey = getParameterByName("write_key")
-
+export default function IndexPage({ searchParams }: { searchParams: Bucket }) {
   const bucket = createBucketClient({
-    bucketSlug: bucketSlug,
-    readKey: readKey,
-    writeKey: writeKey,
+    bucketSlug: searchParams.bucket_slug,
+    readKey: searchParams.read_key,
+    writeKey: searchParams.write_key,
   })
 
   const [photos, setPhotos] = useState<Photo[]>([])

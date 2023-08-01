@@ -1,3 +1,9 @@
+export interface Bucket {
+  bucket_slug: string
+  read_key: string
+  write_key: string
+}
+
 export type PhotoProps = {
   src: string
   url: string
