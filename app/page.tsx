@@ -1,18 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 import { createBucketClient } from "@cosmicjs/sdk"
-import { CheckIcon, Loader2, PlusIcon } from "lucide-react"
+import { Check, Loader2, Plus } from "lucide-react"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 
 import { client } from "@/lib/data"
-import {
-  ParameterByName,
-  Photo,
-  PhotoData,
-  Video,
-  VideoData,
-} from "@/lib/types"
+import { Photo, PhotoData, Video, VideoData } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import EmptyState from "@/components/empty-state"
 import Header from "@/components/header"
@@ -20,36 +15,30 @@ import Input from "@/components/input"
 import NoResultState from "@/components/no-result-state"
 import PhotoOutput from "@/components/photo"
 
-function getParameterByName({ name, url }: ParameterByName): string {
-  if (!url) url = window.location.href
-  name = name.replace(/[\[\]]/g, "\\$&")
-  const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)")
-  const results = regex.exec(url)
-  if (!results) return ""
-  if (!results[2]) return ""
-  return decodeURIComponent(results[2].replace(/\+/g, " "))
-}
-
-const bucketSlug = getParameterByName({
-  name: "bucket_slug",
-  url: window.location.href,
-})
-const readKey = getParameterByName({
-  name: "read_key",
-  url: window.location.href,
-})
-const writeKey = getParameterByName({
-  name: "write_key",
-  url: window.location.href,
-})
-
-const bucket = createBucketClient({
-  bucketSlug: bucketSlug,
-  readKey: readKey,
-  writeKey: writeKey,
-})
-
 export default function IndexPage() {
+  const pathname = usePathname()
+
+  function getParameterByName(name: string): string {
+    name = name.replace(/[\[\]]/g, "\\$&")
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)")
+    const results = regex.exec(pathname)
+    if (!results) return ""
+    if (!results[2]) return ""
+    return decodeURIComponent(results[2].replace(/\+/g, " "))
+  }
+
+  const bucketSlug = getParameterByName("bucket_slug")
+
+  const readKey = getParameterByName("read_key")
+
+  const writeKey = getParameterByName("write_key")
+
+  const bucket = createBucketClient({
+    bucketSlug: bucketSlug,
+    readKey: readKey,
+    writeKey: writeKey,
+  })
+
   const [photos, setPhotos] = useState<Photo[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
@@ -106,7 +95,9 @@ export default function IndexPage() {
   }
 
   async function handleAddPhotoToMedia(photo: Photo) {
+    console.log("photoData:", photoData)
     const adding_media = [...(photoData.adding_media || []), photo.id]
+    console.log("adding_media:", adding_media)
     setPhotosData({ ...photoData, adding_media })
 
     try {
@@ -121,6 +112,7 @@ export default function IndexPage() {
         (id: string) => id !== photo.id
       )
       const added_media = [...photoData.added_media, photo.id]
+      console.log("added_media:", added_media)
       setPhotosData({ ...photoData, adding_media, added_media })
     } catch (err) {
       console.log(err)
@@ -166,7 +158,7 @@ export default function IndexPage() {
         <div>
           <Button variant="secondary">
             <span className="mr-2">Added</span>
-            <CheckIcon
+            <Check
               width={20}
               height={20}
               className="text-green-500 dark:text-green-400"
@@ -186,7 +178,7 @@ export default function IndexPage() {
         >
           <span className="mr-2 block sm:hidden md:block">Add to Media</span>
           <span className="mr-2 hidden sm:block md:hidden">Add Media</span>
-          <PlusIcon
+          <Plus
             width={20}
             height={20}
             className="text-gray-700 dark:text-gray-400"

@@ -9,11 +9,6 @@ export type InputProps = {
   onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-export interface ParameterByName {
-  name: string
-  url?: string
-}
-
 export type Photo = {
   [key: string]: any
   id: string

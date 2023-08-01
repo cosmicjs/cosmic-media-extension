@@ -1,4 +1,3 @@
-// import { createClient as createUnsplashClient } from "unsplash-js"
 import { createClient } from "pexels"
 
 export const client = createClient(
