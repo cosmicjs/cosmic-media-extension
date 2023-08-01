@@ -2,15 +2,6 @@ import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -21,19 +12,6 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <MainNav />
         <div className="flex items-center justify-end space-x-4">
-        {/* add onValueChange */}
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue defaultValue="pexels" placeholder="Pexels" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Provider</SelectLabel>
-                <SelectItem value="pexels">Pexels</SelectItem>
-                <SelectItem value="unsplash">Unsplash</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
           <nav className="flex items-center space-x-1">
             <Link
               href={siteConfig.links.github}

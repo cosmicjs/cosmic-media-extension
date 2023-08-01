@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import GetPexelsPhotos from "./get-pexels-photos"
 import GetPexelsVideos from "./get-pexels-videos"
+import GetUnsplashPhotos from "./get-unsplash-photos"
 
 export default function Content(bucket: Bucket) {
   return (
@@ -13,23 +14,31 @@ export default function Content(bucket: Bucket) {
       className="flex w-full flex-col items-center justify-center"
     >
       <TabsList>
-        <TabsTrigger value="photos">Photos</TabsTrigger>
-        <TabsTrigger value="videos">Videos</TabsTrigger>
-      </TabsList>
-      <TabsContent value="photos" className="w-full">
+        <TabsTrigger value="pexels-photos">Pexels Photos</TabsTrigger>
+        <TabsTrigger value="pexels-videos">Pexels Videos</TabsTrigger>
+        <TabsTrigger value="unsplash-photos">Unsplash Photos</TabsTrigger>
+      </TabsList>  
+      <TabsContent value="pexels-photos" className="w-full">
         <GetPexelsPhotos
           bucket_slug={bucket.bucket_slug}
           read_key={bucket.read_key}
           write_key={bucket.write_key}
         />
       </TabsContent>
-      <TabsContent value="videos" className="w-full">
+      <TabsContent value="pexels-videos" className="w-full">
         <GetPexelsVideos
           bucket_slug={bucket.bucket_slug}
           read_key={bucket.read_key}
           write_key={bucket.write_key}
         />
       </TabsContent>
-    </Tabs>
+      <TabsContent value="unsplash-photos" className="w-full">
+        <GetUnsplashPhotos
+          bucket_slug={bucket.bucket_slug}
+          read_key={bucket.read_key}
+          write_key={bucket.write_key}
+        />
+      </TabsContent>
+    </Tabs> 
   )
 }
