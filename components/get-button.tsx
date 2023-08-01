@@ -2,7 +2,7 @@
 
 import { Check, Loader2, Plus } from "lucide-react"
 
-import { Photo, PhotoData, Video } from "@/lib/types"
+import { Photo, UnsplashPhoto, PhotoData, Video } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 
 export default function GetButton({
@@ -12,8 +12,8 @@ export default function GetButton({
   handleAddVideoToMedia,
 }: {
   photoData: PhotoData
-  media: Photo | Video
-  handleAddPhotoToMedia?: (photo: Photo) => void
+  media: Photo | UnsplashPhoto | Video
+  handleAddPhotoToMedia?: (photo: Photo | UnsplashPhoto) => void
   handleAddVideoToMedia?: (video: Video) => void
 }) {
   if (photoData.adding_media && photoData.adding_media.indexOf(media.id) !== -1)
