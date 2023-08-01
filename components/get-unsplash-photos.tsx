@@ -32,19 +32,23 @@ export default function GetUnsplashPhotos(bucket: Bucket) {
       return
     }
     try {
-      await fetch(UNSPLASH_SEARCH_URL +
-          "?client_id=" +
-          UNSPLASH_ACCESS_KEY +
-          "&query=" +
-          q +
-          "&per_page=50").then((res: any) => {
-        const photos = res.data.results
-        if (!photos) {
-          setPhotos([])
-        } else {
-          setPhotos(photos)
-        }
-      })
+      await fetch(
+  UNSPLASH_SEARCH_URL +
+    "?client_id=" +
+    UNSPLASH_ACCESS_KEY +
+    "&query=" +
+    q +
+    "&per_page=50"
+)
+  .then((res) => res.json())
+  .then((data) => {
+    const photos = data.results;
+    if (!photos) {
+      setPhotos([]);
+    } else {
+      setPhotos(photos);
+    }
+  })
     } catch (e: any) {
       console.log(e)
     }
