@@ -6,7 +6,7 @@ import { UNSPLASH_SEARCH_URL, UNSPLASH_ACCESS_KEY, cosmic } from "@/lib/data"
 import { Bucket, UnsplashPhoto, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
-import EmptyUnsplashState from "./empty-state"
+import EmptyUnsplashState from "./empty-unsplash-state"
 import Header from "./header"
 import Input from "./input"
 import NoResultState from "./no-result-state"
