@@ -10,7 +10,7 @@ import GetUnsplashPhotos from "./get-unsplash-photos"
 export default function Content(bucket: Bucket) {
   return (
     <Tabs
-      defaultValue="photos"
+      defaultValue="pexels-photos"
       className="flex w-full flex-col items-center justify-center"
     >
       <TabsList>
