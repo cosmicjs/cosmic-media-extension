@@ -10,7 +10,7 @@ import { buttonVariants } from "./ui/button"
 function VideoOutput({ src, url, children }: PhotoProps) {
   return (
     <>
-      <div className="absolute flex items-center justify-center left-2 top-2 z-20 bg-white/40 rounded-full h-8 w-12">
+      <div className="absolute left-2 top-2 z-20 flex h-8 w-12 items-center justify-center rounded-full bg-white/40">
         <FileVideo className="h-6 w-6 text-black" />
       </div>
       <Image
