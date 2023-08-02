@@ -7,6 +7,7 @@ export interface Bucket {
 export type PhotoProps = {
   src: string
   url: string
+  provider: string
   children: React.ReactNode
 }
 

@@ -35,14 +35,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "flex min-h-screen w-full max-w-5xl justify-center bg-light-background font-sans antialiased dark:bg-dark-background",
+            "flex min-h-screen w-full justify-center bg-light-background font-sans antialiased dark:bg-dark-background",
             fontSans.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen w-full flex-col">
               <SiteHeader />
-              <div className="flex-1">{children}</div>
+              <div className="w-full flex-1">{children}</div>
             </div>
           </ThemeProvider>
         </body>

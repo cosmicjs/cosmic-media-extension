@@ -12,19 +12,19 @@ import {
 import { Button } from "@/components/ui/button"
 
 export default function GetButton({
-  photoData,
+  data,
   media,
   handleAddPhotoToMedia,
   handleAddVideoToMedia,
 }: {
-  photoData: PhotoData
+  data: PhotoData
   media: Photo | UnsplashPhoto | PixabayPhoto | Video
   handleAddPhotoToMedia?: (
     photo: Photo | UnsplashPhoto | PixabayPhoto | UnsplashPhoto
   ) => void
   handleAddVideoToMedia?: (video: Video) => void
 }) {
-  if (photoData.adding_media && photoData.adding_media.indexOf(media.id) !== -1)
+  if (data.adding_media && data.adding_media.indexOf(media.id) !== -1)
     return (
       <div>
         <Button variant="secondary">
@@ -33,7 +33,7 @@ export default function GetButton({
         </Button>
       </div>
     )
-  if (photoData.added_media && photoData.added_media.indexOf(media.id) !== -1)
+  if (data.added_media && data.added_media.indexOf(media.id) !== -1)
     return (
       <div>
         <Button variant="secondary">
@@ -51,9 +51,9 @@ export default function GetButton({
       <Button
         variant="secondary"
         onClick={
-          photoData && handleAddPhotoToMedia
+          data && handleAddPhotoToMedia
             ? () => handleAddPhotoToMedia(media)
-            : photoData && handleAddVideoToMedia
+            : data && handleAddVideoToMedia
             ? () => handleAddVideoToMedia(media)
             : () => {}
         }

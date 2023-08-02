@@ -2,18 +2,18 @@
 
 import { useState } from "react"
 
-import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
-import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
+import { UNSPLASH_ACCESS_KEY, UNSPLASH_SEARCH_URL, cosmic } from "@/lib/data"
+import { Bucket, PhotoData, UnsplashPhoto } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
-import EmptyPixabayState from "./empty-pixabay-state"
-import Header from "./header"
-import Input from "./input"
-import NoResultState from "./no-result-state"
-import PhotoOutput from "./photo"
+import Header from "../header"
+import Input from "../input"
+import NoResultState from "../no-result-state"
+import PhotoOutput from "../photo"
+import EmptyUnsplashState from "./empty-unsplash-state"
 
-export default function GetPixabayPhotos(bucket: Bucket) {
-  const [photos, setPhotos] = useState<PixabayPhoto[]>([])
+export default function GetUnsplashPhotos(bucket: Bucket) {
+  const [photos, setPhotos] = useState<UnsplashPhoto[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -33,17 +33,16 @@ export default function GetPixabayPhotos(bucket: Bucket) {
     }
     try {
       await fetch(
-        PIXABAY_SEARCH_URL +
-          "?key=" +
-          PIXABAY_KEY +
-          "&q=" +
+        UNSPLASH_SEARCH_URL +
+          "?client_id=" +
+          UNSPLASH_ACCESS_KEY +
+          "&query=" +
           q +
-          "&image_type=photo" +
           "&per_page=50"
       )
         .then((res) => res.json())
         .then((data) => {
-          const photos = data.hits
+          const photos = data.results
           if (!photos) {
             setPhotos([])
           } else {
@@ -55,14 +54,14 @@ export default function GetPixabayPhotos(bucket: Bucket) {
     }
   }
 
-  async function handleAddPhotoToMedia(photo: PixabayPhoto) {
+  async function handleAddPhotoToMedia(photo: UnsplashPhoto) {
     console.log("photoData:", photoData)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     console.log("adding_media:", adding_media)
     setPhotosData({ ...photoData, adding_media })
 
     try {
-      const response = await fetch(photo.largeImageURL ?? "")
+      const response = await fetch(photo.urls?.full ?? "")
       const blob = await response.blob()
       const media: any = new Blob([blob], {
         type: "image/jpeg",
@@ -93,14 +92,18 @@ export default function GetPixabayPhotos(bucket: Bucket) {
       <div>
         {photos && (
           <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-            {photos.map((photo: PixabayPhoto) => {
+            {photos.map((photo: UnsplashPhoto) => {
               return (
                 <div key={photo.id} className="relative w-full">
-                  <PhotoOutput src={photo.largeImageURL} url={photo.pageURL}>
+                  <PhotoOutput
+                    src={photo.urls!.regular}
+                    url={photo.url}
+                    provider="Unsplash"
+                  >
                     <GetButton
                       media={photo}
                       handleAddPhotoToMedia={() => handleAddPhotoToMedia(photo)}
-                      photoData={photoData}
+                      data={photoData}
                     />
                   </PhotoOutput>
                 </div>
@@ -108,7 +111,7 @@ export default function GetPixabayPhotos(bucket: Bucket) {
             })}
           </div>
         )}
-        {photos.length === 0 && <EmptyPixabayState />}
+        {photos.length === 0 && <EmptyUnsplashState />}
         {!photos && <NoResultState />}
       </div>
     </div>

@@ -6,11 +6,11 @@ import { PEXELS_CLIENT, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
-import EmptyState from "./empty-state"
-import Header from "./header"
-import Input from "./input"
-import NoResultState from "./no-result-state"
-import PhotoOutput from "./photo"
+import EmptyState from "../empty-state"
+import Header from "../header"
+import Input from "../input"
+import NoResultState from "../no-result-state"
+import PhotoOutput from "../photo"
 
 export default function GetPexelsVideos(bucket: Bucket) {
   const [videos, setVideos] = useState<Video[]>([])
@@ -32,14 +32,16 @@ export default function GetPexelsVideos(bucket: Bucket) {
       return
     }
     try {
-      await PEXELS_CLIENT.videos.search({ query, per_page: 20 }).then((res: any) => {
-        const videos = res.videos
-        if (!videos) {
-          setVideos([])
-        } else {
-          setVideos(videos)
-        }
-      })
+      await PEXELS_CLIENT.videos
+        .search({ query, per_page: 20 })
+        .then((res: any) => {
+          const videos = res.videos
+          if (!videos) {
+            setVideos([])
+          } else {
+            setVideos(videos)
+          }
+        })
     } catch (e: any) {
       console.log(e)
     }
@@ -81,11 +83,15 @@ export default function GetPexelsVideos(bucket: Bucket) {
             {videos.map((video: Video) => {
               return (
                 <div key={video.id} className="relative w-full">
-                  <PhotoOutput src={video.image!} url={video.url}>
+                  <PhotoOutput
+                    src={video.image!}
+                    url={video.url}
+                    provider="Pexels"
+                  >
                     <GetButton
                       media={video}
                       handleAddVideoToMedia={() => handleAddVideoToMedia(video)}
-                      photoData={videoData}
+                      data={videoData}
                     />
                   </PhotoOutput>
                 </div>

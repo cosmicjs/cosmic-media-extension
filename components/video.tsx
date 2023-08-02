@@ -1,15 +1,18 @@
 import React from "react"
 import Image from "next/image"
-import { ArrowUpRight, Loader2 } from "lucide-react"
+import { ArrowUpRight, FileVideo, Loader2 } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 import { buttonVariants } from "./ui/button"
 
-function PhotoOutput({ src, url, provider, children }: PhotoProps) {
+function VideoOutput({ src, url, children }: PhotoProps) {
   return (
     <>
+      <div className="absolute flex items-center justify-center left-2 top-2 z-20 bg-white/40 rounded-full h-8 w-12">
+        <FileVideo className="h-6 w-6 text-black" />
+      </div>
       <Image
         src={`${src}`}
         alt="Photo"
@@ -28,7 +31,7 @@ function PhotoOutput({ src, url, provider, children }: PhotoProps) {
           rel="noreferrer noopener"
           className={cn(buttonVariants({ variant: "secondary" }), "group")}
         >
-          <span className="mr-2">{provider}</span>
+          <span className="mr-2">Pexels</span>
           <ArrowUpRight
             width={20}
             height={20}
@@ -40,4 +43,4 @@ function PhotoOutput({ src, url, provider, children }: PhotoProps) {
   )
 }
 
-export default PhotoOutput
+export default VideoOutput
