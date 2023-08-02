@@ -3,7 +3,7 @@ import Content from "@/components/content"
 
 export default function IndexPage({ searchParams }: { searchParams: Bucket }) {
   return (
-    <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+    <section className="container grid items-center gap-6 pb-8 md:pb-10">
       <main className="mx-auto mt-2 h-full w-full p-2">
         <Content
           bucket_slug={searchParams.bucket_slug}
