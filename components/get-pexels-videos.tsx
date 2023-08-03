@@ -85,6 +85,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
                 <div key={video.id} className="relative w-full">
                   <VideoOutput
                     src={video.image!}
+                    videoSrc={video.video_files[0].link}
                     url={video.url}
                     provider="Pexels"
                   >
