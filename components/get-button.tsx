@@ -26,29 +26,32 @@ export default function GetButton({
 }) {
   if (data.adding_media && data.adding_media.indexOf(media.id) !== -1)
     return (
-      <div>
-        <Button variant="secondary">
-          <span className="mr-2">Adding...</span>
-          <Loader2 className="animate-spin" />
+      <div className="hidden group-hover:block">
+        <Button
+          variant="secondary"
+          className="rounded-full p-3"
+          title="Adding..."
+        >
+          <Loader2 className="h-4 w-4 animate-spin" />
         </Button>
       </div>
     )
   if (data.added_media && data.added_media.indexOf(media.id) !== -1)
     return (
-      <div>
-        <Button variant="secondary">
-          <span className="mr-2">Added</span>
-          <Check
-            width={20}
-            height={20}
-            className="text-green-500 dark:text-green-400"
-          />
+      <div className="hidden group-hover:block">
+        <Button
+          variant="secondary"
+          className="rounded-full p-3"
+          title="Added to media"
+        >
+          <Check className="h-4 w-4 text-green-500 dark:text-green-400" />
         </Button>
       </div>
     )
   return (
-    <div>
+    <div className="hidden group-hover:block">
       <Button
+        className="rounded-full p-3"
         variant="secondary"
         onClick={
           data && handleAddPhotoToMedia
@@ -57,12 +60,11 @@ export default function GetButton({
             ? () => handleAddVideoToMedia(media)
             : () => {}
         }
+        title="Add to media"
       >
-        <span className="mr-2 block sm:hidden md:block">Add to Media</span>
-        <span className="mr-2 hidden sm:block md:hidden">Add Media</span>
         <Plus
-          width={20}
-          height={20}
+          width={16}
+          height={16}
           className="text-gray-700 dark:text-gray-400"
         />
       </Button>

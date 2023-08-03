@@ -82,7 +82,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
           <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
             {videos.map((video: Video) => {
               return (
-                <div key={video.id} className="relative w-full">
+                <div key={video.id} className="group relative w-full">
                   <VideoOutput
                     src={video.image!}
                     url={video.url}

@@ -215,10 +215,10 @@ export default function GetPhotos(bucket: Bucket) {
       {!photos && <NoResultState />}
       <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
         {unsplashPhotos?.map((photo: UnsplashPhoto) => (
-          <div key={photo.id} className="relative w-full">
+          <div key={`unsplash-${photo.id}`} className="group relative w-full">
             <PhotoOutput
               src={photo.urls!.regular}
-              url={photo.url}
+              url={photo.links.html}
               provider="Unsplash"
             >
               <GetButton
@@ -232,7 +232,7 @@ export default function GetPhotos(bucket: Bucket) {
           </div>
         ))}
         {photos?.map((photo: Photo) => (
-          <div key={photo.id} className="relative w-full">
+          <div key={`pexels-${photo.id}`} className="group relative w-full">
             <PhotoOutput
               src={photo.src!.medium}
               url={photo.url}
@@ -247,7 +247,7 @@ export default function GetPhotos(bucket: Bucket) {
           </div>
         ))}
         {pixabayPhotos?.map((photo: PixabayPhoto) => (
-          <div key={photo.id} className="relative w-full">
+          <div key={`pixabay-${photo.id}`} className="group relative w-full">
             <PhotoOutput
               src={photo.fullHDURL}
               url={photo.pageURL}
