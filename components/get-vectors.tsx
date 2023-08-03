@@ -12,10 +12,8 @@ import VectorOutput from "./illustration"
 import Input from "./input"
 import NoResultState from "./no-result-state"
 
-export default function GetIllustrations(bucket: Bucket) {
-  const [pixabayIllustrations, setPixabayIllustrations] = useState<
-    PixabayPhoto[]
-  >([])
+export default function GetVectors(bucket: Bucket) {
+  const [pixabayVectors, setPixabayVectors] = useState<PixabayPhoto[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -27,10 +25,10 @@ export default function GetIllustrations(bucket: Bucket) {
     bucket.write_key
   )
 
-  async function searchPixabayIllustrations(q: string) {
+  async function searchPixabayVectors(q: string) {
     const query = q
     if (query === "") {
-      setPixabayIllustrations([])
+      setPixabayVectors([])
       return
     }
     try {
@@ -47,9 +45,9 @@ export default function GetIllustrations(bucket: Bucket) {
         .then((data) => {
           const photos = data.hits
           if (!photos) {
-            setPixabayIllustrations([])
+            setPixabayVectors([])
           } else {
-            setPixabayIllustrations(photos)
+            setPixabayVectors(photos)
           }
         })
     } catch (e: any) {
@@ -83,20 +81,20 @@ export default function GetIllustrations(bucket: Bucket) {
     <div className="w-full">
       <Header>
         <Input
-          placeholder="Search free high-resolution illustrations"
+          placeholder="Search free high-resolution vectors"
           onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             const searchTerm = event.currentTarget.value
             try {
-              await Promise.all([searchPixabayIllustrations(searchTerm)])
+              await Promise.all([searchPixabayVectors(searchTerm)])
             } catch (error) {
               console.error("Error occurred during search:", error)
             }
           }}
         />
       </Header>
-      {!pixabayIllustrations && <NoResultState />}
+      {!pixabayVectors && <NoResultState />}
       <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-        {pixabayIllustrations?.map((photo: PixabayPhoto) => (
+        {pixabayVectors?.map((photo: PixabayPhoto) => (
           <div key={photo.id} className="relative w-full">
             <VectorOutput
               src={photo.fullHDURL}
@@ -114,7 +112,7 @@ export default function GetIllustrations(bucket: Bucket) {
           </div>
         ))}
       </div>
-      {pixabayIllustrations?.length === 0 && <EmptyState />}
+      {pixabayVectors?.length === 0 && <EmptyState />}
     </div>
   )
 }
