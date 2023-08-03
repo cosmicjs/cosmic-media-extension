@@ -1,5 +1,5 @@
 import React from "react"
-import { ArrowUpRight, ImageIcon, Loader2 } from "lucide-react"
+import { ArrowUpRight, Image as ImageIcon, Loader2 } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
