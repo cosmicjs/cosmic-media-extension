@@ -35,7 +35,7 @@ export type UnsplashPhoto = {
 export type PixabayPhoto = {
   [key: string]: any
   id: string
-  // fullHDURL: string
+  fullHDURL: string
   largeImageURL: string
   pageURL: string
   name: string

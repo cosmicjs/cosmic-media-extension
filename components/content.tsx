@@ -13,7 +13,7 @@ export default function Content(bucket: Bucket) {
         defaultValue="photos"
         className="flex w-full flex-col items-start justify-center"
       >
-        <TabsList className="absolute top-5 right-0 h-[3.2rem] rounded-xl">
+        <TabsList className="absolute right-0 top-5 h-[3.2rem] rounded-xl">
           <TabsTrigger value="photos" className="h-full rounded-lg">
             Photos
           </TabsTrigger>

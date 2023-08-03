@@ -176,7 +176,7 @@ export default function GetPhotos(bucket: Bucket) {
     setPhotosData({ ...photoData, adding_media })
 
     try {
-      const response = await fetch(photo.largeImageURL ?? "")
+      const response = await fetch(photo.fullHDURL ?? "")
       const blob = await response.blob()
       const media: any = new Blob([blob], {
         type: "image/jpeg",
