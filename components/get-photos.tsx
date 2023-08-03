@@ -28,16 +28,11 @@ import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 import VideoOutput from "./video"
 
-export default function GetPhotosAndVideos(bucket: Bucket) {
+export default function GetPhotos(bucket: Bucket) {
   const [photos, setPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
-    adding_media: [],
-    added_media: [],
-  })
-  const [videos, setVideos] = useState<Video[]>([])
-  const [videoData, setVideosData] = useState<VideoData>({
     adding_media: [],
     added_media: [],
   })
@@ -146,48 +141,6 @@ export default function GetPhotosAndVideos(bucket: Bucket) {
     }
   }
 
-  async function searchPexelsVideos(q: string) {
-    const query = q
-    if (query === "") {
-      setVideos([])
-      return
-    }
-    try {
-      await PEXELS_CLIENT.videos
-        .search({ query, per_page: 20 })
-        .then((res: any) => {
-          const videos = res.videos
-          if (!videos) {
-            setVideos([])
-          } else {
-            setVideos(videos)
-          }
-        })
-    } catch (e: any) {
-      console.log(e)
-    }
-  }
-
-  async function handleAddPexelsVideoToMedia(video: Video) {
-    const adding_media = [...(videoData.adding_media || []), video.id]
-    setVideosData({ ...videoData, adding_media })
-
-    try {
-      const response = await fetch(video.video_files[0].link)
-      const blob = await response.blob()
-      const media: any = new Blob([blob], { type: "video/mp4" })
-      media.name = video.id + ".mp4"
-      await cosmicBucket.media.insertOne({ media })
-      const adding_media = videoData.adding_media?.filter(
-        (id: string) => id !== video.id
-      )
-      const added_media = [...(videoData.added_media || []), video.id]
-      setVideosData({ ...videoData, adding_media, added_media })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   async function searchPixabayPhotos(q: string) {
     const query = q
     if (query === "") {
@@ -244,14 +197,13 @@ export default function GetPhotosAndVideos(bucket: Bucket) {
     <div className="w-full">
       <Header>
         <Input
-          placeholder="Search free high-resolution photos and videos"
+          placeholder="Search free high-resolution photos"
           onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             const searchTerm = event.currentTarget.value
             try {
               await Promise.all([
                 searchUnsplashPhotos(searchTerm),
                 searchPexelsPhotos(searchTerm),
-                searchPexelsVideos(searchTerm),
                 searchPixabayPhotos(searchTerm),
               ])
             } catch (error) {
@@ -309,17 +261,6 @@ export default function GetPhotosAndVideos(bucket: Bucket) {
                 data={photoData}
               />
             </PhotoOutput>
-          </div>
-        ))}
-        {videos?.map((video: Video) => (
-          <div key={video.id} className="relative w-full">
-            <VideoOutput src={video.image!} url={video.url} provider="Pexels">
-              <GetButton
-                media={video}
-                handleAddVideoToMedia={() => handleAddPexelsVideoToMedia(video)}
-                data={videoData}
-              />
-            </VideoOutput>
           </div>
         ))}
       </div>
