@@ -176,7 +176,7 @@ export default function GetPhotos(bucket: Bucket) {
     setPhotosData({ ...photoData, adding_media })
 
     try {
-      const response = await fetch(photo.fullHDURL ?? "")
+      const response = await fetch(photo.imageURL ?? "")
       const blob = await response.blob()
       const media: any = new Blob([blob], {
         type: "image/jpeg",
@@ -249,7 +249,7 @@ export default function GetPhotos(bucket: Bucket) {
         {pixabayPhotos?.map((photo: PixabayPhoto) => (
           <div key={photo.id} className="relative w-full">
             <PhotoOutput
-              src={photo.largeImageURL}
+              src={photo.fullHDURL}
               url={photo.pageURL}
               provider="Pixabay"
             >

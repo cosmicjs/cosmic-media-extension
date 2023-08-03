@@ -36,6 +36,7 @@ export type PixabayPhoto = {
   [key: string]: any
   id: string
   fullHDURL: string
+  imageURL: string
   largeImageURL: string
   pageURL: string
   name: string
