@@ -1,5 +1,4 @@
 import React from "react"
-import Image from "next/image"
 import { ArrowUpRight, Loader2, Video } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
@@ -13,7 +12,8 @@ function VideoOutput({ src, url, children }: PhotoProps) {
       <div className="absolute left-2 top-2 z-20 flex h-8 w-12 items-center justify-center rounded-full bg-white/40">
         <Video className="h-6 w-6 text-black" />
       </div>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={`${src}`}
         alt="Photo"
         className={`relative z-10 h-64 w-full overflow-hidden rounded-2xl object-cover`}
