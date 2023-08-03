@@ -14,8 +14,8 @@ function VideoOutput({ src, url, children }: PhotoProps) {
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`${src}`}
-        alt="Photo"
+        src={src}
+        alt={url}
         className={`relative z-10 h-64 w-full overflow-hidden rounded-2xl object-cover`}
         width={512}
         height={512}
