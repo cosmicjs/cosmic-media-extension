@@ -1,6 +1,5 @@
 import React from "react"
-import Image from "next/image"
-import { ArrowUpRight, Loader2 } from "lucide-react"
+import { ArrowUpRight, ImageIcon, Loader2 } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
@@ -10,14 +9,18 @@ import { buttonVariants } from "./ui/button"
 function PhotoOutput({ src, url, provider, children }: PhotoProps) {
   return (
     <>
-      <Image
+      <div className="absolute left-2 top-2 z-20 flex h-8 w-12 items-center justify-center rounded-full bg-white/40">
+        <ImageIcon className="h-6 w-6 text-black" />
+      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={`${src}`}
         alt="Photo"
         className={`relative z-10 h-64 w-full overflow-hidden rounded-2xl object-cover`}
         width={512}
         height={512}
       />
-      <div className="absolute left-1/2 top-1/2 z-0 w-full text-center">
+      <div className="absolute z-0 grid h-64 w-full place-items-center text-center">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
       <div className="absolute bottom-4 z-20 flex w-full items-center justify-center space-x-4 text-center">

@@ -1,6 +1,6 @@
 import React from "react"
 import Image from "next/image"
-import { ArrowUpRight, FileVideo, Loader2 } from "lucide-react"
+import { ArrowUpRight, Loader2, Video } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
@@ -11,7 +11,7 @@ function VideoOutput({ src, url, children }: PhotoProps) {
   return (
     <>
       <div className="absolute left-2 top-2 z-20 flex h-8 w-12 items-center justify-center rounded-full bg-white/40">
-        <FileVideo className="h-6 w-6 text-black" />
+        <Video className="h-6 w-6 text-black" />
       </div>
       <Image
         src={`${src}`}

@@ -10,7 +10,7 @@ import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./input"
 import NoResultState from "./no-result-state"
-import PhotoOutput from "./photo"
+import VideoOutput from "./video"
 
 export default function GetPexelsVideos(bucket: Bucket) {
   const [videos, setVideos] = useState<Video[]>([])
@@ -83,7 +83,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
             {videos.map((video: Video) => {
               return (
                 <div key={video.id} className="relative w-full">
-                  <PhotoOutput
+                  <VideoOutput
                     src={video.image!}
                     url={video.url}
                     provider="Pexels"
@@ -93,7 +93,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
                       handleAddVideoToMedia={() => handleAddVideoToMedia(video)}
                       data={videoData}
                     />
-                  </PhotoOutput>
+                  </VideoOutput>
                 </div>
               )
             })}
