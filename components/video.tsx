@@ -28,7 +28,7 @@ function VideoOutput({ src, videoSrc, url, children }: VideoProps) {
       ) : (
         <div
           className="relative z-10 h-64"
-          onMouseEnter={() => setTimeout(() => setIsPlaying(true), 1000)}
+          onMouseEnter={() => setIsPlaying(true)}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
