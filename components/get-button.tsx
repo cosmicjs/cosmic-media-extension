@@ -26,7 +26,7 @@ export default function GetButton({
 }) {
   if (data.adding_media && data.adding_media.indexOf(media.id) !== -1)
     return (
-      <div className="hidden group-hover:block">
+      <div>
         <Button
           variant="secondary"
           className="rounded-full p-3"
@@ -38,7 +38,7 @@ export default function GetButton({
     )
   if (data.added_media && data.added_media.indexOf(media.id) !== -1)
     return (
-      <div className="hidden group-hover:block">
+      <div>
         <Button
           variant="secondary"
           className="rounded-full p-3"
