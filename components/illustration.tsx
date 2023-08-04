@@ -20,7 +20,7 @@ function VectorOutput({ src, url, provider, children }: PhotoProps) {
         width={512}
         height={512}
       />
-      <div className="absolute z-0 grid h-64 w-full place-items-center text-center">
+      <div className="absolute top-0 z-0 grid h-64 w-full place-items-center text-center">
         <Loader2 className="h-6 w-6 animate-spin" />
       </div>
       <a

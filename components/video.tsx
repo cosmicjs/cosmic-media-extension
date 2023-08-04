@@ -17,35 +17,35 @@ function VideoOutput({ src, videoSrc, url, children }: VideoProps) {
       onMouseLeave={() => {
         setIsPlaying(false)
       }}
+      onMouseEnter={() => setIsPlaying(true)}
     >
       <div className="absolute left-2 top-2 z-20 flex h-8 w-12 items-center justify-center rounded-full bg-white/40">
         <Video className="h-6 w-6 text-black" />
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {isPlaying ? (
-        <video
-          src={videoSrc}
-          className="relative h-64 w-full rounded-2xl object-cover"
-          autoPlay
-          loop
-          muted
-        />
+        <>
+          <video
+            src={videoSrc}
+            className="relative h-64 w-full rounded-2xl object-cover"
+            autoPlay
+            loop
+            muted
+          />
+        </>
       ) : (
-        <div
-          className="relative z-10 h-64"
-          onMouseEnter={() => setIsPlaying(true)}
-        >
+        <div className="relative z-10 h-64">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt={url}
-            className="h-full w-full rounded-2xl object-cover"
+            className="relative z-10 h-full w-full rounded-2xl object-cover"
           />
+          <div className="absolute top-0 z-0 grid h-64 w-full place-items-center text-center">
+            <Loader2 className="h-6 w-6 animate-spin" />
+          </div>
         </div>
       )}
-      <div className="absolute z-0 grid h-64 w-full place-items-center text-center">
-        <Loader2 className="h-6 w-6 animate-spin" />
-      </div>
       <a
         href={`${url}`}
         target="_blank"
