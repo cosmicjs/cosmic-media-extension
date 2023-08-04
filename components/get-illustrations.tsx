@@ -97,7 +97,7 @@ export default function GetIllustrations(bucket: Bucket) {
       {!pixabayIllustrations && <NoResultState />}
       <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
         {pixabayIllustrations?.map((photo: PixabayPhoto) => (
-          <div key={photo.id} className="relative w-full">
+          <div key={photo.id} className="group relative w-full">
             <VectorOutput
               src={photo.fullHDURL}
               url={photo.pageURL}
