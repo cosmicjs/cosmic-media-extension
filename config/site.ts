@@ -2,7 +2,7 @@ export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: "Media",
-  description: "Integrate Unsplash and Pexels directly into your Dashboard.",
+  description: "Integrate media assets from popular stock media services directly into your dashboard.",
   mainNav: [
     {
       title: "Home",
@@ -11,7 +11,7 @@ export const siteConfig = {
   ],
   links: {
     twitter: "https://twitter.com/cosmicjs",
-    github: "https://github.com/cosmicjs/cosmic-next-template",
+    github: "https://github.com/cosmicjs/cosmic-media-extension",
     docs: "https://www.cosmicjs.com/docs",
     login: "https://app.cosmicjs.com/login",
   },
