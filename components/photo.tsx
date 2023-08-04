@@ -1,5 +1,5 @@
 import React from "react"
-import { ExternalLinkIcon, ImageIcon, Loader2 } from "lucide-react"
+import { ExternalLink, Image as ImageIcon, Loader2 } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
@@ -33,7 +33,7 @@ function PhotoOutput({ src, url, provider, children }: PhotoProps) {
         )}
         title={`View in ${provider}`}
       >
-        <ExternalLinkIcon
+        <ExternalLink
           width={16}
           height={16}
           className="text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-400"

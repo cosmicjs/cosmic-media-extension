@@ -11,6 +11,14 @@ export type PhotoProps = {
   children: React.ReactNode
 }
 
+export type VideoProps = {
+  src: string
+  videoSrc: string
+  url: string
+  provider: string
+  children: React.ReactNode
+}
+
 export type InputProps = {
   placeholder: string
   onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void
