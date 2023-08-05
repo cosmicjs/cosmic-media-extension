@@ -87,7 +87,7 @@ export default function GetPhotos(bucket: Bucket) {
     <div className="w-full">
       <Header>
         <Input
-          placeholder="Type a pompt like: An astronaut riding a rocket into a volcano, then press enter."
+          placeholder="Type a pompt like: A steaming cup of coffee, then press enter."
           onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             const searchTerm = event.currentTarget.value
             try {
