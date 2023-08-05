@@ -93,42 +93,42 @@ export default function GetPhotos(bucket: Bucket) {
   return (
     <div className="w-full">
       <Header>
-        {!generating && (
-          <Input
-            placeholder="Type a pompt like: An astronaut riding a rocket into a volcano, then press enter."
-            onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
-              const searchTerm = event.currentTarget.value
-              try {
-                if (event.which === 13) await searchAIPhotos(searchTerm)
-              } catch (error) {
-                console.error("Error occurred during search:", error)
-              }
-            }}
-          />
-        )}
-        {generating && (
-          <div className="flex">
-            <div className="mr-2">Generating image</div>
-            <div className="mt-1">
-              <Loader2 className="h-4 w-4 animate-spin" />
-            </div>
-          </div>
-        )}
+        <Input
+          placeholder="Type a pompt like: An astronaut riding a rocket into a volcano, then press enter."
+          onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
+            const searchTerm = event.currentTarget.value
+            try {
+              if (event.which === 13) await searchAIPhotos(searchTerm)
+            } catch (error) {
+              console.error("Error occurred during search:", error)
+            }
+          }}
+        />
       </Header>
       {!photos && <NoResultState />}
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-        {photos?.map((photo: Photo) => (
-          <div key={`ai-${photo.url}`} className="group relative w-full">
-            <PhotoOutput src={photo.url} url={photo.url} provider="Unsplash">
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() => handleAddAIPhotoToMedia(photo)}
-                data={photoData}
-              />
-            </PhotoOutput>
+      {generating && (
+        <div className="flex h-10 p-6">
+          <div className="mr-2">🤖&nbsp;&nbsp;Generating images</div>
+          <div className="mt-1">
+            <Loader2 className="h-4 w-4 animate-spin" />
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+      {!generating && (
+        <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
+          {photos?.map((photo: Photo) => (
+            <div key={`ai-${photo.url}`} className="group relative w-full">
+              <PhotoOutput src={photo.url} url={photo.url} provider="Unsplash">
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() => handleAddAIPhotoToMedia(photo)}
+                  data={photoData}
+                />
+              </PhotoOutput>
+            </div>
+          ))}
+        </div>
+      )}
       {photos?.length === 0 && <EmptyState />}
     </div>
   )
