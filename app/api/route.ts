@@ -13,14 +13,15 @@ export async function POST(request: Request) {
 
   try {
     const response = await fetch(url ?? "")
-    const blob = await response.blob()
-    const mediaObj = {
-      media: blob,
-      name: slug
+    const buffer = await response.arrayBuffer()
+    const media = {
+      buffer,
+      originalname: slug + '.jpg'
     }
-    await cosmic.media.insertOne({ media: mediaObj })
+    const res = await cosmic.media.insertOne({ media })
+    console.log(1,res)
   } catch (err) {
-    console.log(err)
+    console.log(2,err)
   }
   return NextResponse.json(request)
 }

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Loader2 } from "lucide-react"
 import slugify from "slugify"
 
+import { cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
@@ -27,6 +28,11 @@ export default function GetPhotos(bucket: Bucket) {
     adding_media: [],
     added_media: [],
   })
+  const cosmicBucket = cosmic(
+    bucket.bucket_slug,
+    bucket.read_key,
+    bucket.write_key
+  )
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
     const adding_media = [...(photoData.adding_media || []), photo.id]
@@ -42,7 +48,7 @@ export default function GetPhotos(bucket: Bucket) {
         body: JSON.stringify({ url, slug, bucket }),
       })
       const adding_media = photoData.adding_media?.filter(
-        (url: string) => url !== photo.url
+        (id: string) => id !== photo.id
       )
       const added_media = [...photoData.added_media, photo.id]
       setPhotosData({ ...photoData, adding_media, added_media })
@@ -50,22 +56,6 @@ export default function GetPhotos(bucket: Bucket) {
     } catch (e) {
       console.log(e)
     }
-    // try {
-    //   const response = await fetch(photo.url ?? "")
-    //   const blob = await response.blob()
-    //   const media: any = new Blob([blob], {
-    //     type: "image/jpeg",
-    //   })
-    //   media.name = slugify(query) + ".jpg"
-    //   await cosmicBucket.media.insertOne({ media })
-    //   const adding_media = photoData.adding_media?.filter(
-    //     (id: string) => id !== photo.id
-    //   )
-    //   const added_media = [...photoData.added_media, photo.id]
-    //   setPhotosData({ ...photoData, adding_media, added_media })
-    // } catch (err) {
-    //   console.log(err)
-    // }
   }
 
   async function searchAIPhotos(q: string) {
@@ -82,8 +72,11 @@ export default function GetPhotos(bucket: Bucket) {
         n: 6,
         size: "1024x1024",
       })
-      const data = response.data.data
-      setPhotos(data)
+      const photos = response.data.data
+      for (const photo of photos) {
+        photo.id = photo.url
+      }
+      setPhotos(photos)
       setGenerating(false)
     } catch (e: any) {
       console.log(e)
@@ -117,11 +110,11 @@ export default function GetPhotos(bucket: Bucket) {
       {!generating && (
         <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
           {photos?.map((photo: Photo) => (
-            <div key={`ai-${photo.url}`} className="group relative w-full">
+            <div key={`ai-${photo.id}`} className="group relative w-full">
               <PhotoOutput src={photo.url} url={photo.url} provider="Unsplash">
                 <GetButton
                   media={photo}
-                  handleAddPhotoToMedia={() => handleAddAIPhotoToMedia(photo)}
+                  handleAddPhotoToMedia={handleAddAIPhotoToMedia}
                   data={photoData}
                 />
               </PhotoOutput>
@@ -129,7 +122,7 @@ export default function GetPhotos(bucket: Bucket) {
           ))}
         </div>
       )}
-      {photos?.length === 0 && <EmptyState />}
+      {!generating && photos?.length === 0 && <EmptyState />}
     </div>
   )
 }

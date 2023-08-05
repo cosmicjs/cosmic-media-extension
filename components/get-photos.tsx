@@ -16,8 +16,6 @@ import {
   PhotoData,
   PixabayPhoto,
   UnsplashPhoto,
-  Video,
-  VideoData,
 } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
@@ -26,7 +24,6 @@ import Header from "./header"
 import Input from "./input"
 import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
-import VideoOutput from "./video"
 
 export default function GetPhotos(bucket: Bucket) {
   const [photos, setPhotos] = useState<Photo[]>([])
