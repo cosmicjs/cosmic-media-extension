@@ -17,4 +17,5 @@ export const cosmic = (bucketSlug: string, readKey: string, writeKey: string) =>
     bucketSlug,
     readKey,
     writeKey,
+    apiEnvironment: "staging"
   })
