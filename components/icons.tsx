@@ -38,6 +38,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       className="h-auto max-w-full fill-gray-700 dark:fill-white"
       aria-label="Cosmic logo"
+      {...props}
     >
       <path
         d="M11.0494 9.71143C11.7149 9.11524 12.3291 8.51905 12.9946 7.97705C12.4827 7.59766 12.022 7.27246 11.5613 6.94727C10.9982 7.43506 10.4352 7.97706 9.87208 8.51905C10.4352 8.73585 10.8447 9.16944 11.0494 9.71143Z"
@@ -147,7 +148,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  openai: (props: LucideIcon) => (
+  openai: (props: LucideProps) => (
     <svg viewBox="0 0 1180 320" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         fill="currentColor"
