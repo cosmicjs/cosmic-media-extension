@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
+import slugify from "slugify"
 
-import { cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 
@@ -22,19 +22,55 @@ const openai = new OpenAIApi(configuration)
 export default function GetPhotos(bucket: Bucket) {
   const [photos, setPhotos] = useState<Photo[]>([])
   const [generating, setGenerating] = useState(false)
+  const [query, setQuery] = useState("")
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
   })
 
-  const cosmicBucket = cosmic(
-    bucket.bucket_slug,
-    bucket.read_key,
-    bucket.write_key
-  )
+  async function handleAddAIPhotoToMedia(photo: Photo) {
+    const adding_media = [...(photoData.adding_media || []), photo.id]
+    setPhotosData({ ...photoData, adding_media })
+    const slug = slugify(query)
+    const url = photo.url
+    try {
+      const res = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url, slug, bucket }),
+      })
+      const adding_media = photoData.adding_media?.filter(
+        (url: string) => url !== photo.url
+      )
+      const added_media = [...photoData.added_media, photo.id]
+      setPhotosData({ ...photoData, adding_media, added_media })
+      console.log(res)
+    } catch (e) {
+      console.log(e)
+    }
+    // try {
+    //   const response = await fetch(photo.url ?? "")
+    //   const blob = await response.blob()
+    //   const media: any = new Blob([blob], {
+    //     type: "image/jpeg",
+    //   })
+    //   media.name = slugify(query) + ".jpg"
+    //   await cosmicBucket.media.insertOne({ media })
+    //   const adding_media = photoData.adding_media?.filter(
+    //     (id: string) => id !== photo.id
+    //   )
+    //   const added_media = [...photoData.added_media, photo.id]
+    //   setPhotosData({ ...photoData, adding_media, added_media })
+    // } catch (err) {
+    //   console.log(err)
+    // }
+  }
 
   async function searchAIPhotos(q: string) {
     const query = q
+    setQuery(query)
     if (query === "") {
       setPhotos([])
       return
@@ -43,7 +79,7 @@ export default function GetPhotos(bucket: Bucket) {
       setGenerating(true)
       const response = await openai.createImage({
         prompt: q,
-        n: 2,
+        n: 6,
         size: "1024x1024",
       })
       const data = response.data.data
@@ -86,9 +122,7 @@ export default function GetPhotos(bucket: Bucket) {
             <PhotoOutput src={photo.url} url={photo.url} provider="Unsplash">
               <GetButton
                 media={photo}
-                // handleAddPhotoToMedia={() =>
-                //   // handleAddAIPhotoToMedia(photo)
-                // }
+                handleAddPhotoToMedia={() => handleAddAIPhotoToMedia(photo)}
                 data={photoData}
               />
             </PhotoOutput>
