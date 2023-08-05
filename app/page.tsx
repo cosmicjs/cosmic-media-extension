@@ -13,7 +13,7 @@ export default function IndexPage({
 }) {
   return (
     <section className="grid items-center gap-6 pb-8 md:pb-10">
-      {searchParams?.location !== "media-modal" && <SiteHeader />}
+      <SiteHeader location={searchParams?.location} />
       <main className="mx-auto mt-2 h-full w-full p-2">
         <Content
           bucket_slug={searchParams.bucket_slug}

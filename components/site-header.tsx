@@ -6,9 +6,13 @@ import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-export function SiteHeader() {
+export function SiteHeader({ location }: { location?: string }) {
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-light-background px-8 dark:bg-dark-background">
+    <header
+      className={`sticky top-0 z-40 w-full border-b bg-light-background px-8 dark:bg-dark-background ${
+        location === "media-modal" && "hidden"
+      }`}
+    >
       <div className="flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <MainNav />
         <div className="flex items-center justify-end space-x-4">
