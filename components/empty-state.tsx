@@ -13,6 +13,7 @@ export default function EmptyState() {
         <Icons.unsplash className="h-10" />
         <Icons.pexels className="h-10" />
         <Icons.pixabay className="h-10" />
+        <Icons.openai className="h-10" />
       </div>
     </div>
   )
