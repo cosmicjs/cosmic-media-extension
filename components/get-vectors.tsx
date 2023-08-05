@@ -93,25 +93,27 @@ export default function GetVectors(bucket: Bucket) {
         />
       </Header>
       {!pixabayVectors && <NoResultState />}
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-        {pixabayVectors?.map((photo: PixabayPhoto) => (
-          <div key={photo.id} className="group relative w-full">
-            <VectorOutput
-              src={photo.fullHDURL}
-              url={photo.pageURL}
-              provider="Pixabay"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() =>
-                  handleAddPixabayIllustrationToMedia(photo)
-                }
-                data={photoData}
-              />
-            </VectorOutput>
-          </div>
-        ))}
-      </div>
+      {pixabayVectors?.length !== 0 && (
+        <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
+          {pixabayVectors?.map((photo: PixabayPhoto) => (
+            <div key={photo.id} className="group relative w-full">
+              <VectorOutput
+                src={photo.fullHDURL}
+                url={photo.pageURL}
+                provider="Pixabay"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddPixabayIllustrationToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </VectorOutput>
+            </div>
+          ))}
+        </div>
+      )}
       {pixabayVectors?.length === 0 && <EmptyState />}
     </div>
   )

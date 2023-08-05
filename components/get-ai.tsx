@@ -107,7 +107,7 @@ export default function GetPhotos(bucket: Bucket) {
           </div>
         </div>
       )}
-      {!generating && (
+      {!generating && photos?.length !== 0 && (
         <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
           {photos?.map((photo: Photo) => (
             <div key={`ai-${photo.id}`} className="group relative w-full">

@@ -210,57 +210,61 @@ export default function GetPhotos(bucket: Bucket) {
         />
       </Header>
       {!photos && <NoResultState />}
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-        {unsplashPhotos?.map((photo: UnsplashPhoto) => (
-          <div key={`unsplash-${photo.id}`} className="group relative w-full">
-            <PhotoOutput
-              src={photo.urls!.regular}
-              url={photo.links.html}
-              provider="Unsplash"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() =>
-                  handleAddUnsplashPhotoToMedia(photo)
-                }
-                data={photoData}
-              />
-            </PhotoOutput>
-          </div>
-        ))}
-        {photos?.map((photo: Photo) => (
-          <div key={`pexels-${photo.id}`} className="group relative w-full">
-            <PhotoOutput
-              src={photo.src!.medium}
-              url={photo.url}
-              provider="Pexels"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() => handleAddPexelsPhotoToMedia(photo)}
-                data={photoData}
-              />
-            </PhotoOutput>
-          </div>
-        ))}
-        {pixabayPhotos?.map((photo: PixabayPhoto) => (
-          <div key={`pixabay-${photo.id}`} className="group relative w-full">
-            <PhotoOutput
-              src={photo.fullHDURL}
-              url={photo.pageURL}
-              provider="Pixabay"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() =>
-                  handleAddPixabayPhotoToMedia(photo)
-                }
-                data={photoData}
-              />
-            </PhotoOutput>
-          </div>
-        ))}
-      </div>
+      {photos.length !== 0 && (
+        <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
+          {unsplashPhotos?.map((photo: UnsplashPhoto) => (
+            <div key={`unsplash-${photo.id}`} className="group relative w-full">
+              <PhotoOutput
+                src={photo.urls!.regular}
+                url={photo.links.html}
+                provider="Unsplash"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddUnsplashPhotoToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </PhotoOutput>
+            </div>
+          ))}
+          {photos?.map((photo: Photo) => (
+            <div key={`pexels-${photo.id}`} className="group relative w-full">
+              <PhotoOutput
+                src={photo.src!.medium}
+                url={photo.url}
+                provider="Pexels"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddPexelsPhotoToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </PhotoOutput>
+            </div>
+          ))}
+          {pixabayPhotos?.map((photo: PixabayPhoto) => (
+            <div key={`pixabay-${photo.id}`} className="group relative w-full">
+              <PhotoOutput
+                src={photo.fullHDURL}
+                url={photo.pageURL}
+                provider="Pixabay"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddPixabayPhotoToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </PhotoOutput>
+            </div>
+          ))}
+        </div>
+      )}
       {photos?.length === 0 && <EmptyState />}
     </div>
   )
