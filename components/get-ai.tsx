@@ -108,7 +108,7 @@ export default function GetPhotos(bucket: Bucket) {
         </div>
       )}
       {!generating && photos?.length !== 0 && (
-        <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
+        <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {photos?.map((photo: Photo) => (
             <div key={`ai-${photo.id}`} className="group relative w-full">
               <PhotoOutput src={photo.url} url={photo.url} provider="Unsplash">
