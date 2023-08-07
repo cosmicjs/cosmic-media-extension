@@ -5,6 +5,7 @@ import { useState } from "react"
 import { PEXELS_CLIENT, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
+import { Icons } from "@/components/icons"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -95,6 +96,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
                       data={videoData}
                     />
                   </VideoOutput>
+                  <Icons.pexels className="absolute -left-6 bottom-4 z-10 h-5" />
                 </div>
               )
             })}

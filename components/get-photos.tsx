@@ -18,6 +18,7 @@ import {
   UnsplashPhoto,
 } from "@/lib/types"
 import GetButton from "@/components/get-button"
+import { Icons } from "@/components/icons"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -70,9 +71,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function handleAddUnsplashPhotoToMedia(photo: UnsplashPhoto) {
-    console.log("photoData:", photoData)
     const adding_media = [...(photoData.adding_media || []), photo.id]
-    console.log("adding_media:", adding_media)
     setPhotosData({ ...photoData, adding_media })
 
     try {
@@ -227,6 +226,7 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
+              <Icons.unsplash className="absolute bottom-4 left-4 z-10 h-5" />
             </div>
           ))}
           {photos?.map((photo: Photo) => (
@@ -244,6 +244,7 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
+              <Icons.pexels className="absolute bottom-4 left-4 z-10 h-5" />
             </div>
           ))}
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
@@ -261,6 +262,7 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
+              <Icons.pixabay className="absolute bottom-4 left-4 z-10 h-5" />
             </div>
           ))}
         </div>

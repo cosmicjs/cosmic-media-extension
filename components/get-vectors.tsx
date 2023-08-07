@@ -5,6 +5,7 @@ import { useState } from "react"
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
 import GetButton from "@/components/get-button"
+import { Icons } from "@/components/icons"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -110,6 +111,7 @@ export default function GetVectors(bucket: Bucket) {
                   data={photoData}
                 />
               </VectorOutput>
+              <Icons.pixabay className="absolute bottom-4 left-4 z-10 h-5" />
             </div>
           ))}
         </div>

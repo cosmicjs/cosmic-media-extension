@@ -7,6 +7,7 @@ import slugify from "slugify"
 import { cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
+import { Icons } from "@/components/icons"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -118,6 +119,7 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
+              <Icons.openai className="absolute bottom-4 left-4 z-10 h-5" />
             </div>
           ))}
         </div>
