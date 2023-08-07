@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { createClient } from "pexels"
 
-import { PEXELS_CLIENT, cosmic } from "@/lib/data"
+import { PEXELS_KEY, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
@@ -14,6 +16,9 @@ import NoResultState from "./no-result-state"
 import VideoOutput from "./video"
 
 export default function GetPexelsVideos(bucket: Bucket) {
+  const searchParams = useSearchParams()
+  const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
+
   const [videos, setVideos] = useState<Video[]>([])
   const [videoData, setVideosData] = useState<VideoData>({
     adding_media: [],
@@ -33,7 +38,8 @@ export default function GetPexelsVideos(bucket: Bucket) {
       return
     }
     try {
-      await PEXELS_CLIENT.videos
+      const pexelsClient = createClient(pexels_key || "")
+      await pexelsClient.videos
         .search({ query, per_page: 20 })
         .then((res: any) => {
           const videos = res.videos

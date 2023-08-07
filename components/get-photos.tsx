@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { createClient } from "pexels"
 
 import {
-  PEXELS_CLIENT,
+  PEXELS_KEY,
   PIXABAY_KEY,
   PIXABAY_SEARCH_URL,
-  UNSPLASH_ACCESS_KEY,
+  UNSPLASH_KEY,
   UNSPLASH_SEARCH_URL,
   cosmic,
 } from "@/lib/data"
@@ -28,6 +30,11 @@ import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
 export default function GetPhotos(bucket: Bucket) {
+  const searchParams = useSearchParams()
+  const unsplash_key = searchParams.get("unsplash_key") || UNSPLASH_KEY
+  const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
+  const pixabay_key = searchParams.get("pixabay_key") || PIXABAY_KEY
+
   const [photos, setPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
@@ -52,7 +59,7 @@ export default function GetPhotos(bucket: Bucket) {
       await fetch(
         UNSPLASH_SEARCH_URL +
           "?client_id=" +
-          UNSPLASH_ACCESS_KEY +
+          unsplash_key +
           "&query=" +
           q +
           "&per_page=50"
@@ -101,7 +108,8 @@ export default function GetPhotos(bucket: Bucket) {
       return
     }
     try {
-      await PEXELS_CLIENT.photos
+      const pexelsClient = createClient(pexels_key || "")
+      await pexelsClient.photos
         .search({ query, per_page: 20 })
         .then((res: any) => {
           const photos = res.photos
@@ -148,7 +156,7 @@ export default function GetPhotos(bucket: Bucket) {
       await fetch(
         PIXABAY_SEARCH_URL +
           "?key=" +
-          PIXABAY_KEY +
+          pixabay_key +
           "&q=" +
           q +
           "&image_type=photo" +

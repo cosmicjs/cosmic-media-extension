@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { Loader2 } from "lucide-react"
 import slugify from "slugify"
 
-import { cosmic } from "@/lib/data"
+import { OPEN_AI_KEY, cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
@@ -17,12 +18,15 @@ import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
 const { Configuration, OpenAIApi } = require("openai")
-const configuration = new Configuration({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-})
-const openai = new OpenAIApi(configuration)
 
 export default function GetPhotos(bucket: Bucket) {
+  const searchParams = useSearchParams()
+  const openai_key = searchParams.get("openai_key") || OPEN_AI_KEY
+  const configuration = new Configuration({
+    apiKey: openai_key,
+  })
+  const openai = new OpenAIApi(configuration)
+
   const [photos, setPhotos] = useState<Photo[]>([])
   const [generating, setGenerating] = useState(false)
   const [query, setQuery] = useState("")

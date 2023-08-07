@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
@@ -15,6 +16,9 @@ import Input from "./input"
 import NoResultState from "./no-result-state"
 
 export default function GetIllustrations(bucket: Bucket) {
+  const searchParams = useSearchParams()
+  const pixabay_key = searchParams.get("pexels_key") || PIXABAY_KEY
+
   const [pixabayIllustrations, setPixabayIllustrations] = useState<
     PixabayPhoto[]
   >([])
@@ -39,7 +43,7 @@ export default function GetIllustrations(bucket: Bucket) {
       await fetch(
         PIXABAY_SEARCH_URL +
           "?key=" +
-          PIXABAY_KEY +
+          pixabay_key +
           "&q=" +
           q +
           "&image_type=illustration" +
