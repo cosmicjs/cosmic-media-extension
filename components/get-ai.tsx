@@ -8,6 +8,7 @@ import { cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
+import Overlay from "@/components/overlay"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -120,7 +121,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.openai className="absolute bottom-4 left-4 z-20 h-5" />
-              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
+              <Overlay />
             </div>
           ))}
         </div>

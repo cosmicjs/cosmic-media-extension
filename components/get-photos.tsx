@@ -19,6 +19,7 @@ import {
 } from "@/lib/types"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
+import Overlay from "@/components/overlay"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -227,7 +228,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.unsplash className="absolute bottom-4 left-4 z-20 h-5" />
-              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
+              <Overlay />
             </div>
           ))}
           {photos?.map((photo: Photo) => (
@@ -246,7 +247,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.pexels className="absolute -left-6 bottom-4 z-20 h-5" />
-              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
+              <Overlay />
             </div>
           ))}
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
@@ -265,7 +266,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
-              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
+              <Overlay />
             </div>
           ))}
         </div>
