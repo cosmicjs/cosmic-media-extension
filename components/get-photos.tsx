@@ -226,7 +226,8 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
-              <Icons.unsplash className="absolute bottom-4 left-4 z-10 h-5" />
+              <Icons.unsplash className="absolute bottom-4 left-4 z-20 h-5" />
+              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
             </div>
           ))}
           {photos?.map((photo: Photo) => (
@@ -244,7 +245,8 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
-              <Icons.pexels className="absolute bottom-4 left-4 z-10 h-5" />
+              <Icons.pexels className="absolute -left-6 bottom-4 z-20 h-5" />
+              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
             </div>
           ))}
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
@@ -262,7 +264,8 @@ export default function GetPhotos(bucket: Bucket) {
                   data={photoData}
                 />
               </PhotoOutput>
-              <Icons.pixabay className="absolute bottom-4 left-4 z-10 h-5" />
+              <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
+              <div className="absolute left-0 top-0 z-10 hidden h-full w-full rounded-2xl bg-gradient-to-t from-white opacity-25 group-hover:block dark:from-black" />
             </div>
           ))}
         </div>
