@@ -29,14 +29,14 @@ function PhotoOutput({ src, url, provider, children }: PhotoProps) {
         rel="noreferrer noopener"
         className={cn(
           buttonVariants({ variant: "secondary" }),
-          "group absolute right-2 top-2 z-20 hidden rounded-full bg-white/40 p-3 hover:bg-white/40 group-hover:block"
+          "group absolute right-2 top-2 z-20 hidden rounded-full p-3 group-hover:block"
         )}
         title={`View in ${provider}`}
       >
         <ExternalLink
           width={16}
           height={16}
-          className="text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-400"
+          className="text-gray-700 dark:text-gray-400"
         />
       </a>
       <div className="absolute bottom-2 right-2 z-20">{children}</div>
