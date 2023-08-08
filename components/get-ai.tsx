@@ -105,8 +105,8 @@ export default function GetPhotos(bucket: Bucket) {
         />
       </Header>
       {!photos && <NoResultState />}
-      {generating && (
-        <div className="flex h-10 p-6">
+      {!generating && (
+        <div className="flex h-10 p-6 w-full">
           <div className="mr-2">🤖&nbsp;&nbsp;Generating images</div>
           <div className="mt-1">
             <Loader2 className="h-4 w-4 animate-spin" />
