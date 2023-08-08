@@ -14,6 +14,7 @@ export async function POST(request: Request) {
   try {
     const response = await fetch(url ?? "")
     const buffer = await response.arrayBuffer()
+    console.log(buffer)
     const media = {
       buffer,
       originalname: slug + '.jpg'

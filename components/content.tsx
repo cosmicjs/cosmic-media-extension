@@ -13,9 +13,9 @@ import GetVectors from "./get-vectors"
 
 export default function Content(bucket: Bucket) {
   return (
-    <div className="relative flex w-full items-center justify-center max-w-3xl mx-auto">
+    <div className="relative flex w-full items-center justify-center">
       <Tabs defaultValue="photos" className="w-full text-center">
-        <TabsList className="relative h-[3.2rem] rounded-xl">
+        <TabsList className="relative mx-auto h-[3.2rem] max-w-3xl rounded-xl">
           <TabsTrigger
             title="Search photos"
             value="photos"
