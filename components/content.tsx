@@ -13,7 +13,7 @@ import GetVectors from "./get-vectors"
 
 export default function Content(bucket: Bucket) {
   return (
-    <div className="relative flex w-full items-center justify-center">
+    <div className="relative flex w-full items-center justify-center max-w-3xl mx-auto">
       <Tabs defaultValue="photos" className="w-full text-center">
         <TabsList className="relative h-[3.2rem] rounded-xl">
           <TabsTrigger
