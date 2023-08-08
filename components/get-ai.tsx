@@ -75,7 +75,7 @@ export default function GetPhotos(bucket: Bucket) {
       setGenerating(true)
       const response = await openai.createImage({
         prompt: q,
-        n: 6,
+        n: 8,
         size: "1024x1024",
       })
       const photos = response.data.data
@@ -106,7 +106,7 @@ export default function GetPhotos(bucket: Bucket) {
       </Header>
       {!photos && <NoResultState />}
       {generating && (
-        <div className="flex h-10 p-6 justify-center">
+        <div className="flex h-10 justify-center p-6">
           <div className="mr-2">🤖&nbsp;&nbsp;Generating images</div>
           <div className="mt-1">
             <Loader2 className="h-4 w-4 animate-spin" />
