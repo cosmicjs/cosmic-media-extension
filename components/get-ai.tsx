@@ -46,7 +46,7 @@ export default function GetPhotos(bucket: Bucket) {
     const slug = slugify(query)
     const url = photo.url
     try {
-      const res = await fetch("/api", {
+      const res = await fetch("/api/upload/ai", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
