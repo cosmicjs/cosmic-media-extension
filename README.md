@@ -1,11 +1,24 @@
-# Cosmic Next Template
+# Cosmic Media Extension
 
-Beautifully designed template built with Next.js, Shadcn UI, Tailwind CSS. Use it as a starter for your Cosmic websites and apps. Extension ready.
+Search from thousands of royalty-free images and video and to use in your Cosmic Bucket. Includes Unsplash, Pexels, Pixabay, images, video as well as OpenAI image generation from prompt.
 
-## Usage
+## Add to Cosmic dashboard
+
+You can add this to your Cosmic dashboard by logging in and going to Your Project > Bucket > Extensions, finding this extension and clicking "Install".
+
+## Service keys
+
+It will default to using the Cosmic API keys for Unsplash, Pexels, Pixaby, and OpenAI. Since other users using these shared keys may cause API throttling / service issues, you can update these to your own keys by going to Extension > Settings and updating the following query params to your own keys:
+
+1. `unsplash_key` Register for a key [here](https://unsplash.com/developers).
+2. `pexels_key` Register for a key [here](https://www.pexels.com/api).
+3. `pixabay_key` Register for a key [here](https://pixabay.com/service/about/api)
+4. `openai_key` Register for a key [here](https://platform.openai.com)
+
+## Run locally
 
 ```bash
-git clone https://github.com/cosmicjs/cosmic-next-template
+git clone https://github.com/cosmicjs/cosmic-media-extension
 cd cosmic-next-template
 yarn
 yarn dev

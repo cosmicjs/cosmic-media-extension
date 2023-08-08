@@ -1,10 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
 import GetButton from "@/components/get-button"
+import { Icons } from "@/components/icons"
+import Overlay from "@/components/overlay"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -13,6 +16,9 @@ import Input from "./input"
 import NoResultState from "./no-result-state"
 
 export default function GetIllustrations(bucket: Bucket) {
+  const searchParams = useSearchParams()
+  const pixabay_key = searchParams.get("pexels_key") || PIXABAY_KEY
+
   const [pixabayIllustrations, setPixabayIllustrations] = useState<
     PixabayPhoto[]
   >([])
@@ -37,7 +43,7 @@ export default function GetIllustrations(bucket: Bucket) {
       await fetch(
         PIXABAY_SEARCH_URL +
           "?key=" +
-          PIXABAY_KEY +
+          pixabay_key +
           "&q=" +
           q +
           "&image_type=illustration" +
@@ -95,25 +101,29 @@ export default function GetIllustrations(bucket: Bucket) {
         />
       </Header>
       {!pixabayIllustrations && <NoResultState />}
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-        {pixabayIllustrations?.map((photo: PixabayPhoto) => (
-          <div key={photo.id} className="group relative w-full">
-            <VectorOutput
-              src={photo.fullHDURL}
-              url={photo.pageURL}
-              provider="Pixabay"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() =>
-                  handleAddPixabayIllustrationToMedia(photo)
-                }
-                data={photoData}
-              />
-            </VectorOutput>
-          </div>
-        ))}
-      </div>
+      {pixabayIllustrations?.length !== 0 && (
+        <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
+          {pixabayIllustrations?.map((photo: PixabayPhoto) => (
+            <div key={photo.id} className="group relative w-full">
+              <VectorOutput
+                src={photo.fullHDURL}
+                url={photo.pageURL}
+                provider="Pixabay"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddPixabayIllustrationToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </VectorOutput>
+              <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
+              <Overlay />
+            </div>
+          ))}
+        </div>
+      )}
       {pixabayIllustrations?.length === 0 && <EmptyState />}
     </div>
   )

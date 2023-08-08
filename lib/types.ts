@@ -22,6 +22,7 @@ export type VideoProps = {
 export type InputProps = {
   placeholder: string
   onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void
+  
 }
 
 export type Photo = {

@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { createClient } from "pexels"
 
 import {
-  PEXELS_CLIENT,
+  PEXELS_KEY,
   PIXABAY_KEY,
   PIXABAY_SEARCH_URL,
-  UNSPLASH_ACCESS_KEY,
+  UNSPLASH_KEY,
   UNSPLASH_SEARCH_URL,
   cosmic,
 } from "@/lib/data"
@@ -16,19 +18,23 @@ import {
   PhotoData,
   PixabayPhoto,
   UnsplashPhoto,
-  Video,
-  VideoData,
 } from "@/lib/types"
 import GetButton from "@/components/get-button"
+import { Icons } from "@/components/icons"
+import Overlay from "@/components/overlay"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./input"
 import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
-import VideoOutput from "./video"
 
 export default function GetPhotos(bucket: Bucket) {
+  const searchParams = useSearchParams()
+  const unsplash_key = searchParams.get("unsplash_key") || UNSPLASH_KEY
+  const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
+  const pixabay_key = searchParams.get("pixabay_key") || PIXABAY_KEY
+
   const [photos, setPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
@@ -53,7 +59,7 @@ export default function GetPhotos(bucket: Bucket) {
       await fetch(
         UNSPLASH_SEARCH_URL +
           "?client_id=" +
-          UNSPLASH_ACCESS_KEY +
+          unsplash_key +
           "&query=" +
           q +
           "&per_page=50"
@@ -73,9 +79,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function handleAddUnsplashPhotoToMedia(photo: UnsplashPhoto) {
-    console.log("photoData:", photoData)
     const adding_media = [...(photoData.adding_media || []), photo.id]
-    console.log("adding_media:", adding_media)
     setPhotosData({ ...photoData, adding_media })
 
     try {
@@ -104,7 +108,8 @@ export default function GetPhotos(bucket: Bucket) {
       return
     }
     try {
-      await PEXELS_CLIENT.photos
+      const pexelsClient = createClient(pexels_key || "")
+      await pexelsClient.photos
         .search({ query, per_page: 20 })
         .then((res: any) => {
           const photos = res.photos
@@ -151,7 +156,7 @@ export default function GetPhotos(bucket: Bucket) {
       await fetch(
         PIXABAY_SEARCH_URL +
           "?key=" +
-          PIXABAY_KEY +
+          pixabay_key +
           "&q=" +
           q +
           "&image_type=photo" +
@@ -213,57 +218,67 @@ export default function GetPhotos(bucket: Bucket) {
         />
       </Header>
       {!photos && <NoResultState />}
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6">
-        {unsplashPhotos?.map((photo: UnsplashPhoto) => (
-          <div key={`unsplash-${photo.id}`} className="group relative w-full">
-            <PhotoOutput
-              src={photo.urls!.regular}
-              url={photo.links.html}
-              provider="Unsplash"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() =>
-                  handleAddUnsplashPhotoToMedia(photo)
-                }
-                data={photoData}
-              />
-            </PhotoOutput>
-          </div>
-        ))}
-        {photos?.map((photo: Photo) => (
-          <div key={`pexels-${photo.id}`} className="group relative w-full">
-            <PhotoOutput
-              src={photo.src!.medium}
-              url={photo.url}
-              provider="Pexels"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() => handleAddPexelsPhotoToMedia(photo)}
-                data={photoData}
-              />
-            </PhotoOutput>
-          </div>
-        ))}
-        {pixabayPhotos?.map((photo: PixabayPhoto) => (
-          <div key={`pixabay-${photo.id}`} className="group relative w-full">
-            <PhotoOutput
-              src={photo.fullHDURL}
-              url={photo.pageURL}
-              provider="Pixabay"
-            >
-              <GetButton
-                media={photo}
-                handleAddPhotoToMedia={() =>
-                  handleAddPixabayPhotoToMedia(photo)
-                }
-                data={photoData}
-              />
-            </PhotoOutput>
-          </div>
-        ))}
-      </div>
+      {photos.length !== 0 && (
+        <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
+          {unsplashPhotos?.map((photo: UnsplashPhoto) => (
+            <div key={`unsplash-${photo.id}`} className="group relative w-full">
+              <PhotoOutput
+                src={photo.urls!.regular}
+                url={photo.links.html}
+                provider="Unsplash"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddUnsplashPhotoToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </PhotoOutput>
+              <Icons.unsplash className="absolute bottom-4 left-4 z-20 h-5" />
+              <Overlay />
+            </div>
+          ))}
+          {photos?.map((photo: Photo) => (
+            <div key={`pexels-${photo.id}`} className="group relative w-full">
+              <PhotoOutput
+                src={photo.src!.medium}
+                url={photo.url}
+                provider="Pexels"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddPexelsPhotoToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </PhotoOutput>
+              <Icons.pexels className="absolute -left-6 bottom-4 z-20 h-5" />
+              <Overlay />
+            </div>
+          ))}
+          {pixabayPhotos?.map((photo: PixabayPhoto) => (
+            <div key={`pixabay-${photo.id}`} className="group relative w-full">
+              <PhotoOutput
+                src={photo.fullHDURL}
+                url={photo.pageURL}
+                provider="Pixabay"
+              >
+                <GetButton
+                  media={photo}
+                  handleAddPhotoToMedia={() =>
+                    handleAddPixabayPhotoToMedia(photo)
+                  }
+                  data={photoData}
+                />
+              </PhotoOutput>
+              <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
+              <Overlay />
+            </div>
+          ))}
+        </div>
+      )}
       {photos?.length === 0 && <EmptyState />}
     </div>
   )
