@@ -2,10 +2,19 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { AlertCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import { PEXELS_KEY, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 
@@ -18,7 +27,7 @@ import VideoOutput from "./video"
 export default function GetPexelsVideos(bucket: Bucket) {
   const searchParams = useSearchParams()
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
-
+  const [saveError, setSaveError] = useState(false)
   const [videos, setVideos] = useState<Video[]>([])
   const [videoData, setVideosData] = useState<VideoData>({
     adding_media: [],
@@ -71,11 +80,43 @@ export default function GetPexelsVideos(bucket: Bucket) {
       setVideosData({ ...videoData, adding_media, added_media })
     } catch (err) {
       console.log(err)
+      setSaveError(true)
+      setVideosData({
+        adding_media: [],
+        added_media: [],
+      })
     }
   }
 
   return (
     <div>
+      {saveError && (
+        <Dialog open onOpenChange={() => setSaveError(false)}>
+          <DialogContent
+            onInteractOutside={() => setSaveError(false)}
+            onEscapeKeyDown={() => setSaveError(false)}
+          >
+            <DialogHeader>
+              <DialogTitle className="mb-4">
+                <AlertCircle className="mr-2 inline-block" />
+                Your media did not save
+              </DialogTitle>
+              <DialogDescription>
+                <div className="mb-6">
+                  You will need to open this extension from your Cosmic
+                  dashboard to save media. Go to your Project / Bucket /
+                  Extensions.
+                </div>
+                <div className="text-right">
+                  <a href="https://app.cosmicjs.com/login">
+                    <Button>Log in to Cosmic</Button>
+                  </a>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Search free high-resolution videos"

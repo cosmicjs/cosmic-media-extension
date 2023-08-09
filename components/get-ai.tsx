@@ -2,11 +2,19 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Loader2 } from "lucide-react"
+import { AlertCircle, Loader2 } from "lucide-react"
 import slugify from "slugify"
 
 import { OPEN_AI_KEY, cosmic } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
@@ -34,11 +42,7 @@ export default function GetPhotos(bucket: Bucket) {
     adding_media: [],
     added_media: [],
   })
-  const cosmicBucket = cosmic(
-    bucket.bucket_slug,
-    bucket.read_key,
-    bucket.write_key
-  )
+  const [saveError, setSaveError] = useState(false)
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
     const adding_media = [...(photoData.adding_media || []), photo.id]
@@ -56,6 +60,14 @@ export default function GetPhotos(bucket: Bucket) {
       const adding_media = photoData.adding_media?.filter(
         (id: string) => id !== photo.id
       )
+      if (!res?.ok) {
+        setPhotosData({
+          adding_media: [],
+          added_media: [],
+        })
+        setSaveError(true)
+        return
+      }
       const added_media = [...photoData.added_media, photo.id]
       setPhotosData({ ...photoData, adding_media, added_media })
       console.log(res)
@@ -88,9 +100,35 @@ export default function GetPhotos(bucket: Bucket) {
       console.log(e)
     }
   }
-
   return (
     <div className="w-full">
+      {saveError && (
+        <Dialog open onOpenChange={() => setSaveError(false)}>
+          <DialogContent
+            onInteractOutside={() => setSaveError(false)}
+            onEscapeKeyDown={() => setSaveError(false)}
+          >
+            <DialogHeader>
+              <DialogTitle className="mb-4">
+                <AlertCircle className="mr-2 inline-block" />
+                Your media did not save
+              </DialogTitle>
+              <DialogDescription>
+                <div className="mb-6">
+                  You will need to open this extension from your Cosmic
+                  dashboard to save media. Go to your Project / Bucket /
+                  Extensions.
+                </div>
+                <div className="text-right">
+                  <a href="https://app.cosmicjs.com/login">
+                    <Button>Log in to Cosmic</Button>
+                  </a>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Type a pompt like: A cup of coffee, then press enter."

@@ -2,9 +2,18 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { AlertCircle } from "lucide-react"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
@@ -24,6 +33,7 @@ export default function GetVectors(bucket: Bucket) {
     adding_media: [],
     added_media: [],
   })
+  const [saveError, setSaveError] = useState(false)
 
   const cosmicBucket = cosmic(
     bucket.bucket_slug,
@@ -80,11 +90,43 @@ export default function GetVectors(bucket: Bucket) {
       setPhotosData({ ...photoData, adding_media, added_media })
     } catch (err) {
       console.log(err)
+      setSaveError(true)
+      setPhotosData({
+        adding_media: [],
+        added_media: [],
+      })
     }
   }
 
   return (
     <div className="w-full">
+      {saveError && (
+        <Dialog open onOpenChange={() => setSaveError(false)}>
+          <DialogContent
+            onInteractOutside={() => setSaveError(false)}
+            onEscapeKeyDown={() => setSaveError(false)}
+          >
+            <DialogHeader>
+              <DialogTitle className="mb-4">
+                <AlertCircle className="mr-2 inline-block" />
+                Your media did not save
+              </DialogTitle>
+              <DialogDescription>
+                <div className="mb-6">
+                  You will need to open this extension from your Cosmic
+                  dashboard to save media. Go to your Project / Bucket /
+                  Extensions.
+                </div>
+                <div className="text-right">
+                  <a href="https://app.cosmicjs.com/login">
+                    <Button>Log in to Cosmic</Button>
+                  </a>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Search free high-resolution vectors"

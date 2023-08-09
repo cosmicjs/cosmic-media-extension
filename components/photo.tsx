@@ -29,7 +29,7 @@ function PhotoOutput({ src, url, provider, children }: PhotoProps) {
         rel="noreferrer noopener"
         className={cn(
           buttonVariants({ variant: "secondary" }),
-          "group absolute right-2 top-2 z-20 hidden rounded-full p-3 group-hover:block"
+          "absolute right-2 top-2 z-20 hidden rounded-full p-3 group-hover:block"
         )}
         title={`View in ${provider}`}
       >

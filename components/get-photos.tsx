@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { AlertCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import {
@@ -19,6 +20,14 @@ import {
   PixabayPhoto,
   UnsplashPhoto,
 } from "@/lib/types"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
@@ -34,7 +43,7 @@ export default function GetPhotos(bucket: Bucket) {
   const unsplash_key = searchParams.get("unsplash_key") || UNSPLASH_KEY
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
   const pixabay_key = searchParams.get("pixabay_key") || PIXABAY_KEY
-
+  const [saveError, setSaveError] = useState(false)
   const [photos, setPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
@@ -98,6 +107,8 @@ export default function GetPhotos(bucket: Bucket) {
       setPhotosData({ ...photoData, adding_media, added_media })
     } catch (err) {
       console.log(err)
+      setSaveError(true)
+      setPhotosData({ adding_media: [], added_media: [] })
     }
   }
 
@@ -142,6 +153,7 @@ export default function GetPhotos(bucket: Bucket) {
       const added_media = [...photoData.added_media, photo.id]
       setPhotosData({ ...photoData, adding_media, added_media })
     } catch (err) {
+      setSaveError(true)
       console.log(err)
     }
   }
@@ -194,12 +206,40 @@ export default function GetPhotos(bucket: Bucket) {
       const added_media = [...photoData.added_media, photo.id]
       setPhotosData({ ...photoData, adding_media, added_media })
     } catch (err) {
+      setSaveError(true)
       console.log(err)
     }
   }
 
   return (
     <div className="w-full">
+      {saveError && (
+        <Dialog open onOpenChange={() => setSaveError(false)}>
+          <DialogContent
+            onInteractOutside={() => setSaveError(false)}
+            onEscapeKeyDown={() => setSaveError(false)}
+          >
+            <DialogHeader>
+              <DialogTitle className="mb-4">
+                <AlertCircle className="mr-2 inline-block" />
+                Your media did not save
+              </DialogTitle>
+              <DialogDescription>
+                <div className="mb-6">
+                  You will need to open this extension from your Cosmic
+                  dashboard to save media. Go to your Project / Bucket /
+                  Extensions.
+                </div>
+                <div className="text-right">
+                  <a href="https://app.cosmicjs.com/login">
+                    <Button>Log in to Cosmic</Button>
+                  </a>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Search free high-resolution photos"
