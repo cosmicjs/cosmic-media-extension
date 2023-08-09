@@ -108,7 +108,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
                   Extensions.
                 </div>
                 <div className="text-right">
-                  <a href="https://app.cosmicjs.com/login">
+                  <a href="https://app.cosmicjs.com/login" target="_blank">
                     <Button>Log in to Cosmic</Button>
                   </a>
                 </div>
