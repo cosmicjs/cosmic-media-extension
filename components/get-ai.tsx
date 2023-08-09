@@ -120,7 +120,11 @@ export default function GetPhotos(bucket: Bucket) {
                   Extensions.
                 </div>
                 <div className="text-right">
-                  <a href="https://app.cosmicjs.com/login" target="_blank">
+                  <a
+                    href="https://app.cosmicjs.com/login"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <Button>Log in to Cosmic</Button>
                   </a>
                 </div>
