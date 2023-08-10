@@ -3,6 +3,7 @@
 import { Check, Loader2, Plus } from "lucide-react"
 
 import {
+  GiphyImage,
   Photo,
   PhotoData,
   PixabayPhoto,
@@ -18,7 +19,7 @@ export default function GetButton({
   handleAddVideoToMedia,
 }: {
   data: PhotoData
-  media: Photo | UnsplashPhoto | PixabayPhoto | Video
+  media: Photo | UnsplashPhoto | PixabayPhoto | Video | GiphyImage
   handleAddPhotoToMedia?: (
     photo: Photo | UnsplashPhoto | PixabayPhoto | UnsplashPhoto
   ) => void

@@ -11,9 +11,10 @@ export default function EmptyState() {
       </div>
       <div className="flex justify-center gap-x-10">
         <Icons.unsplash className="h-10" />
+        <Icons.giphy className="h-10" />
+        <Icons.openai className="h-10" />
         <Icons.pexels className="h-10" />
         <Icons.pixabay className="h-10" />
-        <Icons.openai className="h-10" />
       </div>
     </div>
   )
