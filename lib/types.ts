@@ -52,6 +52,18 @@ export type PixabayPhoto = {
   url: string
 }
 
+export type GiphyImage = {
+  id: string
+  images: {
+    downsized_medium: {
+      url: string
+    }
+  }
+  url: string
+  slug: string
+  name: string
+}
+
 export type Video = {
   [key: string]: any
   id: string
