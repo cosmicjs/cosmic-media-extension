@@ -25,6 +25,20 @@ export default function Content(bucket: Bucket) {
             <Camera className="mr-3" /> Photos
           </TabsTrigger>
           <TabsTrigger
+            title="Gifs"
+            value="gifs"
+            className="h-full rounded-lg px-4"
+          >
+            <Laugh className="mr-3" /> Gifs
+          </TabsTrigger>
+          <TabsTrigger
+            title="Create AI-generated images"
+            value="ai"
+            className="h-full rounded-lg px-4"
+          >
+            <Wand2 className="mr-3" /> AI images
+          </TabsTrigger>
+          <TabsTrigger
             title="Search videos"
             value="videos"
             className="h-full rounded-lg px-4"
@@ -45,20 +59,6 @@ export default function Content(bucket: Bucket) {
           >
             <PenTool className="mr-3" />
             Vectors
-          </TabsTrigger>
-          <TabsTrigger
-            title="Gifs"
-            value="gifs"
-            className="h-full rounded-lg px-4"
-          >
-            <Laugh className="mr-3" /> Gifs
-          </TabsTrigger>
-          <TabsTrigger
-            title="Create AI-generated images"
-            value="ai"
-            className="h-full rounded-lg px-4"
-          >
-            <Wand2 className="mr-3" /> AI images
           </TabsTrigger>
         </TabsList>
         <TabsContent value="photos" className="w-full">
