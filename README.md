@@ -8,12 +8,13 @@ You can add this to your Cosmic dashboard by logging in and going to Your Projec
 
 ## Service keys
 
-It will default to using the Cosmic API keys for Unsplash, Pexels, Pixaby, and OpenAI. Since other users using these shared keys may cause API throttling / service issues, you can update these to your own keys by going to Extension > Settings and updating the following query params to your own keys:
+The deployed extension uses shared keys for Unsplash, Giphy, Pexels, Pixaby, and OpenAI. Since other users using these shared keys may cause API throttling / service issues, you can update these to your own keys by going to Extension > Settings, find the Query Parameters section and update the following query params to your own keys:
 
 1. `unsplash_key` Register for a key [here](https://unsplash.com/developers).
 2. `pexels_key` Register for a key [here](https://www.pexels.com/api).
 3. `pixabay_key` Register for a key [here](https://pixabay.com/service/about/api)
 4. `openai_key` Register for a key [here](https://platform.openai.com)
+5. `giphy_key` Register for a key [here](https://developers.giphy.com)
 
 ## Run locally
 
