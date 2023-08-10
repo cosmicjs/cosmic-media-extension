@@ -25,6 +25,13 @@ export default function Content(bucket: Bucket) {
             <Camera className="mr-3" /> Photos
           </TabsTrigger>
           <TabsTrigger
+            title="Search videos"
+            value="videos"
+            className="h-full rounded-lg px-4"
+          >
+            <Video className="mr-3" /> Video
+          </TabsTrigger>
+          <TabsTrigger
             title="Gifs"
             value="gifs"
             className="h-full rounded-lg px-4"
@@ -37,13 +44,6 @@ export default function Content(bucket: Bucket) {
             className="h-full rounded-lg px-4"
           >
             <Wand2 className="mr-3" /> AI images
-          </TabsTrigger>
-          <TabsTrigger
-            title="Search videos"
-            value="videos"
-            className="h-full rounded-lg px-4"
-          >
-            <Video className="mr-3" /> Video
           </TabsTrigger>
           <TabsTrigger
             title="Search illustrations"
