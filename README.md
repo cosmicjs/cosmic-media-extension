@@ -20,7 +20,7 @@ The deployed extension uses shared keys for Unsplash, Giphy, Pexels, Pixaby, and
 
 ```bash
 git clone https://github.com/cosmicjs/cosmic-media-extension
-cd cosmic-next-template
+cd cosmic-media-template
 yarn
 yarn dev
 ```
