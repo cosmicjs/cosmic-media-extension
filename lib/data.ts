@@ -16,7 +16,7 @@ export const GIPHY_KEY = process.env.NEXT_PUBLIC_GIPHY_KEY
 
 export const OPEN_AI_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY
 
-export const COSMIC_ENV  = (process.env.NEXT_PUBLIC_COSMIC_ENV || 'staging') as TCosmicEnv
+export const COSMIC_ENV  = (process.env.NEXT_PUBLIC_COSMIC_ENV || 'production') as TCosmicEnv
 
 export const cosmic = (bucketSlug: string, readKey: string, writeKey: string) =>
   createBucketClient({
