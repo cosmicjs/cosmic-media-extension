@@ -87,7 +87,6 @@ export default function GetPexelsVideos(bucket: Bucket) {
       })
     }
   }
-
   return (
     <div>
       {saveError && (
@@ -136,8 +135,8 @@ export default function GetPexelsVideos(bucket: Bucket) {
               return (
                 <div key={video.id} className="group relative w-full">
                   <VideoOutput
-                    src={video.image!}
-                    videoSrc={video.video_files[1].link}
+                    src={video.video_pictures![0].picture}
+                    videoSrc={video.video_files![0]?.link}
                     url={video.url}
                     provider="Pexels"
                   >

@@ -37,7 +37,7 @@ export type UnsplashPhoto = {
   [key: string]: any
   id: string
   name: string
-  urls?: { full: string; regular: string }
+  urls?: { full: string; regular: string; small: string }
   url: string
 }
 
@@ -55,6 +55,9 @@ export type PixabayPhoto = {
 export type GiphyImage = {
   id: string
   images: {
+    preview_webp: {
+      url: string
+    }
     downsized_medium: {
       url: string
     }

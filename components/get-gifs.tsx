@@ -91,7 +91,6 @@ export default function GetVectors(bucket: Bucket) {
       })
     }
   }
-
   return (
     <div className="w-full">
       {saveError && (
@@ -144,7 +143,7 @@ export default function GetVectors(bucket: Bucket) {
           {giphyImages?.map((image: GiphyImage) => (
             <div key={image.id} className="group relative w-full">
               <GifOutput
-                src={image?.images?.downsized_medium?.url}
+                src={image?.images?.preview_webp?.url}
                 url={image?.url}
                 provider="Pixabay"
               >

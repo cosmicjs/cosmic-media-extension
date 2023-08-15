@@ -96,7 +96,6 @@ export default function GetIllustrations(bucket: Bucket) {
       setPhotosData({ adding_media: [], added_media: [] })
     }
   }
-
   return (
     <div className="w-full">
       {saveError && (
@@ -149,7 +148,7 @@ export default function GetIllustrations(bucket: Bucket) {
           {pixabayIllustrations?.map((photo: PixabayPhoto) => (
             <div key={photo.id} className="group relative w-full">
               <VectorOutput
-                src={photo.fullHDURL}
+                src={photo.webformatURL}
                 url={photo.pageURL}
                 provider="Pixabay"
               >

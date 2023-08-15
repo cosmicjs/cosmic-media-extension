@@ -150,7 +150,7 @@ export default function GetVectors(bucket: Bucket) {
           {pixabayVectors?.map((photo: PixabayPhoto) => (
             <div key={photo.id} className="group relative w-full">
               <VectorOutput
-                src={photo.fullHDURL}
+                src={photo.webformatURL}
                 url={photo.pageURL}
                 provider="Pixabay"
               >
