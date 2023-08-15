@@ -9,7 +9,7 @@ export default function EmptyState() {
         Use the search bar above to find royalty-free media from popular stock
         media services.
       </div>
-      <div className="flex justify-center gap-x-10">
+      <div className="flex justify-center gap-x-10 max-w-3xl m-auto">
         <Icons.unsplash className="h-10" />
         <Icons.giphy className="h-10" />
         <Icons.openai className="h-10" />
