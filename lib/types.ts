@@ -55,6 +55,9 @@ export type PixabayPhoto = {
 export type GiphyImage = {
   id: string
   images: {
+    preview_webp: {
+      url: string
+    }
     downsized_medium: {
       url: string
     }
