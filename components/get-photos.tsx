@@ -210,7 +210,6 @@ export default function GetPhotos(bucket: Bucket) {
       console.log(err)
     }
   }
-
   return (
     <div className="w-full">
       {saveError && (
@@ -267,7 +266,7 @@ export default function GetPhotos(bucket: Bucket) {
           {unsplashPhotos?.map((photo: UnsplashPhoto) => (
             <div key={`unsplash-${photo.id}`} className="group relative w-full">
               <PhotoOutput
-                src={photo.urls!.regular}
+                src={photo.urls!.small}
                 url={photo.links.html}
                 provider="Unsplash"
               >

@@ -37,7 +37,7 @@ export type UnsplashPhoto = {
   [key: string]: any
   id: string
   name: string
-  urls?: { full: string; regular: string }
+  urls?: { full: string; regular: string; small: string }
   url: string
 }
 
