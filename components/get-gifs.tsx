@@ -22,7 +22,6 @@ import EmptyState from "./empty-state"
 import GifOutput from "./gif"
 import Header from "./header"
 import Input from "./input"
-import NoResultState from "./no-result-state"
 
 export default function GetVectors(bucket: Bucket) {
   const searchParams = useSearchParams()
@@ -137,7 +136,6 @@ export default function GetVectors(bucket: Bucket) {
           }}
         />
       </Header>
-      {!giphyImages && <NoResultState />}
       {giphyImages?.length !== 0 && (
         <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {giphyImages?.map((image: GiphyImage) => (
