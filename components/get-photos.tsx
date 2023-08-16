@@ -35,7 +35,6 @@ import Overlay from "@/components/overlay"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./input"
-import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
 export default function GetPhotos(bucket: Bucket) {
@@ -44,7 +43,7 @@ export default function GetPhotos(bucket: Bucket) {
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
   const pixabay_key = searchParams.get("pixabay_key") || PIXABAY_KEY
   const [saveError, setSaveError] = useState(false)
-  const [photos, setPhotos] = useState<Photo[]>([])
+  const [pexelsPhotos, setPexelsPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
@@ -115,7 +114,7 @@ export default function GetPhotos(bucket: Bucket) {
   async function searchPexelsPhotos(q: string) {
     const query = q
     if (query === "") {
-      setPhotos([])
+      setPexelsPhotos([])
       return
     }
     try {
@@ -125,9 +124,9 @@ export default function GetPhotos(bucket: Bucket) {
         .then((res: any) => {
           const photos = res.photos
           if (!photos) {
-            setPhotos([])
+            setPexelsPhotos([])
           } else {
-            setPhotos(photos)
+            setPexelsPhotos(photos)
           }
         })
     } catch (e: any) {
@@ -161,7 +160,7 @@ export default function GetPhotos(bucket: Bucket) {
   async function searchPixabayPhotos(q: string) {
     const query = q
     if (query === "") {
-      setPhotos([])
+      setPixabayPhotos([])
       return
     }
     try {
@@ -210,6 +209,8 @@ export default function GetPhotos(bucket: Bucket) {
       console.log(err)
     }
   }
+  const allPhotos = [...pexelsPhotos, ...pixabayPhotos, ...unsplashPhotos]
+    .length
   return (
     <div className="w-full">
       {saveError && (
@@ -260,8 +261,7 @@ export default function GetPhotos(bucket: Bucket) {
           }}
         />
       </Header>
-      {!photos && <NoResultState />}
-      {photos.length !== 0 && (
+      {allPhotos !== 0 && (
         <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {unsplashPhotos?.map((photo: UnsplashPhoto) => (
             <div key={`unsplash-${photo.id}`} className="group relative w-full">
@@ -282,10 +282,10 @@ export default function GetPhotos(bucket: Bucket) {
               <Overlay />
             </div>
           ))}
-          {photos?.map((photo: Photo) => (
+          {pexelsPhotos?.map((photo: Photo) => (
             <div key={`pexels-${photo.id}`} className="group relative w-full">
               <PhotoOutput
-                src={photo.src!.medium}
+                src={photo.src!.large}
                 url={photo.url}
                 provider="Pexels"
               >
@@ -304,7 +304,7 @@ export default function GetPhotos(bucket: Bucket) {
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
             <div key={`pixabay-${photo.id}`} className="group relative w-full">
               <PhotoOutput
-                src={photo.fullHDURL}
+                src={photo.webformatURL}
                 url={photo.pageURL}
                 provider="Pixabay"
               >
@@ -322,7 +322,7 @@ export default function GetPhotos(bucket: Bucket) {
           ))}
         </div>
       )}
-      {photos?.length === 0 && <EmptyState />}
+      {allPhotos === 0 && <EmptyState />}
     </div>
   )
 }
