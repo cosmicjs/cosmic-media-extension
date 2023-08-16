@@ -24,6 +24,12 @@ The default extension uses shared keys for Unsplash, Giphy, Pexels, Pixaby, and 
 5. `giphy_key` Register for a key [here](https://developers.giphy.com)
 <img width="1122" alt="query-params" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/61f79248-cd72-4f9f-a7f3-eb4e24d28dd7">
 
+### Providing keys to the application
+Keys can be provided to the app in one of two ways:
+
+1. In the URL via query parameters.
+2. Using the `.env` file. See the `.env.example` file for env var format.
+
 ## Run locally
 
 ```bash
