@@ -9,7 +9,7 @@ Search from millions of royalty-free images and video to use in your Cosmic Buck
 
 To install this extension:
 
-1. [Log in to Cosmic](https://app.cosmicjs.com/login)
+1. [Log in to Cosmic](https://app.cosmicjs.com/login).
 2. Go to _Project > Bucket > Extensions_.
 3. Find this extension and clicking "Install".
 
