@@ -5,11 +5,11 @@ import { Icons } from "@/components/icons"
 export default function EmptyState() {
   return (
     <div>
-      <div className="mb-8 mt-8 text-center font-sans text-lg text-neutral-800 dark:text-neutral-200">
+      <div className="my-8 text-center font-sans text-lg text-neutral-800 dark:text-neutral-200">
         Use the search bar above to find royalty-free media from popular stock
         media services.
       </div>
-      <div className="flex justify-center gap-x-10 max-w-3xl m-auto">
+      <div className="m-auto flex max-w-3xl justify-center gap-x-10">
         <Icons.unsplash className="h-10" />
         <Icons.giphy className="h-10" />
         <Icons.openai className="h-10" />
