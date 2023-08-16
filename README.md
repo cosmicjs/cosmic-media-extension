@@ -1,6 +1,6 @@
 # Cosmic Media Extension
 
-Search from millions of royalty-free images and video to use in your Cosmic Bucket. Includes images from Unsplash, Pexels, and Pixabay, gifs from Giphy, video from Pexels, as well as OpenAI image generation from prompt.
+Search from millions of royalty-free images and video to use in your Cosmic project. Includes images from Unsplash, Pexels, and Pixabay, gifs from Giphy, video from Pexels, as well as OpenAI image generation from prompt.
 
 <img width="844" alt="cosmic-media" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/12072077-297b-498a-9a7f-879db8fde72a">
 
@@ -10,7 +10,7 @@ Search from millions of royalty-free images and video to use in your Cosmic Buck
 To install this extension:
 
 1. [Log in to Cosmic](https://app.cosmicjs.com/login).
-2. Go to _Project > Bucket > Extensions_.
+2. Go to _Project > Extensions_.
 3. Find this extension and clicking "Install".
 
 ## Service keys
