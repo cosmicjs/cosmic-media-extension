@@ -22,7 +22,6 @@ import Overlay from "@/components/overlay"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./input"
-import NoResultState from "./no-result-state"
 import PhotoOutput from "./photo"
 
 const { Configuration, OpenAIApi } = require("openai")
@@ -146,7 +145,6 @@ export default function GetPhotos(bucket: Bucket) {
           }}
         />
       </Header>
-      {!photos && <NoResultState />}
       {generating && (
         <div className="flex h-10 justify-center p-6">
           <div className="mr-2">🤖&nbsp;&nbsp;Generating images</div>

@@ -21,7 +21,6 @@ import { Icons } from "@/components/icons"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./input"
-import NoResultState from "./no-result-state"
 import VideoOutput from "./video"
 
 export default function GetPexelsVideos(bucket: Bucket) {
@@ -154,7 +153,6 @@ export default function GetPexelsVideos(bucket: Bucket) {
         )}
 
         {videos.length === 0 && <EmptyState />}
-        {!videos && <NoResultState />}
       </div>
     </div>
   )
