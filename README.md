@@ -2,6 +2,9 @@
 
 Search from millions of royalty-free images and video to use in your Cosmic Bucket. Includes images from Unsplash, Pexels, and Pixabay, gifs from Giphy, video from Pexels, as well as OpenAI image generation from prompt.
 
+<img width="844" alt="cosmic-media" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/12072077-297b-498a-9a7f-879db8fde72a">
+
+
 ## How to install
 
 To install this extension:
