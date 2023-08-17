@@ -69,7 +69,6 @@ export default function GetPhotos(bucket: Bucket) {
       }
       const added_media = [...photoData.added_media, photo.id]
       setPhotosData({ ...photoData, adding_media, added_media })
-      console.log(res)
     } catch (e) {
       console.log(e)
     }
