@@ -14,7 +14,7 @@ export function SaveErrorMessage(): JSX.Element {
       <DialogDescription>
         <div className="mb-6">
           You will need to open this extension from your Cosmic dashboard to
-          save media. Log in and go to your Project / Bucket / Extensions.
+          save media. Log in and go to Project / Extensions.
         </div>
         <div className="text-right">
           <a

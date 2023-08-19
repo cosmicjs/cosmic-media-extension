@@ -8,6 +8,7 @@ import slugify from "slugify"
 import { OPEN_AI_KEY } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
@@ -36,6 +37,7 @@ export default function GetPhotos(bucket: Bucket) {
     added_media: [],
   })
   const [saveError, setSaveError] = useState(false)
+  const [serviceFetchError, setServiceFetchError] = useState<string>()
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
     const adding_media = [...(photoData.adding_media || []), photo.id]
@@ -69,6 +71,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function searchAIPhotos(q: string) {
+    setServiceFetchError("")
     const query = q
     setQuery(query)
     if (query === "") {
@@ -89,6 +92,8 @@ export default function GetPhotos(bucket: Bucket) {
       setPhotos(photos)
       setGenerating(false)
     } catch (e: any) {
+      setGenerating(false)
+      setServiceFetchError("OpenAI")
       console.log(e)
     }
   }
@@ -117,6 +122,11 @@ export default function GetPhotos(bucket: Bucket) {
           }}
         />
       </Header>
+      {serviceFetchError && (
+        <div className="m-auto max-w-3xl text-left">
+          <FetchErrorMessage service={serviceFetchError} />
+        </div>
+      )}
       {generating && (
         <div className="flex h-10 justify-center p-6">
           <div className="mr-2">🤖&nbsp;&nbsp;Generating images</div>

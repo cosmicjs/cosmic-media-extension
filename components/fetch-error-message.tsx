@@ -20,8 +20,7 @@ export function FetchErrorMessage({
         <div className="mb-6">
           Fetching media from {service} failed. This may be due to a rate limit
           issue with the default API key. Go to the Cosmic Media read me to
-          learn how to add your own service key to the URL or via environment
-          variable.
+          learn how to add your own service keys.
         </div>
         <div className="text-right">
           <a
