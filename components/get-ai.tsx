@@ -40,6 +40,7 @@ export default function GetPhotos(bucket: Bucket) {
   const [serviceFetchError, setServiceFetchError] = useState<string>()
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
     const slug = slugify(query)

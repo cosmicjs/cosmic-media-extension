@@ -60,6 +60,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
   }
 
   async function handleAddVideoToMedia(video: Video) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(videoData.adding_media || []), video.id]
     setVideosData({ ...videoData, adding_media })
 

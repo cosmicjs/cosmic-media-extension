@@ -84,6 +84,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function handleAddUnsplashPhotoToMedia(photo: UnsplashPhoto) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
 
@@ -132,6 +133,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function handleAddPexelsPhotoToMedia(photo: Photo) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
 
@@ -186,6 +188,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function handleAddPixabayPhotoToMedia(photo: PixabayPhoto) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
 

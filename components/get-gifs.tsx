@@ -63,6 +63,7 @@ export default function GetVectors(bucket: Bucket) {
   }
 
   async function handleAddGifToMedia(image: GiphyImage) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), image.id]
     setPhotosData({ ...photoData, adding_media })
 

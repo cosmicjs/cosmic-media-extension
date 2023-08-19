@@ -71,6 +71,7 @@ export default function GetIllustrations(bucket: Bucket) {
   }
 
   async function handleAddPixabayIllustrationToMedia(photo: PixabayPhoto) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
 
