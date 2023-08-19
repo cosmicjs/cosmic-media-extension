@@ -7,6 +7,7 @@ import { createClient } from "pexels"
 import { PEXELS_KEY, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import { SaveErrorMessage } from "@/components/save-error-message"
@@ -20,6 +21,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
   const searchParams = useSearchParams()
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
   const [saveError, setSaveError] = useState(false)
+  const [serviceFetchError, setServiceFetchError] = useState<string>()
   const [videos, setVideos] = useState<Video[]>([])
   const [videoData, setVideosData] = useState<VideoData>({
     adding_media: [],
@@ -33,13 +35,14 @@ export default function GetPexelsVideos(bucket: Bucket) {
   )
 
   async function searchVideos(q: string) {
+    setServiceFetchError("")
     const query = q
     if (query === "") {
       setVideos([])
       return
     }
     try {
-      const pexelsClient = createClient(pexels_key || "")
+      const pexelsClient = createClient()
       await pexelsClient.videos
         .search({ query, per_page: 20 })
         .then((res: any) => {
@@ -51,6 +54,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setServiceFetchError("Pexels")
       console.log(e)
     }
   }
@@ -99,6 +103,11 @@ export default function GetPexelsVideos(bucket: Bucket) {
           }
         />
       </Header>
+      {serviceFetchError && (
+        <div className="m-auto max-w-3xl text-left">
+          <FetchErrorMessage service={serviceFetchError} />
+        </div>
+      )}
       <div>
         {videos?.length !== 0 && (
           <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
