@@ -22,7 +22,7 @@ The extension uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and Ope
 5. `giphy_key` Register for a key [here](https://developers.giphy.com)
 
 ### Using service keys
-Keys can be provided to the app in one of two ways:
+Keys can be provided to the app in one of the following ways:
 
 1. In the URL via query parameters. For example `?unsplash_key=YOUR_UNSPLASH_KEY&pexels_key=YOUR_PEXELS_KEY`
 2. Using the `.env` file. See the `.env.example` file for env var format.
