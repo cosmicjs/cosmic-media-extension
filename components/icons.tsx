@@ -163,7 +163,7 @@ export const Icons = {
   ),
   giphy: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164 35" {...props}>
-      <g fill-rule="evenodd" clip-rule="evenodd">
+      <g fillRule="evenodd" clip-rule="evenodd">
         <path fill="#00ff99" d="M0 3h4v29H0z"></path>
         <path fill="#9933ff" d="M24 11h4v21h-4z"></path>
         <path fill="#00ccff" d="M0 31h28v4H0z"></path>
