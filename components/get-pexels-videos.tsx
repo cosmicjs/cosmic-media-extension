@@ -2,21 +2,14 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { AlertCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import { PEXELS_KEY, cosmic } from "@/lib/data"
 import { Bucket, Video, VideoData } from "@/lib/types"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
+import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -94,28 +87,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
             onInteractOutside={() => setSaveError(false)}
             onEscapeKeyDown={() => setSaveError(false)}
           >
-            <DialogHeader>
-              <DialogTitle className="mb-4">
-                <AlertCircle className="mr-2 inline-block" />
-                Your media did not save
-              </DialogTitle>
-              <DialogDescription>
-                <div className="mb-6">
-                  You will need to open this extension from your Cosmic
-                  dashboard to save media. Go to your Project / Bucket /
-                  Extensions.
-                </div>
-                <div className="text-right">
-                  <a
-                    href="https://app.cosmicjs.com/login"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <Button>Log in to Cosmic</Button>
-                  </a>
-                </div>
-              </DialogDescription>
-            </DialogHeader>
+            <SaveErrorMessage />
           </DialogContent>
         </Dialog>
       )}
