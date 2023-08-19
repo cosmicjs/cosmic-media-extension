@@ -42,7 +42,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
       return
     }
     try {
-      const pexelsClient = createClient()
+      const pexelsClient = createClient(pexels_key || "")
       await pexelsClient.videos
         .search({ query, per_page: 20 })
         .then((res: any) => {
