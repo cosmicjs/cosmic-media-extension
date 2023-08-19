@@ -21,7 +21,7 @@ The extension uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and Ope
 4. `openai_key` Register for a key [here](https://platform.openai.com)
 5. `giphy_key` Register for a key [here](https://developers.giphy.com)
 
-### Providing keys to the application
+### Using service keys
 Keys can be provided to the app in one of two ways:
 
 1. In the URL via query parameters. For example `?unsplash_key=YOUR_UNSPLASH_KEY&pexels_key=YOUR_PEXELS_KEY`
