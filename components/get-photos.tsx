@@ -19,7 +19,7 @@ import {
   PixabayPhoto,
   UnsplashPhoto,
 } from "@/lib/types"
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
