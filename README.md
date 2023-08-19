@@ -9,7 +9,7 @@ Search from millions of royalty-free images and video to use in your [Cosmic](ht
 
 1. [Log in to Cosmic](https://app.cosmicjs.com/login).
 2. Go to _Project > Extensions_.
-3. Find this extension and clicking "Install".
+3. Find this extension and click "Install".
 
 ## Service keys
 
