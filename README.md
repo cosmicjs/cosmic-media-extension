@@ -24,7 +24,7 @@ The extension uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and Ope
 ### Using service keys
 Keys can be provided to the app in one of the following ways:
 
-1. In the URL via query parameters. For example `?unsplash_key=YOUR_UNSPLASH_KEY&pexels_key=YOUR_PEXELS_KEY`
+1. As query params in the URL. For example: `?unsplash_key=YOUR_UNSPLASH_KEY&pexels_key=YOUR_PEXELS_KEY`
 2. Using the `.env` file. See the `.env.example` file for env var format.
 3. In the Cosmic Media extension settings page by going to _Extensions > Cosmic Media > Settings_, find the Query Parameters section and update the following query params to your own keys:
 
