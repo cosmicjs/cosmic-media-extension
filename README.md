@@ -1,6 +1,9 @@
 # Cosmic Media Extension
 
-Search from millions of royalty-free images and video to use in your [Cosmic](https://www.cosmicjs.com/) project. Includes images from Unsplash, Pexels, and Pixabay, gifs from Giphy, video from Pexels, as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
+Search from millions of high-quality, royalty-free stock photos, images, videos, and vectors from some of the most popular stock image services: Unsplash, Pexels, Giphy, and Pixaba as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
+
+### How to use it
+You can use Cosmic Media to search and download media manually, or you can install it in your [Cosmic](https://www.cosmicjs.com/) project as an extension to save media directly in your project.
 
 <img width="100%" alt="cosmic-media" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/ab1992c9-bbc0-4ef1-8977-87b07a74b742">
 
