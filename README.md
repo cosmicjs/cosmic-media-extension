@@ -29,7 +29,7 @@ Keys can be provided to the app in one of the following ways:
 
 1. As query params in the URL. For example: `?unsplash_key=YOUR_UNSPLASH_KEY&pexels_key=YOUR_PEXELS_KEY`
 2. Using the `.env` file. See the `.env.example` file for env var format.
-3. In the Cosmic Media extension settings page by going to _Extensions > Cosmic Media > Settings_, find the Query Parameters section and update the following query params to your own keys:
+3. If installed in Cosmic as an extension, go to Cosmic Media extension settings page by going to _Extensions > Cosmic Media > Settings_, find the Query Parameters section and update the following query params to your own keys:
 
 <img width="1122" alt="query-params" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/61f79248-cd72-4f9f-a7f3-eb4e24d28dd7">
 
