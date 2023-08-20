@@ -12,6 +12,9 @@ import GetPexelsVideos from "./get-pexels-videos"
 import GetPhotos from "./get-photos"
 import GetVectors from "./get-vectors"
 
+function handleTabClick() {
+  document.getElementById("search-input")?.focus()
+}
 export default function Content(bucket: Bucket) {
   return (
     <div className="relative flex w-full items-center justify-center">
@@ -21,6 +24,7 @@ export default function Content(bucket: Bucket) {
             title="Search photos"
             value="photos"
             className="h-full rounded-lg px-4"
+            onClick={handleTabClick}
           >
             <Camera className="mr-3" /> Photos
           </TabsTrigger>
@@ -28,6 +32,7 @@ export default function Content(bucket: Bucket) {
             title="Search videos"
             value="videos"
             className="h-full rounded-lg px-4"
+            onClick={handleTabClick}
           >
             <Video className="mr-3" /> Video
           </TabsTrigger>
@@ -35,6 +40,7 @@ export default function Content(bucket: Bucket) {
             title="Gifs"
             value="gifs"
             className="h-full rounded-lg px-4"
+            onClick={handleTabClick}
           >
             <Laugh className="mr-3" /> Gifs
           </TabsTrigger>
@@ -42,6 +48,7 @@ export default function Content(bucket: Bucket) {
             title="Create AI-generated images"
             value="ai"
             className="h-full rounded-lg px-4"
+            onClick={handleTabClick}
           >
             <Wand2 className="mr-3" /> AI images
           </TabsTrigger>
@@ -49,6 +56,7 @@ export default function Content(bucket: Bucket) {
             title="Search illustrations"
             value="illustrations"
             className="h-full rounded-lg px-4"
+            onClick={handleTabClick}
           >
             <Brush className="mr-3" /> Illustrations
           </TabsTrigger>
@@ -56,6 +64,7 @@ export default function Content(bucket: Bucket) {
             title="Search vectors"
             value="vectors"
             className="h-full rounded-lg px-4"
+            onClick={handleTabClick}
           >
             <PenTool className="mr-3" />
             Vectors
