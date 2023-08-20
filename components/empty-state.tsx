@@ -22,7 +22,7 @@ export default function EmptyState() {
         <Icons.pixabay className="h-10" />
       </div>
       {location !== "media-modal" && (
-        <div className="text-center">
+        <div className="text-center text-sm">
           <a
             href="https://www.cosmicjs.com/marketplace/extensions/cosmic-media"
             target="_blank"
