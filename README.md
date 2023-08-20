@@ -4,7 +4,7 @@ Search from millions of high-quality, royalty-free stock photos, videos, images,
 
 <img width="100%" alt="cosmic-media" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/ab1992c9-bbc0-4ef1-8977-87b07a74b742">
 
-### How to use it
+## How to use it
 You can use Cosmic Media to search and download media manually, or you can install it in your [Cosmic](https://www.cosmicjs.com/) project as an extension to save media directly in your project.
 
 
