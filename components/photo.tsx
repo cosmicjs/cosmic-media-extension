@@ -37,6 +37,7 @@ function PhotoOutput({ src, url, provider, children }: PhotoProps) {
           width={16}
           height={16}
           className="text-gray-700 dark:text-gray-400"
+          onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
         />
       </a>
       <div className="absolute bottom-2 right-2 z-20">{children}</div>

@@ -39,7 +39,7 @@ export default function GetButton({
     )
   if (data.added_media && data.added_media.indexOf(media.id) !== -1)
     return (
-      <div>
+      <div onClick={(e: React.SyntheticEvent) => e.stopPropagation()}>
         <Button
           variant="secondary"
           className="rounded-full p-3"
@@ -50,7 +50,10 @@ export default function GetButton({
       </div>
     )
   return (
-    <div className="hidden group-hover:block">
+    <div
+      className="hidden group-hover:block"
+      onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
+    >
       <Button
         className="rounded-full p-3"
         variant="secondary"
