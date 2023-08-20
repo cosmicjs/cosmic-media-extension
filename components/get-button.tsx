@@ -17,6 +17,7 @@ export default function GetButton({
   media,
   handleAddPhotoToMedia,
   handleAddVideoToMedia,
+  isZoom,
 }: {
   data: PhotoData
   media: Photo | UnsplashPhoto | PixabayPhoto | Video | GiphyImage
@@ -24,6 +25,7 @@ export default function GetButton({
     photo: Photo | UnsplashPhoto | PixabayPhoto | UnsplashPhoto
   ) => void
   handleAddVideoToMedia?: (video: Video) => void
+  isZoom?: boolean
 }) {
   if (data.adding_media && data.adding_media.indexOf(media.id) !== -1)
     return (
@@ -51,7 +53,7 @@ export default function GetButton({
     )
   return (
     <div
-      className="hidden group-hover:block"
+      className={isZoom ? "" : "hidden group-hover:block"}
       onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
     >
       <Button

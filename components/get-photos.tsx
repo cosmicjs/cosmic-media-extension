@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Loader2 } from "lucide-react"
+import { Download, Loader2 } from "lucide-react"
 import { createClient } from "pexels"
 
 import {
@@ -20,13 +20,13 @@ import {
   PixabayPhoto,
   UnsplashPhoto,
 } from "@/lib/types"
+import { downloadImage } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
@@ -254,7 +254,34 @@ export default function GetPhotos(bucket: Bucket) {
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
                 </div>
-                <div>{mediaModalData.description}</div>
+                <div className="relative">
+                  <div className="pr-20">{mediaModalData.description}</div>
+                  <div className="absolute -top-2 right-0 flex">
+                    <Button
+                      variant="secondary"
+                      className="mr-2 inline rounded-full p-3"
+                      title="Download"
+                      onClick={() =>
+                        downloadImage(
+                          mediaModalData.download_url,
+                          mediaModalData.name
+                        )
+                      }
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                    <div className="inline">
+                      <GetButton
+                        media={mediaModalData.photo}
+                        handleAddPhotoToMedia={() =>
+                          handleAddUnsplashPhotoToMedia(mediaModalData.photo)
+                        }
+                        isZoom
+                        data={photoData}
+                      />
+                    </div>
+                  </div>
+                </div>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
@@ -289,14 +316,17 @@ export default function GetPhotos(bucket: Bucket) {
             <div
               key={`unsplash-${photo.id}`}
               className="group relative w-full cursor-zoom-in"
-              onClick={() =>
+              onClick={() => {
                 setMediaModalData({
                   url: photo?.urls?.regular,
                   description: photo.description
                     ? photo.description
                     : photo.alt_description,
+                  photo,
+                  download_url: photo?.urls?.full,
+                  name: `${photo.id}-cosmic-media.jpg`,
                 })
-              }
+              }}
             >
               <PhotoOutput
                 src={photo.urls!.small}
@@ -323,6 +353,9 @@ export default function GetPhotos(bucket: Bucket) {
                 setMediaModalData({
                   url: photo.src!.large2x,
                   description: photo.alt,
+                  photo,
+                  download_url: photo?.src?.large2x,
+                  name: `${photo.id}-cosmic-media.jpg`,
                 })
               }}
             >
@@ -351,6 +384,9 @@ export default function GetPhotos(bucket: Bucket) {
                 setMediaModalData({
                   url: photo.largeImageURL,
                   description: photo.tags,
+                  photo,
+                  download_url: photo?.fullHDURL,
+                  name: `${photo.id}-cosmic-media.jpg`,
                 })
               }}
             >
