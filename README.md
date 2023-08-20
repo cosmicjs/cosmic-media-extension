@@ -38,7 +38,7 @@ Keys can be provided to the app in one of the following ways:
 
 ```bash
 git clone https://github.com/cosmicjs/cosmic-media-extension
-cd cosmic-media-template
+cd cosmic-media-extension
 yarn
 yarn dev
 ```
@@ -54,4 +54,4 @@ yarn dev
 
 ## License
 
-Licensed under the [MIT license](https://github.com/cosmicjs/media-extension/blob/main/LICENSE.md).
+Licensed under the [MIT license](https://github.com/cosmicjs/cosmic-media-extension/blob/main/LICENSE.md).
