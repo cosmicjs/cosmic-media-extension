@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { Loader2 } from "lucide-react"
 import { createClient } from "pexels"
 
 import {
@@ -241,13 +242,17 @@ export default function GetPhotos(bucket: Bucket) {
           >
             <DialogHeader>
               <DialogDescription className="mt-6">
-                <div className="mb-6">
+                <div className="mb-6 min-h-[100px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={mediaModalData.url}
                     alt={mediaModalData.description}
+                    loading="lazy"
                     className={`relative z-10 h-full max-h-[70vh] w-full rounded-2xl object-cover`}
                   />
+                  <div className="absolute top-1/2 z-0 grid w-full place-items-center text-center">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  </div>
                 </div>
                 <div>{mediaModalData.description}</div>
               </DialogDescription>
@@ -316,7 +321,7 @@ export default function GetPhotos(bucket: Bucket) {
               className="group relative w-full cursor-zoom-in"
               onClick={() => {
                 setMediaModalData({
-                  url: photo.src!.large,
+                  url: photo.src!.large2x,
                   description: photo.alt,
                 })
               }}
@@ -344,7 +349,7 @@ export default function GetPhotos(bucket: Bucket) {
               className="group relative w-full cursor-zoom-in"
               onClick={() => {
                 setMediaModalData({
-                  url: photo.webformatURL,
+                  url: photo.largeImageURL,
                   description: photo.tags,
                 })
               }}
