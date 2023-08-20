@@ -273,9 +273,14 @@ export default function GetPhotos(bucket: Bucket) {
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.photo}
-                        handleAddPhotoToMedia={() =>
-                          handleAddUnsplashPhotoToMedia(mediaModalData.photo)
-                        }
+                        handleAddPhotoToMedia={() => {
+                          if (mediaModalData.service === "unsplash")
+                            handleAddUnsplashPhotoToMedia(mediaModalData.photo)
+                          if (mediaModalData.service === "pexels")
+                            handleAddPexelsPhotoToMedia(mediaModalData.photo)
+                          if (mediaModalData.service === "pixabay")
+                            handleAddPixabayPhotoToMedia(mediaModalData.photo)
+                        }}
                         isZoom
                         data={photoData}
                       />
@@ -325,6 +330,7 @@ export default function GetPhotos(bucket: Bucket) {
                   photo,
                   download_url: photo?.urls?.full,
                   name: `${photo.id}-cosmic-media.jpg`,
+                  service: "unsplash",
                 })
               }}
             >
@@ -356,6 +362,7 @@ export default function GetPhotos(bucket: Bucket) {
                   photo,
                   download_url: photo?.src?.large2x,
                   name: `${photo.id}-cosmic-media.jpg`,
+                  service: "pexels",
                 })
               }}
             >
@@ -387,6 +394,7 @@ export default function GetPhotos(bucket: Bucket) {
                   photo,
                   download_url: photo?.fullHDURL,
                   name: `${photo.id}-cosmic-media.jpg`,
+                  service: "pixabay",
                 })
               }}
             >
