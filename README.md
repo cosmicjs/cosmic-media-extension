@@ -1,4 +1,4 @@
-# Cosmic Media Extension
+# Cosmic Media
 
 Search from millions of high-quality, royalty-free stock photos, videos, images, and vectors from some of the most popular stock image services: Unsplash, Pexels, Giphy, and Pixaba as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
 
