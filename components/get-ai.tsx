@@ -2,22 +2,17 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { AlertCircle, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import slugify from "slugify"
 
-import { OPEN_AI_KEY, cosmic } from "@/lib/data"
+import { OPEN_AI_KEY } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
+import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -42,8 +37,10 @@ export default function GetPhotos(bucket: Bucket) {
     added_media: [],
   })
   const [saveError, setSaveError] = useState(false)
+  const [serviceFetchError, setServiceFetchError] = useState<string>()
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
     const slug = slugify(query)
@@ -75,6 +72,7 @@ export default function GetPhotos(bucket: Bucket) {
   }
 
   async function searchAIPhotos(q: string) {
+    setServiceFetchError("")
     const query = q
     setQuery(query)
     if (query === "") {
@@ -95,6 +93,8 @@ export default function GetPhotos(bucket: Bucket) {
       setPhotos(photos)
       setGenerating(false)
     } catch (e: any) {
+      setGenerating(false)
+      setServiceFetchError("OpenAI")
       console.log(e)
     }
   }
@@ -106,28 +106,7 @@ export default function GetPhotos(bucket: Bucket) {
             onInteractOutside={() => setSaveError(false)}
             onEscapeKeyDown={() => setSaveError(false)}
           >
-            <DialogHeader>
-              <DialogTitle className="mb-4">
-                <AlertCircle className="mr-2 inline-block" />
-                Your media did not save
-              </DialogTitle>
-              <DialogDescription>
-                <div className="mb-6">
-                  You will need to open this extension from your Cosmic
-                  dashboard to save media. Go to your Project / Bucket /
-                  Extensions.
-                </div>
-                <div className="text-right">
-                  <a
-                    href="https://app.cosmicjs.com/login"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <Button>Log in to Cosmic</Button>
-                  </a>
-                </div>
-              </DialogDescription>
-            </DialogHeader>
+            <SaveErrorMessage />
           </DialogContent>
         </Dialog>
       )}
@@ -144,6 +123,11 @@ export default function GetPhotos(bucket: Bucket) {
           }}
         />
       </Header>
+      {serviceFetchError && (
+        <div className="m-auto max-w-3xl text-left">
+          <FetchErrorMessage service={serviceFetchError} />
+        </div>
+      )}
       {generating && (
         <div className="flex h-10 justify-center p-6">
           <div className="mr-2">🤖&nbsp;&nbsp;Generating images</div>

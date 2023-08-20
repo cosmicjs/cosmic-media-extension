@@ -1,22 +1,17 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { AlertCircle } from "lucide-react"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { debounce } from "@/lib/utils"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import Overlay from "@/components/overlay"
+import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
@@ -35,6 +30,7 @@ export default function GetIllustrations(bucket: Bucket) {
     added_media: [],
   })
   const [saveError, setSaveError] = useState(false)
+  const [serviceFetchError, setServiceFetchError] = useState<string>()
 
   const cosmicBucket = cosmic(
     bucket.bucket_slug,
@@ -43,6 +39,7 @@ export default function GetIllustrations(bucket: Bucket) {
   )
 
   async function searchPixabayIllustrations(q: string) {
+    debounce(() => setServiceFetchError(""))
     const query = q
     if (query === "") {
       setPixabayIllustrations([])
@@ -68,11 +65,13 @@ export default function GetIllustrations(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setServiceFetchError("Pixabay")
       console.log(e)
     }
   }
 
   async function handleAddPixabayIllustrationToMedia(photo: PixabayPhoto) {
+    if (!bucket.bucket_slug) return setSaveError(true)
     const adding_media = [...(photoData.adding_media || []), photo.id]
     setPhotosData({ ...photoData, adding_media })
 
@@ -103,28 +102,7 @@ export default function GetIllustrations(bucket: Bucket) {
             onInteractOutside={() => setSaveError(false)}
             onEscapeKeyDown={() => setSaveError(false)}
           >
-            <DialogHeader>
-              <DialogTitle className="mb-4">
-                <AlertCircle className="mr-2 inline-block" />
-                Your media did not save
-              </DialogTitle>
-              <DialogDescription>
-                <div className="mb-6">
-                  You will need to open this extension from your Cosmic
-                  dashboard to save media. Go to your Project / Bucket /
-                  Extensions.
-                </div>
-                <div className="text-right">
-                  <a
-                    href="https://app.cosmicjs.com/login"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <Button>Log in to Cosmic</Button>
-                  </a>
-                </div>
-              </DialogDescription>
-            </DialogHeader>
+            <SaveErrorMessage />
           </DialogContent>
         </Dialog>
       )}
@@ -134,13 +112,18 @@ export default function GetIllustrations(bucket: Bucket) {
           onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             const searchTerm = event.currentTarget.value
             try {
-              await Promise.all([searchPixabayIllustrations(searchTerm)])
+              await searchPixabayIllustrations(searchTerm)
             } catch (error) {
               console.error("Error occurred during search:", error)
             }
           }}
         />
       </Header>
+      {serviceFetchError && (
+        <div className="m-auto max-w-3xl text-left">
+          <FetchErrorMessage service={serviceFetchError} />
+        </div>
+      )}
       {pixabayIllustrations?.length !== 0 && (
         <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {pixabayIllustrations?.map((photo: PixabayPhoto) => (
