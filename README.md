@@ -1,6 +1,6 @@
 # Cosmic Media
 
-Search from millions of high-quality, royalty-free stock photos, videos, images, and vectors from some of the most popular stock image services: Unsplash, Pexels, Giphy, and Pixabay as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
+Search from millions of high-quality, royalty-free stock photos, videos, images, and vectors. Includes some of the most popular stock image services: Unsplash, Pexels, Giphy, and Pixabay as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
 
 ### How to use it
 You can use Cosmic Media to search and download media manually, or you can install it in your [Cosmic](https://www.cosmicjs.com/) project as an extension to save media directly in your project.
