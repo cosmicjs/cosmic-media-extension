@@ -53,6 +53,7 @@ export type PixabayPhoto = {
 }
 
 export type GiphyImage = {
+  title: string | undefined
   id: string
   images: {
     preview_webp: {
