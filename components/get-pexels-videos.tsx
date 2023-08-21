@@ -54,7 +54,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
     try {
       const pexelsClient = createClient(pexels_key || "")
       await pexelsClient.videos
-        .search({ query, per_page: 20 })
+        .search({ query, per_page: 80 })
         .then((res: any) => {
           const videos = res.videos
           if (!videos) {
