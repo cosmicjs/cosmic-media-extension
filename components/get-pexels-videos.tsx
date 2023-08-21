@@ -15,11 +15,11 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog"
-import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import VideoOutput from "@/components/media/video"
-import { SaveErrorMessage } from "@/components/save-error-message"
+import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
+import { SaveErrorMessage } from "@/components/messages/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
