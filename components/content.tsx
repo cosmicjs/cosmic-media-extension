@@ -34,7 +34,7 @@ export default function Content(bucket: Bucket) {
             className="h-full rounded-lg px-4"
             onClick={handleTabClick}
           >
-            <Video className="mr-3" /> Video
+            <Video className="mr-3" /> Videos
           </TabsTrigger>
           <TabsTrigger
             title="Gifs"
