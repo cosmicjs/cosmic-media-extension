@@ -11,13 +11,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   x: (props: LucideProps) => (
-    <svg
-      {...props}
-      aria-label="X formerly known as Twitter"
-      fill="currentColor"
-      height="16"
-      viewBox="0 0 22 20"
-    >
+    <svg {...props} fill="currentColor" height="16" viewBox="0 0 22 20">
       <path d="M16.99 0H20.298L13.071 8.26L21.573 19.5H14.916L9.702 12.683L3.736 19.5H0.426L8.156 10.665L0 0H6.826L11.539 6.231L16.99 0ZM15.829 17.52H17.662L5.83 1.876H3.863L15.829 17.52Z"></path>
     </svg>
   ),
@@ -163,7 +157,7 @@ export const Icons = {
   ),
   giphy: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164 35" {...props}>
-      <g fillRule="evenodd" clip-rule="evenodd">
+      <g fillRule="evenodd" clipRule="evenodd">
         <path fill="#00ff99" d="M0 3h4v29H0z"></path>
         <path fill="#9933ff" d="M24 11h4v21h-4z"></path>
         <path fill="#00ccff" d="M0 31h28v4H0z"></path>

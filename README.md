@@ -1,6 +1,6 @@
 # Cosmic Media
 
-Search from millions of high-quality, royalty-free stock photos, videos, images, and vectors. Includes some of the most popular stock image services: Unsplash, Pexels, Giphy, and Pixabay as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
+Search millions of high-quality, royalty-free stock photos, videos, images, and vectors from one convenient interface. Includes popular online media services: Unsplash, Pexels, Giphy, and Pixabay as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
 
 <img width="100%" alt="cosmic-media" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/ab1992c9-bbc0-4ef1-8977-87b07a74b742">
 
@@ -16,7 +16,7 @@ You can use Cosmic Media to search and download media manually, or you can insta
 
 ## Service keys
 
-The extension uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and OpenAI. Since other users using these shared keys may cause API throttling / service issues, you can update these to your own keys:
+The deployed app uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and OpenAI. If you run into API rate-limit issues, you can update these to your own keys:
 
 1. `unsplash_key` Register for a key [here](https://unsplash.com/developers).
 2. `pexels_key` Register for a key [here](https://www.pexels.com/api).
@@ -43,8 +43,8 @@ yarn
 yarn dev
 ```
 
-## Features
-
+## Built with
+- [shadcn/ui](https://github.com/shadcn-ui/ui)
 - Next.js 13 App Directory
 - Radix UI Primitives
 - Tailwind CSS

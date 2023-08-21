@@ -29,7 +29,7 @@ export type Photo = {
   [key: string]: any
   id: string
   name: string
-  src?: { large: string; original: string }
+  src?: { large2x: string; large: string; original: string }
   url: string
 }
 
@@ -37,7 +37,7 @@ export type UnsplashPhoto = {
   [key: string]: any
   id: string
   name: string
-  urls?: { full: string; regular: string; small: string }
+  urls: { full: string; regular: string; small: string }
   url: string
 }
 
@@ -53,6 +53,7 @@ export type PixabayPhoto = {
 }
 
 export type GiphyImage = {
+  title: string | undefined
   id: string
   images: {
     preview_webp: {
@@ -83,4 +84,14 @@ export type PhotoData = {
 export type VideoData = {
   adding_media?: string[]
   added_media: string[]
+}
+
+export type MediaModalData = {
+  url: string
+  description?: string
+  download_url?: string
+  name: string
+  service?: string
+  photo?: any // TODO fix this
+  video?: any // TODO fix this
 }

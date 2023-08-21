@@ -5,8 +5,7 @@ import { ExternalLink, Loader2, Video } from "lucide-react"
 
 import { VideoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
-
-import { buttonVariants } from "./ui/button"
+import { buttonVariants } from "@/components/ui/button"
 
 function VideoOutput({ src, videoSrc, url, children }: VideoProps) {
   const [isPlaying, setIsPlaying] = useState(false)

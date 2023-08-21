@@ -2,22 +2,29 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Loader2 } from "lucide-react"
+import { Download, Loader2 } from "lucide-react"
 import slugify from "slugify"
 
 import { OPEN_AI_KEY } from "@/lib/data"
-import { Bucket, Photo, PhotoData } from "@/lib/types"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { FetchErrorMessage } from "@/components/fetch-error-message"
+import { Bucket, MediaModalData, Photo, PhotoData } from "@/lib/types"
+import { emptyModalData } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+} from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
+import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
+import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
-import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
-import Input from "./input"
-import PhotoOutput from "./photo"
+import PhotoOutput from "./media/photo"
+import Input from "./ui/input"
 
 const { Configuration, OpenAIApi } = require("openai")
 
@@ -38,6 +45,8 @@ export default function GetPhotos(bucket: Bucket) {
   })
   const [saveError, setSaveError] = useState(false)
   const [serviceFetchError, setServiceFetchError] = useState<string>()
+  const [mediaModalData, setMediaModalData] =
+    useState<MediaModalData>(emptyModalData)
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
     if (!bucket.bucket_slug) return setSaveError(true)
@@ -110,6 +119,57 @@ export default function GetPhotos(bucket: Bucket) {
           </DialogContent>
         </Dialog>
       )}
+      {mediaModalData.url && (
+        <Dialog open onOpenChange={() => setMediaModalData(emptyModalData)}>
+          <DialogContent
+            onInteractOutside={() => setMediaModalData(emptyModalData)}
+            onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
+            className="max-w-[70vw]"
+          >
+            <DialogHeader>
+              <DialogDescription className="mt-6">
+                <div className="mb-6 min-h-[100px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={mediaModalData.url}
+                    alt={mediaModalData.description}
+                    loading="lazy"
+                    className={`relative z-10 h-full max-h-[70vh] w-full rounded-2xl object-cover`}
+                  />
+                  <div className="absolute top-1/2 z-0 grid w-full place-items-center text-center">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  </div>
+                </div>
+                <div className="relative min-h-[20px]">
+                  <div className="pr-20">{mediaModalData.description}</div>
+                  <div className="absolute -top-2 right-0 flex">
+                    {mediaModalData.download_url && (
+                      <Button
+                        variant="secondary"
+                        className="mr-2 inline rounded-full p-3"
+                        title="Download"
+                        onClick={() => window.open(mediaModalData.download_url)}
+                      >
+                        <Download className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <div className="inline">
+                      <GetButton
+                        media={mediaModalData.photo}
+                        handleAddPhotoToMedia={() =>
+                          handleAddAIPhotoToMedia(mediaModalData.photo)
+                        }
+                        isZoom
+                        data={photoData}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Type a pompt like: A cup of coffee, then press enter."
@@ -139,7 +199,20 @@ export default function GetPhotos(bucket: Bucket) {
       {!generating && photos?.length !== 0 && (
         <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {photos?.map((photo: Photo) => (
-            <div key={`ai-${photo.id}`} className="group relative w-full">
+            <div
+              key={`ai-${photo.id}`}
+              className="group relative w-full cursor-zoom-in"
+              onClick={() => {
+                setMediaModalData({
+                  url: photo.url,
+                  description: query,
+                  photo: photo,
+                  download_url: photo.url,
+                  name: `${photo.id}-cosmic-media.jpg`,
+                  service: "OpenAI",
+                })
+              }}
+            >
               <PhotoOutput src={photo.url} url={photo.url} provider="Unsplash">
                 <GetButton
                   media={photo}
