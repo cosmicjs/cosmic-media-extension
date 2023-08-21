@@ -16,7 +16,7 @@ You can use Cosmic Media to search and download media manually, or you can insta
 
 ## Service keys
 
-The extension uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and OpenAI. If you run into API rate-limit issues, you can update these to your own keys:
+The deployed app uses default API keys for Unsplash, Giphy, Pexels, Pixaby, and OpenAI. If you run into API rate-limit issues, you can update these to your own keys:
 
 1. `unsplash_key` Register for a key [here](https://unsplash.com/developers).
 2. `pexels_key` Register for a key [here](https://www.pexels.com/api).
