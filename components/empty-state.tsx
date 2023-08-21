@@ -22,15 +22,30 @@ export default function EmptyState() {
         <Icons.pixabay className="h-10" />
       </div>
       {location !== "media-modal" && (
-        <div className="text-center text-sm">
-          <a
-            href="https://www.cosmicjs.com/marketplace/extensions/cosmic-media"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Get Cosmic Extension{" "}
-            <ArrowUpRight className="relative -top-1 inline h-4 w-4" />
-          </a>
+        <div className="flex justify-center gap-8 text-center text-sm">
+          <div>
+            <a
+              className="flex"
+              href="https://www.cosmicjs.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="mr-2">Made by</div>
+              <div className="-mt-1">
+                <Icons.cosmic className="h-6 w-6" />
+              </div>
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://www.cosmicjs.com/marketplace/extensions/cosmic-media"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Get Cosmic Extension{" "}
+              <ArrowUpRight className="relative -top-1 inline h-4 w-4" />
+            </a>
+          </div>
         </div>
       )}
     </div>
