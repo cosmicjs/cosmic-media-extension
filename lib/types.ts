@@ -91,5 +91,6 @@ export type MediaModalData = {
   download_url: string
   name: string
   service?: string
-  photo?: UnsplashPhoto | Photo | PixabayPhoto | string
+  photo?: any // TODO fix this
+  video?: any // TODO fix this
 }
