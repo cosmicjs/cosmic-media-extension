@@ -15,12 +15,13 @@ import {
 } from "@/lib/data"
 import {
   Bucket,
+  MediaModalData,
   Photo,
   PhotoData,
   PixabayPhoto,
   UnsplashPhoto,
 } from "@/lib/types"
-import { downloadImage } from "@/lib/utils"
+import { downloadImage, emptyModalData } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -49,7 +50,7 @@ export default function GetPhotos(bucket: Bucket) {
   const [pexelsPhotos, setPexelsPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
-  const [mediaModalData, setMediaModalData] = useState<any>()
+  const [mediaModalData, setMediaModalData] = useState<MediaModalData>()
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -234,10 +235,10 @@ export default function GetPhotos(bucket: Bucket) {
         </Dialog>
       )}
       {mediaModalData && (
-        <Dialog open onOpenChange={() => setMediaModalData("")}>
+        <Dialog open onOpenChange={() => setMediaModalData(emptyModalData)}>
           <DialogContent
-            onInteractOutside={() => setMediaModalData("")}
-            onEscapeKeyDown={() => setMediaModalData("")}
+            onInteractOutside={() => setMediaModalData(emptyModalData)}
+            onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
             className="max-w-[70vw]"
           >
             <DialogHeader>
