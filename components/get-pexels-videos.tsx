@@ -132,19 +132,23 @@ export default function GetPexelsVideos(bucket: Bucket) {
                 <div className="relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
-                    <Button
-                      variant="secondary"
-                      className="mr-2 inline rounded-full p-3"
-                      title="Download"
-                      onClick={() =>
-                        downloadImage(
-                          mediaModalData.download_url,
-                          mediaModalData.name
-                        )
-                      }
-                    >
-                      <Download className="h-4 w-4" />
-                    </Button>
+                    {mediaModalData.download_url && (
+                      <Button
+                        variant="secondary"
+                        className="mr-2 inline rounded-full p-3"
+                        title="Download"
+                        onClick={() =>
+                          downloadImage(
+                            mediaModalData.download_url
+                              ? mediaModalData.download_url
+                              : "",
+                            mediaModalData.name
+                          )
+                        }
+                      >
+                        <Download className="h-4 w-4" />
+                      </Button>
+                    )}
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.video}

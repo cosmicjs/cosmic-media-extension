@@ -29,7 +29,7 @@ export type Photo = {
   [key: string]: any
   id: string
   name: string
-  src: { large2x: string; large: string; original: string }
+  src?: { large2x: string; large: string; original: string }
   url: string
 }
 
@@ -88,7 +88,7 @@ export type VideoData = {
 export type MediaModalData = {
   url: string
   description?: string
-  download_url: string
+  download_url?: string
   name: string
   service?: string
   photo?: any // TODO fix this
