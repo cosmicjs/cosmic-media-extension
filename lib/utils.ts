@@ -25,3 +25,12 @@ export async function downloadImage(imageSrc: string, name: string) {
   link.click()
   document.body.removeChild(link)
 }
+
+export const emptyModalData = {
+  url: "",
+  description: "",
+  download_url: "",
+  name: "",
+  service: "",
+  photo: ""
+}
