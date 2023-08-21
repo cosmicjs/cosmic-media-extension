@@ -36,7 +36,7 @@ Keys can be provided to the app in one of the following ways:
 2. Using the `.env` file. See the `.env.example` file for env var format.
 3. If installed in Cosmic as an extension, go to Cosmic Media extension settings page by going to _Extensions > Cosmic Media > Settings_, find the Query Parameters section and update the following query params to your own keys:
 
-<a href=""https://app.cosmicjs.com/login">
+<a href="https://app.cosmicjs.com/login">
   <img width="100%" alt="query-params" src="https://imgix.cosmicjs.com/faa928e0-4077-11ee-82b2-d53af1858037-query-params.png?w=2000&auto=compression">
 </a>
 
