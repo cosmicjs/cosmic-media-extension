@@ -86,10 +86,10 @@ export type VideoData = {
 }
 
 export type MediaModalData = {
-  url?: string
+  url: string
   description?: string
   download_url: string
   name: string
   service?: string
-  photo?: any
+  photo?: UnsplashPhoto | Photo | PixabayPhoto | string
 }

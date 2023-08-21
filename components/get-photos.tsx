@@ -50,7 +50,8 @@ export default function GetPhotos(bucket: Bucket) {
   const [pexelsPhotos, setPexelsPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
-  const [mediaModalData, setMediaModalData] = useState<MediaModalData>()
+  const [mediaModalData, setMediaModalData] =
+    useState<MediaModalData>(emptyModalData)
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -234,7 +235,7 @@ export default function GetPhotos(bucket: Bucket) {
           </DialogContent>
         </Dialog>
       )}
-      {mediaModalData && (
+      {mediaModalData.url && (
         <Dialog open onOpenChange={() => setMediaModalData(emptyModalData)}>
           <DialogContent
             onInteractOutside={() => setMediaModalData(emptyModalData)}
