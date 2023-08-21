@@ -26,7 +26,7 @@ export default function EmptyState() {
           <div>
             <a
               className="flex"
-              href="https://www.cosmicjs.com"
+              href="https://www.cosmicjs.com?ref=cosmic-media"
               target="_blank"
               rel="noreferrer"
             >
@@ -38,7 +38,7 @@ export default function EmptyState() {
           </div>
           <div>
             <a
-              href="https://www.cosmicjs.com/marketplace/extensions/cosmic-media"
+              href="https://www.cosmicjs.com/marketplace/extensions/cosmic-media?ref=cosmic-media"
               target="_blank"
               rel="noreferrer"
             >
