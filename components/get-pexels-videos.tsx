@@ -120,18 +120,11 @@ export default function GetPexelsVideos(bucket: Bucket) {
                   <video
                     src={mediaModalData.download_url}
                     className={`relative z-10 h-full max-h-[70vh] w-full rounded-2xl object-cover`}
-                    // className="relative h-64 w-full rounded-2xl"
                     autoPlay
                     loop
                     muted
                     controls
                   />
-                  {/* <img
-                    src={mediaModalData.url}
-                    alt={mediaModalData.description}
-                    loading="lazy"
-                    className={`relative z-10 h-full max-h-[70vh] w-full rounded-2xl object-cover`}
-                  /> */}
                   <div className="absolute top-1/2 z-0 grid w-full place-items-center text-center">
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
