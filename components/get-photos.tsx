@@ -36,8 +36,8 @@ import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
-import Input from "./input"
-import PhotoOutput from "./photo"
+import PhotoOutput from "./media/photo"
+import Input from "./ui/input"
 
 export default function GetPhotos(bucket: Bucket) {
   const searchParams = useSearchParams()

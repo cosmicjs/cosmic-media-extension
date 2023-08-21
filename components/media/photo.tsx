@@ -3,8 +3,7 @@ import { ExternalLink, Image as ImageIcon, Loader2 } from "lucide-react"
 
 import { PhotoProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
-
-import { buttonVariants } from "./ui/button"
+import { buttonVariants } from "@/components/ui/button"
 
 function PhotoOutput({ src, url, provider, children }: PhotoProps) {
   return (
