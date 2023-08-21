@@ -8,16 +8,16 @@ import slugify from "slugify"
 import { OPEN_AI_KEY } from "@/lib/data"
 import { Bucket, Photo, PhotoData } from "@/lib/types"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
+import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
+import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
-import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
-import Input from "./input"
-import PhotoOutput from "./photo"
+import PhotoOutput from "./media/photo"
+import Input from "./ui/input"
 
 const { Configuration, OpenAIApi } = require("openai")
 

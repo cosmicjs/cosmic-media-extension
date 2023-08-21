@@ -7,16 +7,16 @@ import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
 import { debounce } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
+import VectorOutput from "@/components/media/illustration"
+import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
+import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
-import { SaveErrorMessage } from "@/components/save-error-message"
 
 import EmptyState from "./empty-state"
 import Header from "./header"
-import VectorOutput from "./illustration"
-import Input from "./input"
+import Input from "./ui/input"
 
 export default function GetIllustrations(bucket: Bucket) {
   const searchParams = useSearchParams()
@@ -53,7 +53,7 @@ export default function GetIllustrations(bucket: Bucket) {
           "&q=" +
           q +
           "&image_type=illustration" +
-          "&per_page=50"
+          "&per_page=80"
       )
         .then((res) => res.json())
         .then((data) => {

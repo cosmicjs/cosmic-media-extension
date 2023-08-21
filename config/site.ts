@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Media",
+  name: "Cosmic Media",
   description:
-    "Integrate media assets from popular stock media services directly into your dashboard.",
+    "Search millions of high-quality, royalty-free stock photos, videos, images, and vectors from one convenient interface.",
   mainNav: [
     {
       title: "Home",
