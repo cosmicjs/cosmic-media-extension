@@ -51,7 +51,7 @@ export default function GetVectors(bucket: Bucket) {
           "&q=" +
           q +
           "&image_type=illustration" +
-          "&per_page=50"
+          "&per_page=80"
       )
         .then((res) => res.json())
         .then((data) => {
