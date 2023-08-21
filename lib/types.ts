@@ -29,7 +29,7 @@ export type Photo = {
   [key: string]: any
   id: string
   name: string
-  src?: { large: string; original: string }
+  src?: { large2x: string; large: string; original: string }
   url: string
 }
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { Download, Loader2 } from "lucide-react"
 import { createClient } from "pexels"
 
 import {
@@ -19,7 +20,14 @@ import {
   PixabayPhoto,
   UnsplashPhoto,
 } from "@/lib/types"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { downloadImage } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+} from "@/components/ui/dialog"
 import { FetchErrorMessage } from "@/components/fetch-error-message"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
@@ -41,6 +49,7 @@ export default function GetPhotos(bucket: Bucket) {
   const [pexelsPhotos, setPexelsPhotos] = useState<Photo[]>([])
   const [pixabayPhotos, setPixabayPhotos] = useState<PixabayPhoto[]>([])
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
+  const [mediaModalData, setMediaModalData] = useState<any>()
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -224,6 +233,65 @@ export default function GetPhotos(bucket: Bucket) {
           </DialogContent>
         </Dialog>
       )}
+      {mediaModalData && (
+        <Dialog open onOpenChange={() => setMediaModalData("")}>
+          <DialogContent
+            onInteractOutside={() => setMediaModalData("")}
+            onEscapeKeyDown={() => setMediaModalData("")}
+            className="max-w-[70vw]"
+          >
+            <DialogHeader>
+              <DialogDescription className="mt-6">
+                <div className="mb-6 min-h-[100px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={mediaModalData.url}
+                    alt={mediaModalData.description}
+                    loading="lazy"
+                    className={`relative z-10 h-full max-h-[70vh] w-full rounded-2xl object-cover`}
+                  />
+                  <div className="absolute top-1/2 z-0 grid w-full place-items-center text-center">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="pr-20">{mediaModalData.description}</div>
+                  <div className="absolute -top-2 right-0 flex">
+                    <Button
+                      variant="secondary"
+                      className="mr-2 inline rounded-full p-3"
+                      title="Download"
+                      onClick={() =>
+                        downloadImage(
+                          mediaModalData.download_url,
+                          mediaModalData.name
+                        )
+                      }
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                    <div className="inline">
+                      <GetButton
+                        media={mediaModalData.photo}
+                        handleAddPhotoToMedia={() => {
+                          if (mediaModalData.service === "unsplash")
+                            handleAddUnsplashPhotoToMedia(mediaModalData.photo)
+                          if (mediaModalData.service === "pexels")
+                            handleAddPexelsPhotoToMedia(mediaModalData.photo)
+                          if (mediaModalData.service === "pixabay")
+                            handleAddPixabayPhotoToMedia(mediaModalData.photo)
+                        }}
+                        isZoom
+                        data={photoData}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Search free high-resolution photos"
@@ -250,7 +318,22 @@ export default function GetPhotos(bucket: Bucket) {
       {allPhotos !== 0 && (
         <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {unsplashPhotos?.map((photo: UnsplashPhoto) => (
-            <div key={`unsplash-${photo.id}`} className="group relative w-full">
+            <div
+              key={`unsplash-${photo.id}`}
+              className="group relative w-full cursor-zoom-in"
+              onClick={() => {
+                setMediaModalData({
+                  url: photo?.urls?.regular,
+                  description: photo.description
+                    ? photo.description
+                    : photo.alt_description,
+                  photo,
+                  download_url: photo?.urls?.full,
+                  name: `${photo.id}-cosmic-media.jpg`,
+                  service: "unsplash",
+                })
+              }}
+            >
               <PhotoOutput
                 src={photo.urls!.small}
                 url={photo.links.html}
@@ -269,7 +352,20 @@ export default function GetPhotos(bucket: Bucket) {
             </div>
           ))}
           {pexelsPhotos?.map((photo: Photo) => (
-            <div key={`pexels-${photo.id}`} className="group relative w-full">
+            <div
+              key={`pexels-${photo.id}`}
+              className="group relative w-full cursor-zoom-in"
+              onClick={() => {
+                setMediaModalData({
+                  url: photo.src!.large2x,
+                  description: photo.alt,
+                  photo,
+                  download_url: photo?.src?.large2x,
+                  name: `${photo.id}-cosmic-media.jpg`,
+                  service: "pexels",
+                })
+              }}
+            >
               <PhotoOutput
                 src={photo.src!.large}
                 url={photo.url}
@@ -288,7 +384,20 @@ export default function GetPhotos(bucket: Bucket) {
             </div>
           ))}
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
-            <div key={`pixabay-${photo.id}`} className="group relative w-full">
+            <div
+              key={`pixabay-${photo.id}`}
+              className="group relative w-full cursor-zoom-in"
+              onClick={() => {
+                setMediaModalData({
+                  url: photo.largeImageURL,
+                  description: photo.tags,
+                  photo,
+                  download_url: photo?.fullHDURL,
+                  name: `${photo.id}-cosmic-media.jpg`,
+                  service: "pixabay",
+                })
+              }}
+            >
               <PhotoOutput
                 src={photo.webformatURL}
                 url={photo.pageURL}
