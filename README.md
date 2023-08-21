@@ -43,8 +43,8 @@ yarn
 yarn dev
 ```
 
-## Features
-
+## Built with
+- [shadcn/ui](https://github.com/shadcn-ui/ui)
 - Next.js 13 App Directory
 - Radix UI Primitives
 - Tailwind CSS
