@@ -9,7 +9,9 @@ export function MainNav() {
     <div className="flex gap-6 md:gap-10">
       <Link href="/" className="flex items-center space-x-4">
         <Icons.cosmic className="h-6 w-6" />
-        <span className="mt-[3px] inline-block font-bold">Media</span>
+        <span className="mt-[3px] inline-block font-bold">
+          {siteConfig.navTitle}
+        </span>
       </Link>
     </div>
   )

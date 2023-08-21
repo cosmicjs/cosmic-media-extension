@@ -2,6 +2,7 @@ export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: "Cosmic Media",
+  navTitle: "Media",
   description:
     "Search millions of high-quality, royalty-free stock photos, videos, images, and vectors from one convenient interface.",
   mainNav: [
