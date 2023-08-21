@@ -54,7 +54,7 @@ export default function GetVectors(bucket: Bucket) {
     }
     try {
       await fetch(
-        GIPHY_SEARCH_URL + "?api_key=" + giphy_key + "&q=" + q + "&limit=50"
+        GIPHY_SEARCH_URL + "?api_key=" + giphy_key + "&q=" + q + "&limit=80"
       )
         .then((res) => res.json())
         .then((res) => {
