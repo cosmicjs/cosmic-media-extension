@@ -7,7 +7,7 @@ import slugify from "slugify"
 
 import { OPEN_AI_KEY } from "@/lib/data"
 import { Bucket, MediaModalData, Photo, PhotoData } from "@/lib/types"
-import { downloadImage, emptyModalData } from "@/lib/utils"
+import { emptyModalData } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

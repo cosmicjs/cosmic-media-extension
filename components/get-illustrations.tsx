@@ -1,12 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { Download, Loader2 } from "lucide-react"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
-import { Bucket, PhotoData, PixabayPhoto } from "@/lib/types"
-import { debounce } from "@/lib/utils"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Bucket, MediaModalData, PhotoData, PixabayPhoto } from "@/lib/types"
+import { debounce, downloadImage, emptyModalData } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+} from "@/components/ui/dialog"
 import GetButton from "@/components/get-button"
 import { Icons } from "@/components/icons"
 import VectorOutput from "@/components/media/illustration"
@@ -31,6 +38,8 @@ export default function GetIllustrations(bucket: Bucket) {
   })
   const [saveError, setSaveError] = useState(false)
   const [serviceFetchError, setServiceFetchError] = useState<string>()
+  const [mediaModalData, setMediaModalData] =
+    useState<MediaModalData>(emptyModalData)
 
   const cosmicBucket = cosmic(
     bucket.bucket_slug,
@@ -106,6 +115,66 @@ export default function GetIllustrations(bucket: Bucket) {
           </DialogContent>
         </Dialog>
       )}
+      {mediaModalData.url && (
+        <Dialog open onOpenChange={() => setMediaModalData(emptyModalData)}>
+          <DialogContent
+            onInteractOutside={() => setMediaModalData(emptyModalData)}
+            onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
+            className="max-w-[70vw]"
+          >
+            <DialogHeader>
+              <DialogDescription className="mt-6">
+                <div className="mb-6 min-h-[100px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={mediaModalData.url}
+                    alt={mediaModalData.description}
+                    loading="lazy"
+                    className={`relative z-10 h-full max-h-[70vh] w-full rounded-2xl object-cover`}
+                  />
+                  <div className="absolute top-1/2 z-0 grid w-full place-items-center text-center">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  </div>
+                </div>
+                <div className="relative min-h-[20px]">
+                  <div className="pr-20">{mediaModalData.description}</div>
+                  <div className="absolute -top-2 right-0 flex">
+                    {mediaModalData.download_url && (
+                      <Button
+                        variant="secondary"
+                        className="mr-2 inline rounded-full p-3"
+                        title="Download"
+                        onClick={() =>
+                          downloadImage(
+                            mediaModalData.download_url
+                              ? mediaModalData.download_url
+                              : "",
+                            mediaModalData.name
+                          )
+                        }
+                      >
+                        <Download className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <div className="inline">
+                      <GetButton
+                        media={mediaModalData.photo}
+                        handleAddPhotoToMedia={() =>
+                          handleAddPixabayIllustrationToMedia(
+                            mediaModalData.photo
+                          )
+                        }
+                        isZoom
+                        data={photoData}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       <Header>
         <Input
           placeholder="Search free high-resolution illustrations"
@@ -127,7 +196,20 @@ export default function GetIllustrations(bucket: Bucket) {
       {pixabayIllustrations?.length !== 0 && (
         <div className="3xl:grid-cols-6 mt-4 grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:mt-6 lg:grid-cols-4 2xl:grid-cols-5">
           {pixabayIllustrations?.map((photo: PixabayPhoto) => (
-            <div key={photo.id} className="group relative w-full">
+            <div
+              key={photo.id}
+              className="group relative w-full cursor-zoom-in"
+              onClick={() => {
+                setMediaModalData({
+                  url: photo.largeImageURL,
+                  description: photo.tags,
+                  photo,
+                  download_url: photo?.fullHDURL,
+                  name: `${photo.id}-cosmic-media.jpg`,
+                  service: "pixabay",
+                })
+              }}
+            >
               <VectorOutput
                 src={photo.webformatURL}
                 url={photo.pageURL}
