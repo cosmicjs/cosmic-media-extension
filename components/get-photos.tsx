@@ -142,6 +142,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPexelsPhotos([])
       setServiceFetchError("Pexels")
       console.log(e)
     }
@@ -197,6 +198,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPixabayPhotos([])
       setServiceFetchError("Pixabay")
       console.log(e)
     }
