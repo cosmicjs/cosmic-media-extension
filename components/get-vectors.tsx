@@ -122,7 +122,7 @@ export default function GetVectors(bucket: Bucket) {
           <DialogContent
             onInteractOutside={() => setMediaModalData(emptyModalData)}
             onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
-            className="max-w-[70vw]"
+            className="md:max-w-[70vw]"
           >
             <DialogHeader>
               <DialogDescription className="mt-6">
