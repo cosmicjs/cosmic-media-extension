@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import isMobile from "is-mobile"
 import { Brush, Camera, Laugh, PenTool, Video, Wand2 } from "lucide-react"
 
 import { Bucket } from "@/lib/types"
@@ -29,65 +30,67 @@ export default function Content(bucket: Bucket) {
 
   return (
     <div className="relative flex w-full items-center justify-center">
-      <div className="sm:hidden">
-        <Select value={selectedView} onValueChange={setSelectedView}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Photos" defaultValue="photos" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="photos">Photos</SelectItem>
-              <SelectItem value="videos">Videos</SelectItem>
-              <SelectItem value="gifs">Gifs</SelectItem>
-              <SelectItem value="ai">AI Images</SelectItem>
-              <SelectItem value="illustrations">Illustrations</SelectItem>
-              <SelectItem value="vectors">Vectors</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {selectedView === "photos" && (
-          <GetPhotos
-            bucket_slug={bucket.bucket_slug}
-            read_key={bucket.read_key}
-            write_key={bucket.write_key}
-          />
-        )}
-        {selectedView === "videos" && (
-          <GetPexelsVideos
-            bucket_slug={bucket.bucket_slug}
-            read_key={bucket.read_key}
-            write_key={bucket.write_key}
-          />
-        )}
-        {selectedView === "gifs" && (
-          <GetGifs
-            bucket_slug={bucket.bucket_slug}
-            read_key={bucket.read_key}
-            write_key={bucket.write_key}
-          />
-        )}
-        {selectedView === "ai" && (
-          <GetAI
-            bucket_slug={bucket.bucket_slug}
-            read_key={bucket.read_key}
-            write_key={bucket.write_key}
-          />
-        )}
-        {selectedView === "illustrations" && (
-          <GetIllustrations
-            bucket_slug={bucket.bucket_slug}
-            read_key={bucket.read_key}
-            write_key={bucket.write_key}
-          />
-        )}
-        {selectedView === "vectors" && (
-          <GetVectors
-            bucket_slug={bucket.bucket_slug}
-            read_key={bucket.read_key}
-            write_key={bucket.write_key}
-          />
-        )}
-      </div>
+      {isMobile() && (
+        <div className="sm:hidden">
+          <Select value={selectedView} onValueChange={setSelectedView}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Photos" defaultValue="photos" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="photos">Photos</SelectItem>
+                <SelectItem value="videos">Videos</SelectItem>
+                <SelectItem value="gifs">Gifs</SelectItem>
+                <SelectItem value="ai">AI Images</SelectItem>
+                <SelectItem value="illustrations">Illustrations</SelectItem>
+                <SelectItem value="vectors">Vectors</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {selectedView === "photos" && (
+            <GetPhotos
+              bucket_slug={bucket.bucket_slug}
+              read_key={bucket.read_key}
+              write_key={bucket.write_key}
+            />
+          )}
+          {selectedView === "videos" && (
+            <GetPexelsVideos
+              bucket_slug={bucket.bucket_slug}
+              read_key={bucket.read_key}
+              write_key={bucket.write_key}
+            />
+          )}
+          {selectedView === "gifs" && (
+            <GetGifs
+              bucket_slug={bucket.bucket_slug}
+              read_key={bucket.read_key}
+              write_key={bucket.write_key}
+            />
+          )}
+          {selectedView === "ai" && (
+            <GetAI
+              bucket_slug={bucket.bucket_slug}
+              read_key={bucket.read_key}
+              write_key={bucket.write_key}
+            />
+          )}
+          {selectedView === "illustrations" && (
+            <GetIllustrations
+              bucket_slug={bucket.bucket_slug}
+              read_key={bucket.read_key}
+              write_key={bucket.write_key}
+            />
+          )}
+          {selectedView === "vectors" && (
+            <GetVectors
+              bucket_slug={bucket.bucket_slug}
+              read_key={bucket.read_key}
+              write_key={bucket.write_key}
+            />
+          )}
+        </div>
+      )}
       <Tabs
         defaultValue="photos"
         className="hidden w-full text-center sm:block"
