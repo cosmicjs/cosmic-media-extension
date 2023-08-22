@@ -9,7 +9,7 @@ export default function EmptyState() {
   const searchParams = useSearchParams()
   const location = searchParams.get("location")
   return (
-    <div>
+    <div className="w-full sm:max-w-3xl">
       <div className="my-8 text-center font-sans text-lg text-neutral-800 dark:text-neutral-200">
         Use the search bar above to find royalty-free media from popular online
         media services.
@@ -25,13 +25,13 @@ export default function EmptyState() {
         <div className="flex flex-col items-center justify-center gap-8 text-center text-sm sm:flex-row">
           <div>
             <a
-              className="flex"
+              className="flex flex-col sm:flex-row"
               href="https://www.cosmicjs.com?ref=cosmic-media"
               target="_blank"
               rel="noreferrer"
             >
               <div className="mr-2">Made by</div>
-              <div className="-mt-1">
+              <div className="mt-2 flex justify-center sm:-mt-1">
                 <Icons.cosmic className="h-6 w-6" />
               </div>
             </a>
