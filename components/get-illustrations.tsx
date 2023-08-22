@@ -74,6 +74,7 @@ export default function GetIllustrations(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPixabayIllustrations([])
       setServiceFetchError("Pixabay")
       console.log(e)
     }

@@ -64,6 +64,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setVideos([])
       setServiceFetchError("Pexels")
       console.log(e)
     }
