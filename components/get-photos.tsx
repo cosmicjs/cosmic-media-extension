@@ -80,7 +80,10 @@ export default function GetPhotos(bucket: Bucket) {
       )
         .then((res) => res.json())
         .then((data) => {
-          if (data.errors) return setServiceFetchError("Unsplash")
+          if (data.errors) {
+            setUnsplashPhotos([])
+            return setServiceFetchError("Unsplash")
+          }
           const photos = data.results
           if (!photos) {
             setUnsplashPhotos([])
@@ -89,6 +92,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setUnsplashPhotos([])
       setServiceFetchError("Unsplash")
       console.log(e)
     }
@@ -138,6 +142,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPexelsPhotos([])
       setServiceFetchError("Pexels")
       console.log(e)
     }
@@ -193,6 +198,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPixabayPhotos([])
       setServiceFetchError("Pixabay")
       console.log(e)
     }

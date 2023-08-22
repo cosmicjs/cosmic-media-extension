@@ -13,7 +13,7 @@ export function FetchErrorMessage({
   return (
     <Alert>
       <AlertTitle className="mb-6 flex">
-        <AlertCircle className="h-4 w-4 mr-2" />
+        <AlertCircle className="mr-2 h-4 w-4" />
         Failed to fetch from {service}
       </AlertTitle>
       <AlertDescription>

@@ -1,8 +1,17 @@
 "use client"
 
+import { useState } from "react"
 import { Brush, Camera, Laugh, PenTool, Video, Wand2 } from "lucide-react"
 
 import { Bucket } from "@/lib/types"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import GetAI from "./get-ai"
@@ -16,9 +25,73 @@ function handleTabClick() {
   document.getElementById("search-input")?.focus()
 }
 export default function Content(bucket: Bucket) {
+  const [selectedView, setSelectedView] = useState("photos")
+
   return (
     <div className="relative flex w-full items-center justify-center">
-      <Tabs defaultValue="photos" className="w-full text-center">
+      <div className="sm:hidden">
+        <Select value={selectedView} onValueChange={setSelectedView}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Photos" defaultValue="photos" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="photos">Photos</SelectItem>
+              <SelectItem value="videos">Videos</SelectItem>
+              <SelectItem value="gifs">Gifs</SelectItem>
+              <SelectItem value="ai">AI Images</SelectItem>
+              <SelectItem value="illustrations">Illustrations</SelectItem>
+              <SelectItem value="vectors">Vectors</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {selectedView === "photos" && (
+          <GetPhotos
+            bucket_slug={bucket.bucket_slug}
+            read_key={bucket.read_key}
+            write_key={bucket.write_key}
+          />
+        )}
+        {selectedView === "videos" && (
+          <GetPexelsVideos
+            bucket_slug={bucket.bucket_slug}
+            read_key={bucket.read_key}
+            write_key={bucket.write_key}
+          />
+        )}
+        {selectedView === "gifs" && (
+          <GetGifs
+            bucket_slug={bucket.bucket_slug}
+            read_key={bucket.read_key}
+            write_key={bucket.write_key}
+          />
+        )}
+        {selectedView === "ai" && (
+          <GetAI
+            bucket_slug={bucket.bucket_slug}
+            read_key={bucket.read_key}
+            write_key={bucket.write_key}
+          />
+        )}
+        {selectedView === "illustrations" && (
+          <GetIllustrations
+            bucket_slug={bucket.bucket_slug}
+            read_key={bucket.read_key}
+            write_key={bucket.write_key}
+          />
+        )}
+        {selectedView === "vectors" && (
+          <GetVectors
+            bucket_slug={bucket.bucket_slug}
+            read_key={bucket.read_key}
+            write_key={bucket.write_key}
+          />
+        )}
+      </div>
+      <Tabs
+        defaultValue="photos"
+        className="hidden w-full text-center sm:block"
+      >
         <TabsList className="relative mx-auto h-[3.2rem] max-w-3xl rounded-xl">
           <TabsTrigger
             title="Search photos"
