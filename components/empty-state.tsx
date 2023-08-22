@@ -11,7 +11,7 @@ export default function EmptyState() {
   return (
     <div>
       <div className="my-8 text-center font-sans text-lg text-neutral-800 dark:text-neutral-200">
-        Use the search bar above to find royalty-free media from popular stock
+        Use the search bar above to find royalty-free media from popular online
         media services.
       </div>
       <div className="m-auto mb-16 flex max-w-3xl justify-center gap-x-10">
