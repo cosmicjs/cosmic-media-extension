@@ -71,6 +71,7 @@ export default function GetVectors(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPixabayVectors([])
       setServiceFetchError("Pixabay")
       console.log(e)
     }

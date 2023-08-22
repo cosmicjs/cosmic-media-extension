@@ -67,6 +67,7 @@ export default function GetVectors(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setGiphyImages([])
       setServiceFetchError("Giphy")
       console.log(e)
     }
