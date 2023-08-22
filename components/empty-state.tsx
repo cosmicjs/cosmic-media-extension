@@ -9,20 +9,20 @@ export default function EmptyState() {
   const searchParams = useSearchParams()
   const location = searchParams.get("location")
   return (
-    <div className="w-full sm:max-w-3xl">
+    <div>
       <div className="my-8 text-center font-sans text-lg text-neutral-800 dark:text-neutral-200">
         Use the search bar above to find royalty-free media from popular online
         media services.
       </div>
-      <div className="m-auto mb-16 grid w-full place-items-center gap-10 sm:max-w-3xl sm:grid-cols-5">
-        <Icons.unsplash className="h-8" />
-        <Icons.giphy className="h-8" />
-        <Icons.openai className="h-8" />
-        <Icons.pexels className="h-8" />
-        <Icons.pixabay className="h-8" />
+      <div className="m-auto mb-16 flex max-w-3xl justify-center gap-x-10">
+        <Icons.unsplash className="h-6 sm:h-10" />
+        <Icons.giphy className="h-6 sm:h-10" />
+        <Icons.openai className="h-6 sm:h-10" />
+        <Icons.pexels className="h-6 sm:h-10" />
+        <Icons.pixabay className="h-6 sm:h-10" />
       </div>
       {location !== "media-modal" && (
-        <div className="flex flex-col items-center justify-center gap-8 text-center text-sm sm:flex-row">
+        <div className="flex justify-center gap-8 text-center text-sm">
           <div>
             <a
               className="flex flex-col sm:flex-row"
