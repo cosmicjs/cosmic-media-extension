@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
 import { createClient } from "pexels"
 
@@ -52,6 +53,8 @@ export default function GetPhotos(bucket: Bucket) {
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
   const [mediaModalData, setMediaModalData] =
     useState<MediaModalData>(emptyModalData)
+  const showMobile = useMemo(() => isMobile(), [])
+
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -360,7 +363,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.unsplash className="absolute bottom-4 left-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
           {pexelsPhotos?.map((photo: Photo) => (
@@ -392,7 +395,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.pexels className="absolute -left-6 bottom-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
@@ -424,7 +427,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
         </div>
