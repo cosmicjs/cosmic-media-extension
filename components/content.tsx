@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import isMobile from "is-mobile"
 import { Brush, Camera, Laugh, PenTool, Video, Wand2 } from "lucide-react"
 
@@ -27,10 +27,10 @@ function handleTabClick() {
 }
 export default function Content(bucket: Bucket) {
   const [selectedView, setSelectedView] = useState("photos")
-
+  const showMobile = useMemo(() => isMobile(), [])
   return (
     <div className="relative flex w-full items-center justify-center">
-      {isMobile() && (
+      {showMobile && (
         <div className="sm:hidden">
           <Select value={selectedView} onValueChange={setSelectedView}>
             <SelectTrigger className="w-full">
