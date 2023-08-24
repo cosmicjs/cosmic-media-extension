@@ -357,7 +357,6 @@ export default function GetPhotos(bucket: Bucket) {
           placeholder="Search free high-resolution photos"
           onChange={(event) => {
             const searchTerm = event.target.value
-            console.log("searchTerm", searchTerm)
             setServiceFetchError("")
             setQuery(searchTerm)
           }}
