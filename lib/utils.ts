@@ -18,7 +18,7 @@ export async function downloadImage(imageSrc: string, name: string) {
   const imageBlog = await image.blob()
   const imageURL = URL.createObjectURL(imageBlog)
 
-  const link = document.createElement('a')
+  const link = document.createElement("a")
   link.href = imageURL
   link.download = name
   document.body.appendChild(link)
@@ -32,5 +32,6 @@ export const emptyModalData = {
   download_url: "",
   name: "",
   service: "",
-  photo: ""
+  photo: "",
+  user: "",
 }
