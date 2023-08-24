@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { Download, Loader2 } from "lucide-react"
 import { createClient } from "pexels"
@@ -21,11 +21,14 @@ import VideoOutput from "@/components/media/video"
 import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
 import { SaveErrorMessage } from "@/components/messages/save-error-message"
 
+import { GlobalContext } from "./content"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./ui/input"
 
 export default function GetPexelsVideos(bucket: Bucket) {
+  const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
+
   const searchParams = useSearchParams()
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
   const [saveError, setSaveError] = useState(false)
@@ -95,6 +98,12 @@ export default function GetPexelsVideos(bucket: Bucket) {
       })
     }
   }
+
+  useEffect(() => {
+    searchVideos(debouncedQuery)
+    //eslint-disable-next-line
+  }, [debouncedQuery])
+
   return (
     <div>
       {saveError && (
@@ -169,10 +178,9 @@ export default function GetPexelsVideos(bucket: Bucket) {
       )}
       <Header>
         <Input
+          value={query}
           placeholder="Search free high-resolution videos"
-          onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) =>
-            searchVideos(event.currentTarget.value)
-          }
+          onChange={(event) => setQuery(event.target.value)}
         />
       </Header>
       {serviceFetchError && (

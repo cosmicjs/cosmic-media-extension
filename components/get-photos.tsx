@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation"
+// import { mediaFetch } from "@/utils/media-fetch.utils"
 import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
 import { createClient } from "pexels"
@@ -58,10 +59,6 @@ export default function GetPhotos(bucket: Bucket) {
     useState<MediaModalData>(emptyModalData)
   const showMobile = useMemo(() => isMobile(), [])
 
-  const [abortController, setAbortController] = useState(new AbortController())
-
-  console.log("query", query)
-
   const cosmicBucket = cosmic(
     bucket.bucket_slug,
     bucket.read_key,
@@ -81,17 +78,13 @@ export default function GetPhotos(bucket: Bucket) {
         return
       }
       try {
-        abortController.abort() // Abort previous requests
-        const newAbortController = new AbortController() // Create a new instance of AbortController
-        setAbortController(newAbortController)
         await fetch(
           UNSPLASH_SEARCH_URL +
             "?client_id=" +
             unsplash_key +
             "&query=" +
             q +
-            "&per_page=50",
-          { signal: newAbortController.signal }
+            "&per_page=50"
         )
           .then((res) => res.json())
           .then((data) => {
@@ -200,9 +193,6 @@ export default function GetPhotos(bucket: Bucket) {
         return
       }
       try {
-        abortController.abort() // Abort previous requests
-        const newAbortController = new AbortController() // Create a new instance of AbortController
-        setAbortController(newAbortController)
         await fetch(
           PIXABAY_SEARCH_URL +
             "?key=" +
@@ -210,8 +200,7 @@ export default function GetPhotos(bucket: Bucket) {
             "&q=" +
             q +
             "&image_type=photo" +
-            "&per_page=50",
-          { signal: newAbortController.signal }
+            "&per_page=50"
         )
           .then((res) => res.json())
           .then((data) => {
@@ -260,9 +249,7 @@ export default function GetPhotos(bucket: Bucket) {
   const searchPhotos = useCallback(
     async (searchTerm: string) => {
       try {
-        // Abort any previous requests
-
-        await Promise.all([
+        await Promise.allSettled([
           searchUnsplashPhotos(searchTerm),
           searchPexelsPhotos(searchTerm),
           searchPixabayPhotos(searchTerm),
@@ -276,7 +263,8 @@ export default function GetPhotos(bucket: Bucket) {
 
   useEffect(() => {
     searchPhotos(debouncedQuery)
-  }, [debouncedQuery, searchPhotos, abortController])
+    //eslint-disable-next-line
+  }, [debouncedQuery])
 
   return (
     <div className="w-full">
