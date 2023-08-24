@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from "react"
+import { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
@@ -36,12 +36,15 @@ import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
 import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
 
+import { GlobalContext } from "./content"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import PhotoOutput from "./media/photo"
 import Input from "./ui/input"
 
 export default function GetPhotos(bucket: Bucket) {
+  const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
+
   const searchParams = useSearchParams()
   const unsplash_key = searchParams.get("unsplash_key") || UNSPLASH_KEY
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
@@ -55,10 +58,9 @@ export default function GetPhotos(bucket: Bucket) {
     useState<MediaModalData>(emptyModalData)
   const showMobile = useMemo(() => isMobile(), [])
 
-  const [photoData, setPhotosData] = useState<PhotoData>({
-    adding_media: [],
-    added_media: [],
-  })
+  const [abortController, setAbortController] = useState(new AbortController())
+
+  console.log("query", query)
 
   const cosmicBucket = cosmic(
     bucket.bucket_slug,
@@ -66,40 +68,52 @@ export default function GetPhotos(bucket: Bucket) {
     bucket.write_key
   )
 
-  async function searchUnsplashPhotos(q: string) {
-    const query = q
-    if (query === "") {
-      setUnsplashPhotos([])
-      return
-    }
-    try {
-      await fetch(
-        UNSPLASH_SEARCH_URL +
-          "?client_id=" +
-          unsplash_key +
-          "&query=" +
-          q +
-          "&per_page=50"
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.errors) {
-            setUnsplashPhotos([])
-            return setServiceFetchError("Unsplash")
-          }
-          const photos = data.results
-          if (!photos) {
-            setUnsplashPhotos([])
-          } else {
-            setUnsplashPhotos(photos)
-          }
-        })
-    } catch (e: any) {
-      setUnsplashPhotos([])
-      setServiceFetchError("Unsplash")
-      console.log(e)
-    }
-  }
+  const [photoData, setPhotosData] = useState<PhotoData>({
+    adding_media: [],
+    added_media: [],
+  })
+
+  const searchUnsplashPhotos = useCallback(
+    async (q: string) => {
+      const query = q
+      if (query === "") {
+        setUnsplashPhotos([])
+        return
+      }
+      try {
+        abortController.abort() // Abort previous requests
+        const newAbortController = new AbortController() // Create a new instance of AbortController
+        setAbortController(newAbortController)
+        await fetch(
+          UNSPLASH_SEARCH_URL +
+            "?client_id=" +
+            unsplash_key +
+            "&query=" +
+            q +
+            "&per_page=50",
+          { signal: newAbortController.signal }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.errors) {
+              setUnsplashPhotos([])
+              return setServiceFetchError("Unsplash")
+            }
+            const photos = data.results
+            if (!photos) {
+              setUnsplashPhotos([])
+            } else {
+              setUnsplashPhotos(photos)
+            }
+          })
+      } catch (e: any) {
+        setUnsplashPhotos([])
+        setServiceFetchError("Unsplash")
+        console.log(e)
+      }
+    },
+    [unsplash_key]
+  )
 
   async function handleAddUnsplashPhotoToMedia(photo: UnsplashPhoto) {
     if (!bucket.bucket_slug) return setSaveError(true)
@@ -126,30 +140,33 @@ export default function GetPhotos(bucket: Bucket) {
     }
   }
 
-  async function searchPexelsPhotos(q: string) {
-    const query = q
-    if (query === "") {
-      setPexelsPhotos([])
-      return
-    }
-    try {
-      const pexelsClient = createClient(pexels_key || "")
-      await pexelsClient.photos
-        .search({ query, per_page: 20 })
-        .then((res: any) => {
-          const photos = res.photos
-          if (!photos) {
-            setPexelsPhotos([])
-          } else {
-            setPexelsPhotos(photos)
-          }
-        })
-    } catch (e: any) {
-      setPexelsPhotos([])
-      setServiceFetchError("Pexels")
-      console.log(e)
-    }
-  }
+  const searchPexelsPhotos = useCallback(
+    async (q: string) => {
+      const query = q
+      if (query === "") {
+        setPexelsPhotos([])
+        return
+      }
+      try {
+        const pexelsClient = createClient(pexels_key || "")
+        await pexelsClient.photos
+          .search({ query, per_page: 20 })
+          .then((res: any) => {
+            const photos = res.photos
+            if (!photos) {
+              setPexelsPhotos([])
+            } else {
+              setPexelsPhotos(photos)
+            }
+          })
+      } catch (e: any) {
+        setPexelsPhotos([])
+        setServiceFetchError("Pexels")
+        console.log(e)
+      }
+    },
+    [pexels_key]
+  )
 
   async function handleAddPexelsPhotoToMedia(photo: Photo) {
     if (!bucket.bucket_slug) return setSaveError(true)
@@ -175,37 +192,44 @@ export default function GetPhotos(bucket: Bucket) {
     }
   }
 
-  async function searchPixabayPhotos(q: string) {
-    const query = q
-    if (query === "") {
-      setPixabayPhotos([])
-      return
-    }
-    try {
-      await fetch(
-        PIXABAY_SEARCH_URL +
-          "?key=" +
-          pixabay_key +
-          "&q=" +
-          q +
-          "&image_type=photo" +
-          "&per_page=50"
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          const photos = data.hits
-          if (!photos) {
-            setPixabayPhotos([])
-          } else {
-            setPixabayPhotos(photos)
-          }
-        })
-    } catch (e: any) {
-      setPixabayPhotos([])
-      setServiceFetchError("Pixabay")
-      console.log(e)
-    }
-  }
+  const searchPixabayPhotos = useCallback(
+    async (q: string) => {
+      const query = q
+      if (query === "") {
+        setPixabayPhotos([])
+        return
+      }
+      try {
+        abortController.abort() // Abort previous requests
+        const newAbortController = new AbortController() // Create a new instance of AbortController
+        setAbortController(newAbortController)
+        await fetch(
+          PIXABAY_SEARCH_URL +
+            "?key=" +
+            pixabay_key +
+            "&q=" +
+            q +
+            "&image_type=photo" +
+            "&per_page=50",
+          { signal: newAbortController.signal }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            const photos = data.hits
+            if (!photos) {
+              setPixabayPhotos([])
+            } else {
+              setPixabayPhotos(photos)
+            }
+          })
+      } catch (e: any) {
+        setPixabayPhotos([])
+        setServiceFetchError("Pixabay")
+        console.log(e)
+      }
+    },
+    [pixabay_key]
+  )
 
   async function handleAddPixabayPhotoToMedia(photo: PixabayPhoto) {
     if (!bucket.bucket_slug) return setSaveError(true)
@@ -232,6 +256,28 @@ export default function GetPhotos(bucket: Bucket) {
   }
   const allPhotos = [...pexelsPhotos, ...pixabayPhotos, ...unsplashPhotos]
     .length
+
+  const searchPhotos = useCallback(
+    async (searchTerm: string) => {
+      try {
+        // Abort any previous requests
+
+        await Promise.all([
+          searchUnsplashPhotos(searchTerm),
+          searchPexelsPhotos(searchTerm),
+          searchPixabayPhotos(searchTerm),
+        ])
+      } catch (error) {
+        console.error("Error occurred during search:", error)
+      }
+    },
+    [searchUnsplashPhotos, searchPexelsPhotos, searchPixabayPhotos]
+  )
+
+  useEffect(() => {
+    searchPhotos(debouncedQuery)
+  }, [debouncedQuery, searchPhotos, abortController])
+
   return (
     <div className="w-full">
       {saveError && (
@@ -321,19 +367,13 @@ export default function GetPhotos(bucket: Bucket) {
       <Header>
         <Input
           placeholder="Search free high-resolution photos"
-          onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
-            const searchTerm = event.currentTarget.value
+          onChange={(event) => {
+            const searchTerm = event.target.value
+            console.log("searchTerm", searchTerm)
             setServiceFetchError("")
-            try {
-              await Promise.all([
-                searchUnsplashPhotos(searchTerm),
-                searchPexelsPhotos(searchTerm),
-                searchPixabayPhotos(searchTerm),
-              ])
-            } catch (error) {
-              console.error("Error occurred during search:", error)
-            }
+            setQuery(searchTerm)
           }}
+          value={query}
         />
       </Header>
       {serviceFetchError && (
