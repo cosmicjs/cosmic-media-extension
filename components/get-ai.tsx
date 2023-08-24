@@ -188,8 +188,9 @@ export default function GetAI(bucket: Bucket) {
           }}
         />
         <Button
-          className="absolute right-[4px] top-[12px] h-10 w-[90px]"
+          className="absolute right-[4px] top-[13px] h-10 w-[100px]"
           onClick={() => searchAIPhotos(query)}
+          disabled={generating}
         >
           Generate
         </Button>
