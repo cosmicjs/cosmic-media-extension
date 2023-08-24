@@ -265,7 +265,7 @@ export default function GetPhotos(bucket: Bucket) {
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
                 </div>
-                <div className="relative min-h-[20px]">
+                <div className="text-left relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
                     {mediaModalData.download_url && (
@@ -301,6 +301,17 @@ export default function GetPhotos(bucket: Bucket) {
                       />
                     </div>
                   </div>
+                  {mediaModalData.creator && (
+                    <div className="mt-2 underline">
+                      <a
+                        href={mediaModalData.creator.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        by {mediaModalData.creator.name}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </DialogDescription>
             </DialogHeader>
@@ -346,6 +357,12 @@ export default function GetPhotos(bucket: Bucket) {
                   download_url: photo?.urls?.full,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "unsplash",
+                  creator: {
+                    name: `${photo.user.first_name} ${
+                      photo.user.last_name ? photo.user.last_name : ""
+                    }`,
+                    url: photo.user.links.html,
+                  },
                 })
               }}
             >
@@ -371,6 +388,7 @@ export default function GetPhotos(bucket: Bucket) {
               key={`pexels-${photo.id}`}
               className="group relative w-full cursor-zoom-in"
               onClick={() => {
+                console.log(photo)
                 setMediaModalData({
                   url: photo.src!.large2x,
                   description: photo.alt,
@@ -378,6 +396,10 @@ export default function GetPhotos(bucket: Bucket) {
                   download_url: photo?.src?.large2x,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "pexels",
+                  creator: {
+                    name: `${photo.photographer}`,
+                    url: photo.photographer_url,
+                  },
                 })
               }}
             >
@@ -410,6 +432,10 @@ export default function GetPhotos(bucket: Bucket) {
                   download_url: photo?.fullHDURL,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "pixabay",
+                  creator: {
+                    name: photo.user,
+                    url: `https://pixabay.com/users/${photo.user_id}`,
+                  },
                 })
               }}
             >
