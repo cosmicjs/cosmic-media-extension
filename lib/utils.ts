@@ -33,5 +33,4 @@ export const emptyModalData = {
   name: "",
   service: "",
   photo: "",
-  user: "",
 }
