@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
 import { useContext, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Download, Loader2 } from "lucide-react"
+import { Download, Loader2, XCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import { PEXELS_KEY, cosmic } from "@/lib/data"
@@ -182,6 +182,19 @@ export default function GetPexelsVideos(bucket: Bucket) {
           placeholder="Search free high-resolution videos"
           onChange={(event) => setQuery(event.target.value)}
         />
+        {query && (
+          <XCircle
+            title="Clear input"
+            onClick={() => {
+              setQuery("")
+              document.getElementById("search-input")?.focus()
+            }}
+            className="absolute right-[12px] top-[23px] h-5 w-5 cursor-pointer text-gray-500"
+          />
+        )}
+        {/* { // TODO add loader
+          <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
+        } */}
       </Header>
       {serviceFetchError && (
         <div className="m-auto max-w-3xl text-left">

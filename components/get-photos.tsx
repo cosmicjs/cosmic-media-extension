@@ -4,7 +4,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 // import { mediaFetch } from "@/utils/media-fetch.utils"
 import isMobile from "is-mobile"
-import { Download, Loader2 } from "lucide-react"
+import { Download, Loader2, XCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import {
@@ -362,6 +362,19 @@ export default function GetPhotos(bucket: Bucket) {
           }}
           value={query}
         />
+        {query && (
+          <XCircle
+            title="Clear input"
+            onClick={() => {
+              setQuery("")
+              document.getElementById("search-input")?.focus()
+            }}
+            className="absolute right-[12px] top-[23px] h-5 w-5 cursor-pointer text-gray-500"
+          />
+        )}
+        {/* { // TODO add loader
+          <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
+        } */}
       </Header>
       {serviceFetchError && (
         <div className="m-auto max-w-3xl text-left">

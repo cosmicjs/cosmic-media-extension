@@ -3,7 +3,7 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
-import { Download, Loader2 } from "lucide-react"
+import { Download, Loader2, XCircle } from "lucide-react"
 
 import { GIPHY_KEY, GIPHY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, GiphyImage, MediaModalData, PhotoData } from "@/lib/types"
@@ -184,6 +184,19 @@ export default function GetGifs(bucket: Bucket) {
           placeholder="Search free gifs"
           onChange={(event) => setQuery(event.target.value)}
         />
+        {query && (
+          <XCircle
+            title="Clear input"
+            onClick={() => {
+              setQuery("")
+              document.getElementById("search-input")?.focus()
+            }}
+            className="absolute right-[12px] top-[23px] h-5 w-5 cursor-pointer text-gray-500"
+          />
+        )}
+        {/* { // TODO add loader
+          <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
+        } */}
       </Header>
       {serviceFetchError && (
         <div className="m-auto max-w-3xl text-left">
