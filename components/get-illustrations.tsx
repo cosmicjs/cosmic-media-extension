@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
@@ -22,11 +22,13 @@ import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
 import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
 
+import { GlobalContext } from "./content"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./ui/input"
 
 export default function GetIllustrations(bucket: Bucket) {
+  const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
   const searchParams = useSearchParams()
   const pixabay_key = searchParams.get("pexels_key") || PIXABAY_KEY
 
@@ -106,6 +108,10 @@ export default function GetIllustrations(bucket: Bucket) {
       setPhotosData({ adding_media: [], added_media: [] })
     }
   }
+  useEffect(() => {
+    searchPixabayIllustrations(debouncedQuery)
+    //eslint-disable-next-line
+  }, [debouncedQuery])
   return (
     <div className="w-full">
       {saveError && (
@@ -180,15 +186,9 @@ export default function GetIllustrations(bucket: Bucket) {
       )}
       <Header>
         <Input
+          value={query}
           placeholder="Search free high-resolution illustrations"
-          onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
-            const searchTerm = event.currentTarget.value
-            try {
-              await searchPixabayIllustrations(searchTerm)
-            } catch (error) {
-              console.error("Error occurred during search:", error)
-            }
-          }}
+          onChange={(event) => setQuery(event.target.value)}
         />
       </Header>
       {serviceFetchError && (

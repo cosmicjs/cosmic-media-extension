@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 // import { mediaFetch } from "@/utils/media-fetch.utils"
 import isMobile from "is-mobile"
@@ -299,7 +299,7 @@ export default function GetPhotos(bucket: Bucket) {
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
                 </div>
-                <div className="text-left relative min-h-[20px]">
+                <div className="relative min-h-[20px] text-left">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
                     {mediaModalData.download_url && (
