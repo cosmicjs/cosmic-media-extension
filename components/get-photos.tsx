@@ -303,7 +303,11 @@ export default function GetPhotos(bucket: Bucket) {
                   </div>
                   {mediaModalData.creator && (
                     <div className="mt-2 underline">
-                      <a href={mediaModalData.creator.url} target="_blank">
+                      <a
+                        href={mediaModalData.creator.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
                         by {mediaModalData.creator.name}
                       </a>
                     </div>
