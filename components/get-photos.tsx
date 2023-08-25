@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
 import { createClient } from "pexels"
 
@@ -52,6 +53,8 @@ export default function GetPhotos(bucket: Bucket) {
   const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([])
   const [mediaModalData, setMediaModalData] =
     useState<MediaModalData>(emptyModalData)
+  const showMobile = useMemo(() => isMobile(), [])
+
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -80,7 +83,10 @@ export default function GetPhotos(bucket: Bucket) {
       )
         .then((res) => res.json())
         .then((data) => {
-          if (data.errors) return setServiceFetchError("Unsplash")
+          if (data.errors) {
+            setUnsplashPhotos([])
+            return setServiceFetchError("Unsplash")
+          }
           const photos = data.results
           if (!photos) {
             setUnsplashPhotos([])
@@ -89,6 +95,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setUnsplashPhotos([])
       setServiceFetchError("Unsplash")
       console.log(e)
     }
@@ -138,6 +145,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPexelsPhotos([])
       setServiceFetchError("Pexels")
       console.log(e)
     }
@@ -193,6 +201,7 @@ export default function GetPhotos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPixabayPhotos([])
       setServiceFetchError("Pixabay")
       console.log(e)
     }
@@ -240,7 +249,7 @@ export default function GetPhotos(bucket: Bucket) {
           <DialogContent
             onInteractOutside={() => setMediaModalData(emptyModalData)}
             onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
-            className="max-w-[70vw]"
+            className="md:max-w-[70vw]"
           >
             <DialogHeader>
               <DialogDescription className="mt-6">
@@ -256,7 +265,7 @@ export default function GetPhotos(bucket: Bucket) {
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
                 </div>
-                <div className="relative min-h-[20px]">
+                <div className="text-left relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
                     {mediaModalData.download_url && (
@@ -292,6 +301,17 @@ export default function GetPhotos(bucket: Bucket) {
                       />
                     </div>
                   </div>
+                  {mediaModalData.creator && (
+                    <div className="mt-2 underline">
+                      <a
+                        href={mediaModalData.creator.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        by {mediaModalData.creator.name}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </DialogDescription>
             </DialogHeader>
@@ -337,6 +357,12 @@ export default function GetPhotos(bucket: Bucket) {
                   download_url: photo?.urls?.full,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "unsplash",
+                  creator: {
+                    name: `${photo.user.first_name} ${
+                      photo.user.last_name ? photo.user.last_name : ""
+                    }`,
+                    url: photo.user.links.html,
+                  },
                 })
               }}
             >
@@ -354,7 +380,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.unsplash className="absolute bottom-4 left-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
           {pexelsPhotos?.map((photo: Photo) => (
@@ -362,6 +388,7 @@ export default function GetPhotos(bucket: Bucket) {
               key={`pexels-${photo.id}`}
               className="group relative w-full cursor-zoom-in"
               onClick={() => {
+                console.log(photo)
                 setMediaModalData({
                   url: photo.src!.large2x,
                   description: photo.alt,
@@ -369,6 +396,10 @@ export default function GetPhotos(bucket: Bucket) {
                   download_url: photo?.src?.large2x,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "pexels",
+                  creator: {
+                    name: `${photo.photographer}`,
+                    url: photo.photographer_url,
+                  },
                 })
               }}
             >
@@ -386,7 +417,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.pexels className="absolute -left-6 bottom-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
           {pixabayPhotos?.map((photo: PixabayPhoto) => (
@@ -401,6 +432,10 @@ export default function GetPhotos(bucket: Bucket) {
                   download_url: photo?.fullHDURL,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "pixabay",
+                  creator: {
+                    name: photo.user,
+                    url: `https://pixabay.com/users/${photo.user_id}`,
+                  },
                 })
               }}
             >
@@ -418,7 +453,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
         </div>

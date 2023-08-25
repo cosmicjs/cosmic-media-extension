@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
@@ -40,6 +41,7 @@ export default function GetIllustrations(bucket: Bucket) {
   const [serviceFetchError, setServiceFetchError] = useState<string>()
   const [mediaModalData, setMediaModalData] =
     useState<MediaModalData>(emptyModalData)
+  const showMobile = useMemo(() => isMobile(), [])
 
   const cosmicBucket = cosmic(
     bucket.bucket_slug,
@@ -74,6 +76,7 @@ export default function GetIllustrations(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setPixabayIllustrations([])
       setServiceFetchError("Pixabay")
       console.log(e)
     }
@@ -120,7 +123,7 @@ export default function GetIllustrations(bucket: Bucket) {
           <DialogContent
             onInteractOutside={() => setMediaModalData(emptyModalData)}
             onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
-            className="max-w-[70vw]"
+            className="md:max-w-[70vw]"
           >
             <DialogHeader>
               <DialogDescription className="mt-6">
@@ -224,7 +227,7 @@ export default function GetIllustrations(bucket: Bucket) {
                 />
               </VectorOutput>
               <Icons.pixabay className="absolute bottom-4 left-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
         </div>

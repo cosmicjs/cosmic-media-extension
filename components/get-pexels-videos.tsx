@@ -64,6 +64,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
           }
         })
     } catch (e: any) {
+      setVideos([])
       setServiceFetchError("Pexels")
       console.log(e)
     }
@@ -111,7 +112,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
           <DialogContent
             onInteractOutside={() => setMediaModalData(emptyModalData)}
             onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
-            className="max-w-[70vw]"
+            className="md:max-w-[70vw]"
           >
             <DialogHeader>
               <DialogDescription className="mt-6">

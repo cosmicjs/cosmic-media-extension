@@ -2,7 +2,12 @@
 
 Search millions of high-quality, royalty-free stock photos, videos, images, and vectors from one convenient interface. Includes popular online media services: Unsplash, Pexels, Giphy, and Pixabay as well as OpenAI image generation from prompt. [Try it here](https://cosmicmedia.vercel.app/).
 
-<img width="100%" alt="cosmic-media" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/ab1992c9-bbc0-4ef1-8977-87b07a74b742">
+<a href="https://cosmicmedia.vercel.app">
+  <img width="100%" alt="cosmic-media" src="https://imgix.cosmicjs.com/eee1bf40-3799-11ee-be3f-55e1752361d4-2.png?w=2000&auto=compression" />
+</a>
+<a href="https://cosmicmedia.vercel.app">
+  <img width="100%" alt="cosmic-media" src="https://imgix.cosmicjs.com/b59dd520-3d4d-11ee-82b2-d53af1858037-cosmic-media.png?w=2000&auto=compression"/>
+<a/>
 
 ## How to use it
 You can use Cosmic Media to search and download media manually, or you can install it in your [Cosmic](https://www.cosmicjs.com/) project as an extension to save media directly in your project.
@@ -31,8 +36,9 @@ Keys can be provided to the app in one of the following ways:
 2. Using the `.env` file. See the `.env.example` file for env var format.
 3. If installed in Cosmic as an extension, go to Cosmic Media extension settings page by going to _Extensions > Cosmic Media > Settings_, find the Query Parameters section and update the following query params to your own keys:
 
-<img width="1122" alt="query-params" src="https://github.com/cosmicjs/cosmic-media-extension/assets/1950722/61f79248-cd72-4f9f-a7f3-eb4e24d28dd7">
-
+<a href="https://app.cosmicjs.com/login">
+  <img width="100%" alt="query-params" src="https://imgix.cosmicjs.com/faa928e0-4077-11ee-82b2-d53af1858037-query-params.png?w=2000&auto=compression">
+</a>
 
 ## Run locally
 

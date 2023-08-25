@@ -22,7 +22,6 @@ export type VideoProps = {
 export type InputProps = {
   placeholder: string
   onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void
-  
 }
 
 export type Photo = {
@@ -94,4 +93,8 @@ export type MediaModalData = {
   service?: string
   photo?: any // TODO fix this
   video?: any // TODO fix this
+  creator?: {
+    name: string
+    url: string
+  }
 }

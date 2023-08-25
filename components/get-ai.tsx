@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import isMobile from "is-mobile"
 import { Download, Loader2 } from "lucide-react"
 import slugify from "slugify"
 
@@ -47,6 +48,7 @@ export default function GetPhotos(bucket: Bucket) {
   const [serviceFetchError, setServiceFetchError] = useState<string>()
   const [mediaModalData, setMediaModalData] =
     useState<MediaModalData>(emptyModalData)
+  const showMobile = useMemo(() => isMobile(), [])
 
   async function handleAddAIPhotoToMedia(photo: Photo) {
     if (!bucket.bucket_slug) return setSaveError(true)
@@ -124,7 +126,7 @@ export default function GetPhotos(bucket: Bucket) {
           <DialogContent
             onInteractOutside={() => setMediaModalData(emptyModalData)}
             onEscapeKeyDown={() => setMediaModalData(emptyModalData)}
-            className="max-w-[70vw]"
+            className="md:max-w-[70vw]"
           >
             <DialogHeader>
               <DialogDescription className="mt-6">
@@ -221,7 +223,7 @@ export default function GetPhotos(bucket: Bucket) {
                 />
               </PhotoOutput>
               <Icons.openai className="absolute bottom-4 left-4 z-20 h-5" />
-              <Overlay />
+              {showMobile && <Overlay />}
             </div>
           ))}
         </div>
