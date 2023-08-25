@@ -246,9 +246,9 @@ export default function GetIllustrations(bucket: Bucket) {
         </div>
       )}
       {!query && pixabayIllustrations?.length === 0 && <EmptyState />}
-      {query && pixabayIllustrations?.length === 0 && (
+      {!serviceFetchError && query && pixabayIllustrations?.length === 0 && (
         <div className="w-full text-center">
-          <Loader2 className="h-6 w-6 animate-spin absolute top-[200px] right-1/2" />
+          <Loader2 className="absolute right-1/2 top-[200px] h-6 w-6 animate-spin" />
         </div>
       )}
     </div>

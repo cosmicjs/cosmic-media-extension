@@ -247,9 +247,9 @@ export default function GetVectors(bucket: Bucket) {
         </div>
       )}
       {!query && pixabayVectors?.length === 0 && <EmptyState />}
-      {query && pixabayVectors?.length === 0 && (
+      {!serviceFetchError && query && pixabayVectors?.length === 0 && (
         <div className="w-full text-center">
-          <Loader2 className="h-6 w-6 animate-spin absolute top-[200px] right-1/2" />
+          <Loader2 className="absolute right-1/2 top-[200px] h-6 w-6 animate-spin" />
         </div>
       )}
     </div>
