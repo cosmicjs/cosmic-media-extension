@@ -176,7 +176,7 @@ export default function GetAI(bucket: Bucket) {
       <Header>
         <Input
           value={query}
-          placeholder="Type a pompt like: A cup of coffee, then press enter."
+          placeholder="Prompt: A cup of coffee"
           onChange={(event) => setQuery(event.target.value)}
           onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             const searchTerm = event.currentTarget.value
@@ -194,14 +194,14 @@ export default function GetAI(bucket: Bucket) {
               setQuery("")
               document.getElementById("search-input")?.focus()
             }}
-            className="absolute right-[115px] top-[23px] h-5 w-5 cursor-pointer text-gray-500"
+            className="absolute right-[115px] top-[37%] h-5 w-5 cursor-pointer text-gray-500 sm:right-[115px] sm:top-[23px]"
           />
         )}
         {/* { // TODO add loader
           <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
         } */}
         <Button
-          className="absolute right-[4px] top-[13px] h-10 w-[100px]"
+          className="absolute right-1 top-[25%] h-10 w-[100px] sm:right-[4px] sm:top-[13px]"
           onClick={() => searchAIPhotos(query)}
           disabled={generating}
         >

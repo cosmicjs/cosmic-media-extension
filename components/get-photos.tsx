@@ -369,7 +369,7 @@ export default function GetPhotos(bucket: Bucket) {
               setQuery("")
               document.getElementById("search-input")?.focus()
             }}
-            className="absolute right-[12px] top-[23px] h-5 w-5 cursor-pointer text-gray-500"
+            className="absolute right-2 top-[37%] h-5 w-5 cursor-pointer text-gray-500 sm:right-[12px] sm:top-[23px]"
           />
         )}
         {/* { // TODO add loader

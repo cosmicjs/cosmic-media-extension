@@ -30,7 +30,7 @@ import Input from "./ui/input"
 export default function GetVectors(bucket: Bucket) {
   const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
   const searchParams = useSearchParams()
-  const pixabay_key = searchParams.get("pexels_key") || PIXABAY_KEY
+  const pixabay_key = searchParams.get("pixabay_key") || PIXABAY_KEY
 
   const [pixabayVectors, setPixabayVectors] = useState<PixabayPhoto[]>([])
   const [photoData, setPhotosData] = useState<PhotoData>({
@@ -63,7 +63,7 @@ export default function GetVectors(bucket: Bucket) {
           pixabay_key +
           "&q=" +
           q +
-          "&image_type=illustration" +
+          "&image_type=vector" +
           "&per_page=80"
       )
         .then((res) => res.json())
@@ -198,7 +198,7 @@ export default function GetVectors(bucket: Bucket) {
               setQuery("")
               document.getElementById("search-input")?.focus()
             }}
-            className="absolute right-[12px] top-[23px] h-5 w-5 cursor-pointer text-gray-500"
+            className="absolute right-2 top-[37%] h-5 w-5 cursor-pointer text-gray-500 sm:right-[12px] sm:top-[23px]"
           />
         )}
         {/* { // TODO add loader

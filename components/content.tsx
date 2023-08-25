@@ -60,7 +60,7 @@ export default function Content(bucket: Bucket) {
     <GlobalContext.Provider value={globalContextValue}>
       <div className="relative flex w-full items-center justify-center">
         {showMobile && (
-          <div className="sm:hidden">
+          <div className="w-full sm:hidden">
             <Select value={selectedView} onValueChange={setSelectedView}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Photos" defaultValue="photos" />
