@@ -1,11 +1,15 @@
 "use client"
 
+import { useContext } from "react"
 import { useSearchParams } from "next/navigation"
 import { ArrowUpRight } from "lucide-react"
 
 import { Icons } from "@/components/icons"
 
+import { GlobalContext } from "./content"
+
 export default function EmptyState() {
+  const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
   const searchParams = useSearchParams()
   const location = searchParams.get("location")
   return (
