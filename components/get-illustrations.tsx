@@ -1,9 +1,9 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
-import { Download, Loader2 } from "lucide-react"
+import { Download, Loader2, XCircle } from "lucide-react"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, MediaModalData, PhotoData, PixabayPhoto } from "@/lib/types"
@@ -22,13 +22,15 @@ import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
 import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
 
+import { GlobalContext } from "./content"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./ui/input"
 
 export default function GetIllustrations(bucket: Bucket) {
+  const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
   const searchParams = useSearchParams()
-  const pixabay_key = searchParams.get("pexels_key") || PIXABAY_KEY
+  const pixabay_key = searchParams.get("pixabay_key") || PIXABAY_KEY
 
   const [pixabayIllustrations, setPixabayIllustrations] = useState<
     PixabayPhoto[]
@@ -106,6 +108,10 @@ export default function GetIllustrations(bucket: Bucket) {
       setPhotosData({ adding_media: [], added_media: [] })
     }
   }
+  useEffect(() => {
+    searchPixabayIllustrations(debouncedQuery)
+    //eslint-disable-next-line
+  }, [debouncedQuery])
   return (
     <div className="w-full">
       {saveError && (
@@ -180,16 +186,23 @@ export default function GetIllustrations(bucket: Bucket) {
       )}
       <Header>
         <Input
+          value={query}
           placeholder="Search free high-resolution illustrations"
-          onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
-            const searchTerm = event.currentTarget.value
-            try {
-              await searchPixabayIllustrations(searchTerm)
-            } catch (error) {
-              console.error("Error occurred during search:", error)
-            }
-          }}
+          onChange={(event) => setQuery(event.target.value)}
         />
+        {query && (
+          <XCircle
+            title="Clear input"
+            onClick={() => {
+              setQuery("")
+              document.getElementById("search-input")?.focus()
+            }}
+            className="absolute right-2 top-[37%] h-5 w-5 cursor-pointer text-gray-500 sm:right-[12px] sm:top-[23px]"
+          />
+        )}
+        {/* { // TODO add loader
+          <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
+        } */}
       </Header>
       {serviceFetchError && (
         <div className="m-auto max-w-3xl text-left">
@@ -232,7 +245,12 @@ export default function GetIllustrations(bucket: Bucket) {
           ))}
         </div>
       )}
-      {pixabayIllustrations?.length === 0 && <EmptyState />}
+      {!query && pixabayIllustrations?.length === 0 && <EmptyState />}
+      {query && pixabayIllustrations?.length === 0 && (
+        <div className="w-full text-center">
+          <Loader2 className="h-6 w-6 animate-spin absolute top-[200px] right-1/2" />
+        </div>
+      )}
     </div>
   )
 }
