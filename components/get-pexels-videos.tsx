@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Download, Loader2 } from "lucide-react"
+import { Download, Loader2, XCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import { PEXELS_KEY, cosmic } from "@/lib/data"
@@ -21,11 +21,14 @@ import VideoOutput from "@/components/media/video"
 import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
 import { SaveErrorMessage } from "@/components/messages/save-error-message"
 
+import { GlobalContext } from "./content"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import Input from "./ui/input"
 
 export default function GetPexelsVideos(bucket: Bucket) {
+  const { query, setQuery, debouncedQuery } = useContext(GlobalContext)
+
   const searchParams = useSearchParams()
   const pexels_key = searchParams.get("pexels_key") || PEXELS_KEY
   const [saveError, setSaveError] = useState(false)
@@ -95,6 +98,12 @@ export default function GetPexelsVideos(bucket: Bucket) {
       })
     }
   }
+
+  useEffect(() => {
+    searchVideos(debouncedQuery)
+    //eslint-disable-next-line
+  }, [debouncedQuery])
+
   return (
     <div>
       {saveError && (
@@ -169,11 +178,23 @@ export default function GetPexelsVideos(bucket: Bucket) {
       )}
       <Header>
         <Input
+          value={query}
           placeholder="Search free high-resolution videos"
-          onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) =>
-            searchVideos(event.currentTarget.value)
-          }
+          onChange={(event) => setQuery(event.target.value)}
         />
+        {query && (
+          <XCircle
+            title="Clear input"
+            onClick={() => {
+              setQuery("")
+              document.getElementById("search-input")?.focus()
+            }}
+            className="absolute right-2 top-[37%] h-5 w-5 cursor-pointer text-gray-500 sm:right-[12px] sm:top-[23px]"
+          />
+        )}
+        {/* { // TODO add loader
+          <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
+        } */}
       </Header>
       {serviceFetchError && (
         <div className="m-auto max-w-3xl text-left">
@@ -217,8 +238,12 @@ export default function GetPexelsVideos(bucket: Bucket) {
             })}
           </div>
         )}
-
-        {videos.length === 0 && <EmptyState />}
+        {!query && videos.length === 0 && <EmptyState />}
+        {query && videos.length === 0 && (
+          <div className="w-full text-center">
+            <Loader2 className="h-6 w-6 animate-spin absolute top-[200px] right-1/2" />
+          </div>
+        )}
       </div>
     </div>
   )

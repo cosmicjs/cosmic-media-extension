@@ -1,9 +1,9 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
-import { Download, Loader2 } from "lucide-react"
+import { Download, Loader2, XCircle } from "lucide-react"
 import slugify from "slugify"
 
 import { OPEN_AI_KEY } from "@/lib/data"
@@ -22,6 +22,7 @@ import { FetchErrorMessage } from "@/components/messages/fetch-error-message"
 import { SaveErrorMessage } from "@/components/messages/save-error-message"
 import Overlay from "@/components/overlay"
 
+import { GlobalContext } from "./content"
 import EmptyState from "./empty-state"
 import Header from "./header"
 import PhotoOutput from "./media/photo"
@@ -29,7 +30,8 @@ import Input from "./ui/input"
 
 const { Configuration, OpenAIApi } = require("openai")
 
-export default function GetPhotos(bucket: Bucket) {
+export default function GetAI(bucket: Bucket) {
+  const { query, setQuery } = useContext(GlobalContext)
   const searchParams = useSearchParams()
   const openai_key = searchParams.get("openai_key") || OPEN_AI_KEY
   const configuration = new Configuration({
@@ -39,7 +41,6 @@ export default function GetPhotos(bucket: Bucket) {
 
   const [photos, setPhotos] = useState<Photo[]>([])
   const [generating, setGenerating] = useState(false)
-  const [query, setQuery] = useState("")
   const [photoData, setPhotosData] = useState<PhotoData>({
     adding_media: [],
     added_media: [],
@@ -174,7 +175,9 @@ export default function GetPhotos(bucket: Bucket) {
       )}
       <Header>
         <Input
-          placeholder="Type a pompt like: A cup of coffee, then press enter."
+          value={query}
+          placeholder="Prompt: A cup of coffee"
+          onChange={(event) => setQuery(event.target.value)}
           onKeyUp={async (event: React.KeyboardEvent<HTMLInputElement>) => {
             const searchTerm = event.currentTarget.value
             try {
@@ -184,6 +187,26 @@ export default function GetPhotos(bucket: Bucket) {
             }
           }}
         />
+        {query && (
+          <XCircle
+            title="Clear input"
+            onClick={() => {
+              setQuery("")
+              document.getElementById("search-input")?.focus()
+            }}
+            className="absolute right-[115px] top-[37%] h-5 w-5 cursor-pointer text-gray-500 sm:right-[115px] sm:top-[23px]"
+          />
+        )}
+        {/* { // TODO add loader
+          <Loader2 className="absolute right-[12px] top-[22px] h-5 w-5 animate-spin text-gray-500" />
+        } */}
+        <Button
+          className="absolute right-1 top-[25%] h-10 w-[100px] sm:right-[4px] sm:top-[13px]"
+          onClick={() => searchAIPhotos(query)}
+          disabled={generating}
+        >
+          Generate
+        </Button>
       </Header>
       {serviceFetchError && (
         <div className="m-auto max-w-3xl text-left">

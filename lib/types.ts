@@ -1,3 +1,5 @@
+import { ChangeEventHandler } from "react"
+
 export interface Bucket {
   bucket_slug: string
   read_key: string
@@ -20,8 +22,10 @@ export type VideoProps = {
 }
 
 export type InputProps = {
+  value: string
   placeholder: string
-  onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void
+  onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 export type Photo = {
