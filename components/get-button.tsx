@@ -1,6 +1,6 @@
 "use client"
 
-import { Check, Loader2, Plus } from "lucide-react"
+import { Check, Download, Loader2 } from "lucide-react"
 
 import {
   GiphyImage,
@@ -68,7 +68,7 @@ export default function GetButton({
         }
         title="Add to media"
       >
-        <Plus
+        <Download
           width={16}
           height={16}
           className="text-gray-700 dark:text-gray-400"

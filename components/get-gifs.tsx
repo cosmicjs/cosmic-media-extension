@@ -3,12 +3,12 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
-import { Download, Loader2, XCircle } from "lucide-react"
+import { ExternalLink, Loader2, XCircle } from "lucide-react"
 
 import { GIPHY_KEY, GIPHY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, GiphyImage, MediaModalData, PhotoData } from "@/lib/types"
-import { downloadImage, emptyModalData } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn, emptyModalData } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -144,23 +144,25 @@ export default function GetGifs(bucket: Bucket) {
                 <div className="relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
-                    {mediaModalData.download_url && (
-                      <Button
-                        variant="secondary"
-                        className="mr-2 inline rounded-full p-3"
-                        title="Download"
-                        onClick={() =>
-                          downloadImage(
-                            mediaModalData.download_url
-                              ? mediaModalData.download_url
-                              : "",
-                            mediaModalData.name
-                          )
+                    <a
+                      href={`${mediaModalData.external_url}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "mr-2 inline rounded-full p-3"
+                      )}
+                      title={`View in ${mediaModalData.service}`}
+                    >
+                      <ExternalLink
+                        width={16}
+                        height={16}
+                        className="text-gray-700 dark:text-gray-400"
+                        onClick={(e: React.SyntheticEvent) =>
+                          e.stopPropagation()
                         }
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    )}
+                      />
+                    </a>
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.photo}
@@ -217,6 +219,7 @@ export default function GetGifs(bucket: Bucket) {
                   download_url: image?.images?.downsized_medium?.url,
                   name: `${image.id}-cosmic-media.gif`,
                   service: "giphy",
+                  external_url: image.url,
                 })
               }}
             >

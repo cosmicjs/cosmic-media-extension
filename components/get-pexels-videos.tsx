@@ -2,13 +2,13 @@
 
 import { useContext, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Download, Loader2, XCircle } from "lucide-react"
+import { ExternalLink, Loader2, XCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import { PEXELS_KEY, cosmic } from "@/lib/data"
 import { Bucket, MediaModalData, Video, VideoData } from "@/lib/types"
-import { downloadImage, emptyModalData } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn, emptyModalData } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -142,23 +142,25 @@ export default function GetPexelsVideos(bucket: Bucket) {
                 <div className="relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
-                    {mediaModalData.download_url && (
-                      <Button
-                        variant="secondary"
-                        className="mr-2 inline rounded-full p-3"
-                        title="Download"
-                        onClick={() =>
-                          downloadImage(
-                            mediaModalData.download_url
-                              ? mediaModalData.download_url
-                              : "",
-                            mediaModalData.name
-                          )
+                    <a
+                      href={`${mediaModalData.external_url}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "mr-2 inline rounded-full p-3"
+                      )}
+                      title={`View in ${mediaModalData.service}`}
+                    >
+                      <ExternalLink
+                        width={16}
+                        height={16}
+                        className="text-gray-700 dark:text-gray-400"
+                        onClick={(e: React.SyntheticEvent) =>
+                          e.stopPropagation()
                         }
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    )}
+                      />
+                    </a>
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.video}
@@ -170,6 +172,17 @@ export default function GetPexelsVideos(bucket: Bucket) {
                       />
                     </div>
                   </div>
+                  {mediaModalData.creator && (
+                    <div className="mt-2 underline">
+                      <a
+                        href={mediaModalData.creator.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        by {mediaModalData.creator.name}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </DialogDescription>
             </DialogHeader>
@@ -210,6 +223,7 @@ export default function GetPexelsVideos(bucket: Bucket) {
                   key={video.id}
                   className="group relative w-full cursor-zoom-in"
                   onClick={() => {
+                    console.log(video)
                     setMediaModalData({
                       url: video.video_pictures![0].picture,
                       description: video.description,
@@ -217,6 +231,11 @@ export default function GetPexelsVideos(bucket: Bucket) {
                       download_url: video.video_files![0]?.link,
                       name: `${video.id}-cosmic-media.mp4`,
                       service: "pexels",
+                      external_url: video.url,
+                      creator: {
+                        name: video.user.name,
+                        url: video.user.url,
+                      },
                     })
                   }}
                 >

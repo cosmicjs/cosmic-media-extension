@@ -3,12 +3,12 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
-import { Download, Loader2, XCircle } from "lucide-react"
+import { ExternalLink, Loader2, XCircle } from "lucide-react"
 
 import { PIXABAY_KEY, PIXABAY_SEARCH_URL, cosmic } from "@/lib/data"
 import { Bucket, MediaModalData, PhotoData, PixabayPhoto } from "@/lib/types"
-import { debounce, downloadImage, emptyModalData } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn, debounce, emptyModalData } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -51,7 +51,7 @@ export default function GetIllustrations(bucket: Bucket) {
     bucket.write_key
   )
 
-  async function searchPixabayIllustrations(q: string) {
+  async function searchPixabay(q: string) {
     debounce(() => setServiceFetchError(""))
     const query = q
     if (query === "") {
@@ -109,7 +109,7 @@ export default function GetIllustrations(bucket: Bucket) {
     }
   }
   useEffect(() => {
-    searchPixabayIllustrations(debouncedQuery)
+    searchPixabay(debouncedQuery)
     //eslint-disable-next-line
   }, [debouncedQuery])
   return (
@@ -148,23 +148,25 @@ export default function GetIllustrations(bucket: Bucket) {
                 <div className="relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
-                    {mediaModalData.download_url && (
-                      <Button
-                        variant="secondary"
-                        className="mr-2 inline rounded-full p-3"
-                        title="Download"
-                        onClick={() =>
-                          downloadImage(
-                            mediaModalData.download_url
-                              ? mediaModalData.download_url
-                              : "",
-                            mediaModalData.name
-                          )
+                    <a
+                      href={`${mediaModalData.external_url}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "mr-2 inline rounded-full p-3"
+                      )}
+                      title={`View in ${mediaModalData.service}`}
+                    >
+                      <ExternalLink
+                        width={16}
+                        height={16}
+                        className="text-gray-700 dark:text-gray-400"
+                        onClick={(e: React.SyntheticEvent) =>
+                          e.stopPropagation()
                         }
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    )}
+                      />
+                    </a>
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.photo}
@@ -178,6 +180,17 @@ export default function GetIllustrations(bucket: Bucket) {
                       />
                     </div>
                   </div>
+                  {mediaModalData.creator && (
+                    <div className="mt-2 underline">
+                      <a
+                        href={mediaModalData.creator.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        by {mediaModalData.creator.name}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </DialogDescription>
             </DialogHeader>
@@ -223,6 +236,11 @@ export default function GetIllustrations(bucket: Bucket) {
                   download_url: photo?.fullHDURL,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "pixabay",
+                  creator: {
+                    name: photo.user,
+                    url: `https://pixabay.com/users/${photo.user_id}`,
+                  },
+                  external_url: photo.pageURL,
                 })
               }}
             >
