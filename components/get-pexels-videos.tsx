@@ -223,7 +223,6 @@ export default function GetPexelsVideos(bucket: Bucket) {
                   key={video.id}
                   className="group relative w-full cursor-zoom-in"
                   onClick={() => {
-                    console.log(video)
                     setMediaModalData({
                       url: video.video_pictures![0].picture,
                       description: video.description,
