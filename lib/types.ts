@@ -101,4 +101,5 @@ export type MediaModalData = {
     name: string
     url: string
   }
+  external_url?: string
 }

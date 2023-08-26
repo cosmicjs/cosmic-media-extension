@@ -4,7 +4,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 // import { mediaFetch } from "@/utils/media-fetch.utils"
 import isMobile from "is-mobile"
-import { Download, Loader2, XCircle } from "lucide-react"
+import { ExternalLink, Loader2, XCircle } from "lucide-react"
 import { createClient } from "pexels"
 
 import {
@@ -23,8 +23,8 @@ import {
   PixabayPhoto,
   UnsplashPhoto,
 } from "@/lib/types"
-import { downloadImage, emptyModalData } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn, emptyModalData } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -302,23 +302,25 @@ export default function GetPhotos(bucket: Bucket) {
                 <div className="relative min-h-[20px] text-left">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
-                    {mediaModalData.download_url && (
-                      <Button
-                        variant="secondary"
-                        className="mr-2 inline rounded-full p-3"
-                        title="Download"
-                        onClick={() =>
-                          downloadImage(
-                            mediaModalData.download_url
-                              ? mediaModalData.download_url
-                              : "",
-                            mediaModalData.name
-                          )
+                    <a
+                      href={`${mediaModalData.external_url}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "mr-2 inline rounded-full p-3"
+                      )}
+                      title={`View in ${mediaModalData.service}`}
+                    >
+                      <ExternalLink
+                        width={16}
+                        height={16}
+                        className="text-gray-700 dark:text-gray-400"
+                        onClick={(e: React.SyntheticEvent) =>
+                          e.stopPropagation()
                         }
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    )}
+                      />
+                    </a>
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.photo}
@@ -395,6 +397,7 @@ export default function GetPhotos(bucket: Bucket) {
                     : photo.alt_description,
                   photo,
                   download_url: photo?.urls?.full,
+                  external_url: photo?.links?.html,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "unsplash",
                   creator: {
@@ -428,7 +431,6 @@ export default function GetPhotos(bucket: Bucket) {
               key={`pexels-${photo.id}`}
               className="group relative w-full cursor-zoom-in"
               onClick={() => {
-                console.log(photo)
                 setMediaModalData({
                   url: photo.src!.large2x,
                   description: photo.alt,
@@ -440,6 +442,7 @@ export default function GetPhotos(bucket: Bucket) {
                     name: `${photo.photographer}`,
                     url: photo.photographer_url,
                   },
+                  external_url: photo.url,
                 })
               }}
             >
@@ -476,6 +479,7 @@ export default function GetPhotos(bucket: Bucket) {
                     name: photo.user,
                     url: `https://pixabay.com/users/${photo.user_id}`,
                   },
+                  external_url: photo.pageURL,
                 })
               }}
             >
