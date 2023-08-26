@@ -56,6 +56,10 @@ export type PixabayPhoto = {
 }
 
 export type GiphyImage = {
+  user: {
+    display_name: string
+    profile_url: string
+  }
   title: string | undefined
   id: string
   images: {
