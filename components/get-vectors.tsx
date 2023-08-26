@@ -146,7 +146,7 @@ export default function GetVectors(bucket: Bucket) {
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
                 </div>
-                <div className="relative min-h-[20px]">
+                <div className="relative min-h-[20px] text-left">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
                     <a
