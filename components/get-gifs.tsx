@@ -174,6 +174,17 @@ export default function GetGifs(bucket: Bucket) {
                       />
                     </div>
                   </div>
+                  {mediaModalData?.creator?.name && (
+                    <div className="mt-2 underline">
+                      <a
+                        href={mediaModalData.creator.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        by {mediaModalData.creator.name}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </DialogDescription>
             </DialogHeader>
@@ -220,6 +231,10 @@ export default function GetGifs(bucket: Bucket) {
                   name: `${image.id}-cosmic-media.gif`,
                   service: "giphy",
                   external_url: image.url,
+                  creator: {
+                    name: image?.user?.display_name,
+                    url: image?.user?.profile_url,
+                  },
                 })
               }}
             >
