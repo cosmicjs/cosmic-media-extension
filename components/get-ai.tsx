@@ -3,13 +3,13 @@
 import { useContext, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import isMobile from "is-mobile"
-import { Download, Loader2, XCircle } from "lucide-react"
+import { ExternalLink, Loader2, XCircle } from "lucide-react"
 import slugify from "slugify"
 
 import { OPEN_AI_KEY } from "@/lib/data"
 import { Bucket, MediaModalData, Photo, PhotoData } from "@/lib/types"
-import { emptyModalData } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn, emptyModalData } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -146,16 +146,25 @@ export default function GetAI(bucket: Bucket) {
                 <div className="relative min-h-[20px]">
                   <div className="pr-20">{mediaModalData.description}</div>
                   <div className="absolute -top-2 right-0 flex">
-                    {mediaModalData.download_url && (
-                      <Button
-                        variant="secondary"
-                        className="mr-2 inline rounded-full p-3"
-                        title="Download"
-                        onClick={() => window.open(mediaModalData.download_url)}
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    )}
+                    <a
+                      href={`${mediaModalData.external_url}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "mr-2 inline rounded-full p-3"
+                      )}
+                      title={`View in ${mediaModalData.service}`}
+                    >
+                      <ExternalLink
+                        width={16}
+                        height={16}
+                        className="text-gray-700 dark:text-gray-400"
+                        onClick={(e: React.SyntheticEvent) =>
+                          e.stopPropagation()
+                        }
+                      />
+                    </a>
                     <div className="inline">
                       <GetButton
                         media={mediaModalData.photo}
@@ -235,6 +244,7 @@ export default function GetAI(bucket: Bucket) {
                   download_url: photo.url,
                   name: `${photo.id}-cosmic-media.jpg`,
                   service: "OpenAI",
+                  external_url: photo.url,
                 })
               }}
             >
