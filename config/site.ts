@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Cosmic Media",
-  navTitle: "Media",
+  name: "LUL",
+  navTitle: "LUL",
   description:
     "Search millions of high-quality, royalty-free stock photos, videos, images, and vectors from one convenient interface.",
   mainNav: [
@@ -12,9 +12,9 @@ export const siteConfig = {
     },
   ],
   links: {
-    x: "https://x.com/cosmicjs",
-    github: "https://github.com/cosmicjs/cosmic-media-extension",
-    docs: "https://www.cosmicjs.com/docs",
-    login: "https://app.cosmicjs.com/login",
+    x: "https://www.lul.bz",
+    github: "https://www.lul.bz",
+    docs: "https://www.lul.bz",
+    login: "https://www.lul.bz",
   },
 }
