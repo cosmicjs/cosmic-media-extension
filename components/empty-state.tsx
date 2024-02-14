@@ -24,14 +24,7 @@ export default function EmptyState() {
           <div>
             
               <div className="mr-2">Made by LUL</div>
-              <div className="mt-2 flex justify-center sm:-mt-1">
-               
-              </div>
-            </a>
-          </div>
-          <div>
           
-          </div>
         </div>
       )}
     </div>
