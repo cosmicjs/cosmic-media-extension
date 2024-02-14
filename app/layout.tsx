@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: {
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <div className="w-full flex-1">{children}</div>
             </div>
           </ThemeProvider>
+           <Analytics />
         </body>
       </html>
     </>
